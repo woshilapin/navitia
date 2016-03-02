@@ -1,0 +1,2995 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Documentation</title>
+
+    <link href="../stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <link href="../stylesheets/navio.css" rel="stylesheet" type="text/css" media="all" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script src="../javascripts/all_nosearch.js" type="text/javascript"></script>
+
+  </head>
+
+  <body class="includes includes_integration">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="../images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="../images/logo.png" />
+      <div id="toc">
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="navitia-documentation-v1-interface">Navitia documentation: v1 interface</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p>This document describes how to call navitia via the v1 interface, and
+the returned resources. You can read our lexicon at
+<a href="https://github.com/OpenTransport/vocabulary/blob/master/vocabulary.md">https://github.com/OpenTransport/vocabulary/blob/master/vocabulary.md</a></p>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p>The only endpoint of this version of the api is :
+<a href="https://api.navitia.io/v1/">https://api.navitia.io/v1/</a></p>
+
+<p>See <a href="#authentication">authentication</a> section to find out <strong>how to use your token</strong>.</p>
+
+<p>If you use a web browser, you only have to paste it in the user area,
+with no password. Or, in a simplier way, you can add your token in the
+address bar like :</p>
+<pre class="highlight plaintext"><code>https://*my-token-is-mine-and-i-will-never-clearly-give-it*@api.navitia.io/v1/coverage/fr-idf/networks
+</code></pre>
+
+<h3 id="some-easy-examples">Some easy examples</h3>
+
+<ul>
+<li>Geographical coverage of the service &gt; <a href="https://api.navitia.io/v1/coverage">https://api.navitia.io/v1/coverage</a></li>
+<li>Where am I? (WGS 84 coordinates)
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coord/2.377310;48.847002">https://api.navitia.io/v1/coord/2.377310;48.847002</a></li>
+<li>I&rsquo;m on the &ldquo;/fr-idf&rdquo; coverage, at &ldquo;20, rue Hector Malot in Paris, France&rdquo;</li>
+</ul></li>
+<li>Which services are available on this coverage? Let&rsquo;s take a look at the links at the bottom of this stream
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf">https://api.navitia.io/v1/coverage/fr-idf</a></li>
+</ul></li>
+<li>Networks available? (see what <a href="#network">network</a> is)
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/networks">https://api.navitia.io/v1/coverage/fr-idf/networks</a></li>
+<li>pwooo, many networks on this coverage ;)</li>
+</ul></li>
+<li>Is there any Metro lines or networks?
+
+<ul>
+<li>there is an api for that. See <a href="#pt-objects">pt_objects</a></li>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro">https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro</a></li>
+<li>Response contain one network, one mode, and many lines</li>
+</ul></li>
+<li>Let&rsquo;s try some filtering (see <a href="#ptreferential">ptreferential</a>)
+
+<ul>
+<li>filter on the specific metro network (&ldquo;id&rdquo;: &ldquo;network:OIF:439&rdquo; extracted from last request)</li>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:OIF:439/">https://api.navitia.io/v1/coverage/fr-idf/networks/network:OIF:439/</a></li>
+<li>physical modes managed by this network</li>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:OIF:439/physical_modes">https://api.navitia.io/v1/coverage/fr-idf/networks/network:OIF:439/physical_modes</a></li>
+<li>metro lines</li>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:OIF:439/physical_modes/physical_mode:Metro/lines">https://api.navitia.io/v1/coverage/fr-idf/networks/network:OIF:439/physical_modes/physical_mode:Metro/lines</a></li>
+</ul></li>
+<li>By the way, what stuff are close to me?
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/places_nearby">https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/places_nearby</a></li>
+<li>or <a href="https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/lines">https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/lines</a></li>
+<li>or <a href="https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/stop_schedules">https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/stop_schedules</a></li>
+<li>or &hellip;</li>
+</ul></li>
+</ul>
+
+<h3 id="resources">Resources</h3>
+
+<p>All the resources return a response containing a links object, a paging
+object, and the requested object.</p>
+
+<ul>
+<li>  <strong>Coverage</strong> : List of the region covered by navitia</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage</td>
+<td>List of the areas covered by navitia</td>
+</tr>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>region_id</em></td>
+<td>Information about a specific region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/coords/<em>lon;lat</em></td>
+<td>Information about a specific region</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>  <strong>Public transportation objects</strong> : List of the public transport
+objects of a region</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/<em>collection_name</em></td>
+<td>Collection of objects of a region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/region_id/collection_name/object_id</td>
+<td>Information about a specific region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em></td>
+<td>Collection of objects of a region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em>/<em>object_id</em></td>
+<td>Information about a specific region</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>  <strong>Journeys</strong> : Compute journeys</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/journeys</td>
+<td>List of journeys</td>
+</tr>
+<tr>
+<td><code class="prettyprint">get</code> /journeys</td>
+<td>List of journeys</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>  <strong>Route Schedules</strong> : Compute route schedules for a given resource</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/route_schedules</td>
+<td>List of the route schedules</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>  <strong>Stop Schedules</strong> : Compute stop schedules for a given resource</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/stop_schedules</td>
+<td>List of the stop schedules</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>  <strong>Departures</strong> : List of the next departures for a given resource</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/departures</td>
+<td>List of the departures</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>  <strong>Arrivals</strong> : List of the next departures for a given resource</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/arrivals</td>
+<td>List of the arrivals</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>  <strong>Places</strong> : Search in the datas</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/places</td>
+<td>List of objects</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>  <strong>Places nearby</strong> : List of objects near an object or a coord</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/places_nearby</td>
+<td>List of objects near the resource</td>
+</tr>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/places_nearby</td>
+<td>List of objects near the resource</td>
+</tr>
+</tbody></table>
+
+<h2 id="authentication">Authentication</h2>
+
+<p>You must authenticate to use <strong>navitia.io</strong>. When you register we give
+you a authentication key to the API.</p>
+
+<p>You must use the <a href="http://tools.ietf.org/html/rfc2617#section-2">Basic HTTP
+authentication</a>, where the
+username is the key, and without password.</p>
+
+<h2 id="paging">Paging</h2>
+
+<p>All response contains a paging object</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>items_per_page</td>
+<td>int</td>
+<td>Number of items per page</td>
+</tr>
+<tr>
+<td>items_on_page</td>
+<td>int</td>
+<td>Number of items on this page</td>
+</tr>
+<tr>
+<td>start_page</td>
+<td>int</td>
+<td>The page number</td>
+</tr>
+<tr>
+<td>total_result</td>
+<td>int</td>
+<td>Total number of items for this request</td>
+</tr>
+</tbody></table>
+
+<p>You can navigate through a request with 2 parameters</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>start_page</td>
+<td>int</td>
+<td>The page number</td>
+</tr>
+<tr>
+<td>count</td>
+<td>int</td>
+<td>Number of items per page</td>
+</tr>
+</tbody></table>
+
+<h2 id="interface">Interface</h2>
+
+<p>We aim to implement <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS</a>
+concept with Navitia.</p>
+
+<p>Each response contains a linkable object and lots of links. Links allow
+you to know all accessible uris and services for a given point.</p>
+
+<h3 id="templated-url">Templated url</h3>
+
+<p>Under some link sections, you will find a &ldquo;templated&rdquo; property. If
+&ldquo;templated&rdquo; is true, then you will have to format the link with one id.</p>
+
+<p>For example, in response of
+<a href="https://api.navitia.io/v1/coverage/fr-idf/lines">https://api.navitia.io/v1/coverage/fr-idf/lines</a> you will find a
+<em>links</em> section:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.navitia.io/v1/coverage/fr-idf/lines/{lines.id}/stop_schedules"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"route_schedules"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>You have to put one line id instead of &ldquo;{lines.id}&rdquo;. For example:
+<a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:043043001:N1OIF658/stop_schedules">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:043043001:N1OIF658/stop_schedules</a></p>
+
+<h3 id="inner-references">Inner references</h3>
+
+<p>Some link sections look like</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"edc46f3a-ad3d-11e4-a5e1-005056a44da2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>That means you will find inside the same stream ( <em>&ldquo;internal&rdquo;: true</em> ) a
+&ldquo;disruptions&rdquo; section ( <em>&ldquo;rel&rdquo;: &ldquo;disruptions&rdquo;</em> ) containing some
+disruptions objects ( <em>&ldquo;type&rdquo;: &ldquo;disruption&rdquo;</em> ) where you can find the
+details of your object ( <em>&ldquo;id&rdquo;: &ldquo;edc46f3a-ad3d-11e4-a5e1-005056a44da2&rdquo;</em>
+).</p>
+
+<h2 id="apis">Apis</h2>
+
+<h3 id="coverage-coverage">Coverage (/coverage)</h3>
+
+<p>You can easily navigate through regions covered by navitia.io, with the
+coverage api. The only arguments are the ones of <a href="#paging">paging</a>.</p>
+
+<h3 id="inverted-geocoding-coord">Inverted geocoding (/coord)</h3>
+
+<p>Very simple service: you give Navitia some coordinates, it answers you
+where you are:</p>
+
+<ul>
+<li>  your detailed postal address</li>
+<li>  the right Navitia &ldquo;coverage&rdquo; which allows you to access to all known
+local mobility services</li>
+</ul>
+
+<p>For example, you can request navitia with a WGS84 coordinate as:</p>
+
+<p><a href="https://api.navitia.io/v1/coord/2.37691590563854;48.8467597481174">https://api.navitia.io/v1/coord/2.37691590563854;48.8467597481174</a></p>
+
+<p>In response, you will get the coverage id, a very useful label and a
+ressource id:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"regions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"fr-idf"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.37691590564;48.8467597481"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20 Rue Hector Malot (Paris)"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The coverage id is <em>&ldquo;regions&rdquo;: [&ldquo;fr-idf&rdquo;]</em> so you can ask Navitia on
+accessible local mobility services:</p>
+
+<p><a href="https://api.navitia.io/v1/coverage/fr-idf/">https://api.navitia.io/v1/coverage/fr-idf/</a></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"regions"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"running"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"start_production_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20150804"</span><span class="p">,</span><span class="nt">"end_production_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20160316"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fr-idf"</span><span class="w">
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/coords"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/places"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/networks"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/physical_modes"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/companies"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/commercial_modes"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/lines"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/routes"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/stop_areas"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/stop_points"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/line_groups"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/connections"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/vehicle_journeys"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/poi_types"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/pois"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://api.navitia.io/v1/coverage/fr-idf/"</span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="public-transportation-objects-exploration-networks-or-lines-or-routes">Public transportation objects exploration (/networks or /lines or /routes&hellip;)</h3>
+
+<p>Once you have selected a region, you can explore the public
+transportation objects easily with these apis. You just need to add at
+the end of your url a collection name to see all the objects of a
+particular collection. To see an object add the id of this object at the
+end of the collection&rsquo;s url. The <a href="#paging">paging</a> arguments may be used to
+paginate results.</p>
+
+<h4 id="collections">Collections</h4>
+
+<ul>
+<li>  networks</li>
+<li>  lines</li>
+<li>  routes</li>
+<li>  stop_points</li>
+<li>  stop_areas</li>
+<li>  commercial_modes</li>
+<li>  physical_modes</li>
+<li>  companies</li>
+<li>  vehicle_journeys</li>
+</ul>
+
+<h4 id="specific-parameters">Specific parameters</h4>
+
+<p>There are other specific parameters.</p>
+
+<h5 id="quot-depth-quot">&ldquo;depth&rdquo;</h5>
+
+<p>This tiny parameter can expand Navitia power by making it more wordy.
+Here is some examples around &ldquo;metro line 1&rdquo; from the Parisian network:</p>
+
+<ul>
+<li>Get &ldquo;line 1&rdquo; id
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro%201">https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro%201</a></li>
+<li>The id is &ldquo;line:OIF:100110001:1OIF439&rdquo;</li>
+</ul></li>
+<li>Get routes for this line
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes</a></li>
+</ul></li>
+<li>Want to get a tiny response? Just add &ldquo;depth=0&rdquo;
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=0">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=0</a></li>
+<li>The response is lighter (parent lines disappear for example)</li>
+</ul></li>
+<li>Want more informations, just add &ldquo;depth=2&rdquo;
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=2">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=2</a></li>
+<li>The response is a little more verbose (with some geojson appear in response)</li>
+</ul></li>
+<li>Wanna fat more informations, let&rsquo;s try &ldquo;depth=3&rdquo;
+
+<ul>
+<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=3">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=3</a></li>
+<li>Big response: all stop_points are shown</li>
+</ul></li>
+<li>Wanna spam the internet bandwidth? Try &ldquo;depth=42&rdquo;
+
+<ul>
+<li>No. There is a technical limit with &ldquo;depth=3&rdquo;</li>
+</ul></li>
+</ul>
+
+<h5 id="odt-level">odt level</h5>
+
+<ul>
+<li>  Type: String</li>
+<li>  Default value: all</li>
+<li>  Warning: works ONLY with /lines collection&hellip;</li>
+</ul>
+
+<p>It allows you to request navitia for specific pickup lines. It refers to
+the <a href="#odt">odt</a> section. &ldquo;odt_level&rdquo; can take one of these values:</p>
+
+<p><em>NEW! after 1.18 versions, this parameter is more accurate</em></p>
+
+<ul>
+<li>  all (default value): no filter, provide all public transport lines,
+whatever its type</li>
+<li>  scheduled : provide only regular lines (see the <a href="#odt">odt</a> section)</li>
+<li>  with_stops : to get regular, &ldquo;odt_with_stop_time&rdquo; and &ldquo;odt_with_stop_point&rdquo; lines.
+
+<ul>
+<li>  You can easily request route_schedule and stop_schedule with these kind of lines.</li>
+<li>  Be aware of &ldquo;estimated&rdquo; stop times</li>
+</ul></li>
+<li>  zonal : to get &ldquo;odt_with_zone&rdquo; lines with non-detailed trips</li>
+</ul>
+
+<p>For example</p>
+
+<p><a href="https://api.navitia.io/v1/coverage/fr-nw/networks/network:lila/lines">https://api.navitia.io/v1/coverage/fr-nw/networks/network:lila/lines</a></p>
+
+<p><a href="https://api.navitia.io/v1/coverage/fr-nw/networks/network:Lignes18/lines?odt_level=scheduled">https://api.navitia.io/v1/coverage/fr-nw/networks/network:Lignes18/lines?odt_level=scheduled</a></p>
+
+<h5 id="distance">distance</h5>
+
+<ul>
+<li>  Type: Integer</li>
+<li>  Default value: 200</li>
+</ul>
+
+<p>If you specify coords in your filter, you can modify the radius used for
+the proximity search.
+<a href="https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/stop_schedules?distance=500">https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/stop_schedules?distance=500</a></p>
+
+<h5 id="headsign">headsign</h5>
+
+<ul>
+<li>  Type: String</li>
+</ul>
+
+<p>If given, add a filter on the vehicle journeys that has the given value
+as headsign (on vehicle journey itself or at a stop time).</p>
+
+<p>Examples:</p>
+
+<ul>
+<li>  <a href="http://api.navitia.io/v1/coverage/fr-idf/vehicle_journeys?headsign=CANE">http://api.navitia.io/v1/coverage/fr-idf/vehicle_journeys?headsign=CANE</a></li>
+<li>  <a href="http://api.navitia.io/v1/coverage/fr-idf/stop_areas?headsign=CANE">http://api.navitia.io/v1/coverage/fr-idf/stop_areas?headsign=CANE</a></li>
+</ul>
+
+<aside class="warning">
+    This last request gives the stop areas used by the vehicle
+    journeys containing the headsign CANE, *not* the stop areas where it
+    exists a stop time with the headsign CANE.
+</aside>
+
+<h5 id="since-until">since / until</h5>
+
+<ul>
+<li>  Type: datetime</li>
+</ul>
+
+<p>To be used only on &ldquo;vehicle_journeys&rdquo; collection, to filter on a
+period. Both parameters &ldquo;until&rdquo; and &ldquo;since&rdquo; are optional.</p>
+
+<p>Example:</p>
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr_idf/vehicle_journeys?since=20150912T120000&amp;until=20150913T110000">https://api.navitia.io/v1/coverage/fr_idf/vehicle_journeys?since=20150912T120000&amp;until=20150913T110000</a></li>
+</ul>
+
+<aside class="warning">
+    This filter is applied using only the first stop time of a
+    vehicle journey, &ldquo;since&rdquo; is included and &ldquo;until&rdquo; is excluded.
+</aside>
+
+<h4 id="filter">Filter</h4>
+
+<p>It is possible to apply a filter to the returned collection, using
+&ldquo;filter&rdquo; parameter. If no object matches the filter, a &ldquo;bad_filter&rdquo;
+error is sent. If filter can not be parsed, an &ldquo;unable_to_parse&rdquo; error
+is sent. If object or attribute provided is not handled, the filter is
+ignored.</p>
+
+<h5 id="line-code">line.code</h5>
+
+<p>It allows you to request navitia objects referencing a line whose code
+is the one provided, especially lines themselves and routes.</p>
+
+<p>Examples :</p>
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/lines?filter=line.code=4">https://api.navitia.io/v1/coverage/fr-idf/lines?filter=line.code=4</a></li>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/routes?filter=line.code=%22m%C3%A9tro%20347%22">https://api.navitia.io/v1/coverage/fr-idf/routes?filter=line.code=&ldquo;métro 347&rdquo;</a></li>
+</ul>
+
+<h4 id="examples">Examples</h4>
+
+<p>Response example for this request
+<a href="https://api.navitia.io/v1/coverage/fr-idf/physical_modes">https://api.navitia.io/v1/coverage/fr-idf/physical_modes</a></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"pagination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"..."</span><span class="w">
+    </span><span class="err">}</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"physical_modes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"physical_mode:0x3"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bus"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"physical_mode:0x4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ferry"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Other examples</p>
+
+<ul>
+<li>  Network list
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks">https://api.navitia.io/v1/coverage/fr-idf/networks</a></li>
+</ul></li>
+<li>  Physical mode list
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/physical_modes">https://api.navitia.io/v1/coverage/fr-idf/physical_modes</a></li>
+</ul></li>
+<li>  Line list
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/lines">https://api.navitia.io/v1/coverage/fr-idf/lines</a></li>
+</ul></li>
+<li>  Line list for one mode
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/physical_modes/physical_mode:Metro/lines">https://api.navitia.io/v1/coverage/fr-idf/physical_modes/physical_mode:Metro/lines</a></li>
+</ul></li>
+</ul>
+
+<h3 id="public-transport-objects-autocomplete-pt_objects">Public Transport objects autocomplete (/pt_objects)</h3>
+
+<p>This api search in public transport objects via their names. It&rsquo;s a kind
+of magical autocomplete on public transport data. It returns, in
+addition of classic objects, a collection of <a href="#place">places</a>.</p>
+
+<h4 id="how-does-it-works">How does it works</h4>
+
+<p>Differents kind of objects can be returned (sorted as):</p>
+
+<ul>
+<li>  network</li>
+<li>  commercial_mode</li>
+<li>  line</li>
+<li>  route</li>
+<li>  stop_area</li>
+</ul>
+
+<p>Here is a typical use case. A traveler has to find a line between the
+1500 lines around Paris. Without any filters:</p>
+
+<ul>
+<li>  traveler input: &ldquo;bob&rdquo;
+
+<ul>
+<li>  network : &ldquo;bobby network&rdquo;</li>
+<li>  line : &ldquo;bobby bus 1&rdquo;</li>
+<li>  line : &ldquo;bobby bus 2&rdquo;</li>
+<li>  route : &ldquo;bobby bus 1 to green&rdquo;</li>
+<li>  route : &ldquo;bobby bus 1 to rose&rdquo;</li>
+<li>  route : &ldquo;bobby bus 2 to yellow&rdquo;</li>
+<li>  stop_area : &ldquo;&hellip;</li>
+</ul></li>
+<li>  traveler input: &quot;bobby met&rdquo;
+
+<ul>
+<li>  line : &ldquo;bobby metro 1&rdquo;</li>
+<li>  line : &ldquo;bobby metro 11&rdquo;</li>
+<li>  line : &ldquo;bobby metro 2&rdquo;</li>
+<li>  line : &ldquo;bobby metro 3&rdquo;</li>
+<li>  route : &ldquo;bobby metro 1 to Martin&rdquo;</li>
+<li>  route : &ldquo;bobby metro 1 to Mahatma&rdquo;</li>
+<li>  route : &ldquo;bobby metro 11 to Marcus&rdquo;</li>
+<li>  route : &ldquo;bobby metro 11 to Steven&rdquo;</li>
+<li>  route : &ldquo;&hellip;</li>
+</ul></li>
+<li>  traveler input: &quot;bobby met 11&rdquo; or &ldquo;bobby metro 11&rdquo;
+
+<ul>
+<li>  line : &ldquo;bobby metro 11&rdquo;</li>
+<li>  route : &ldquo;bobby metro 11 to Marcus&rdquo;</li>
+<li>  route : &ldquo;bobby metro 11 to Steven&rdquo;</li>
+</ul></li>
+</ul>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>yep</td>
+<td>q</td>
+<td>string</td>
+<td>The search term</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>type[]</td>
+<td>array of string</td>
+<td>Type of objects you want to query It takes one the following values: [<code class="prettyprint">network</code>, <code class="prettyprint">commercial_mode</code>, <code class="prettyprint">line</code>, <code class="prettyprint">route</code>, <code class="prettyprint">stop_area</code>]</td>
+<td>[<code class="prettyprint">network</code>, <code class="prettyprint">commercial_mode</code>, <code class="prettyprint">line</code>, <code class="prettyprint">route</code>, <code class="prettyprint">stop_area</code>]</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+There is no pagination for this api
+</aside>
+
+<h4 id="example">Example</h4>
+
+<p>Response example for :
+<a href="https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=bus%20ratp%20%39&amp;type%5B%5D=line&amp;type%5B%5D=route">https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=bus%20ratp%20%39&amp;type[]=line&amp;type[]=route</a></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"pt_objects"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="err">{</span><span class="w">
+            </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"line"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="err">...</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line:OIF:100100091:91OIF442"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RATP Bus 91 (MOBILIEN 91)"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+                </span><span class="err">}</span><span class="p">,</span><span class="w">
+</span><span class="s2">"links"</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+ </span><span class="p">],</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="places-autocomplete-places">Places autocomplete (/places)</h3>
+
+<p>This api search in all geographical objects via their names. It returns,
+in addition of classic objects, a collection of <a href="#place">places</a> . This api is
+very useful to make some autocomplete stuff.</p>
+
+<p>Differents kind of objects can be returned (sorted as):</p>
+
+<ul>
+<li>  administrative_region</li>
+<li>  stop_area</li>
+<li>  poi</li>
+<li>  address</li>
+<li>  stop_point (appears only if specified, using &ldquo;&amp;type[]=stop_point&rdquo;
+filter)</li>
+</ul>
+
+<aside class="warning">
+    There is no pagination for this api.
+</aside>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>yep</td>
+<td>q</td>
+<td>string</td>
+<td>The search term</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>type[]</td>
+<td>array of string</td>
+<td>Type of objects you want to query It takes one the following values: [<code class="prettyprint">stop_area</code>, <code class="prettyprint">address</code>, <code class="prettyprint">administrative_region</code>, <code class="prettyprint">poi</code>, <code class="prettyprint">stop_point</code>]</td>
+<td>[<code class="prettyprint">stop_area</code>, <code class="prettyprint">address</code>, <code class="prettyprint">poi</code>, <code class="prettyprint">administrative_region</code>]</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>admin_uri[]</td>
+<td>array of string</td>
+<td>If filled, will restrained the search within the given admin uris</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h4 id="how-does-it-works">How does it works</h4>
+
+<h4 id="example">Example</h4>
+
+<p>Response example for :
+<a href="https://api.navitia.io/v1/coverage/fr-idf/places?q=rue">https://api.navitia.io/v1/coverage/fr-idf/places?q=rue</a></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"places"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="err">{</span><span class="w">
+
+            </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_area"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"stop_area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="err">...</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_area:TAN:SA:RUET"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ruette"</span><span class="w">
+
+        </span><span class="p">},</span><span class="w">
+                </span><span class="err">}</span><span class="p">,</span><span class="w">
+</span><span class="s2">"links"</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+ </span><span class="p">],</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="places-nearby-places_nearby">Places Nearby (/places_nearby)</h3>
+
+<p>This api search for public transport object near another object, or near
+coordinates. It returns, in addition of classic objects, a collection of
+<a href="#place">places</a>.</p>
+
+<aside class="warning">
+    There is no pagination for this api.
+</aside>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nop</td>
+<td>distance</td>
+<td>int</td>
+<td>Distance range in meters</td>
+<td>500</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>type[]</td>
+<td>array of string</td>
+<td>Type of objects you want to query</td>
+<td>[<code class="prettyprint">stop_area</code>, <code class="prettyprint">stop_point</code>, <code class="prettyprint">poi</code>, <code class="prettyprint">administrative_region</code>]</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>admin_uri[]</td>
+<td>array of string</td>
+<td>If filled, will restrained the search within the given admin uris</td>
+<td>&ldquo;&rdquo;</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>filter</td>
+<td>string</td>
+<td>Use to restrain returned objects. for example: places_type.id=theater</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p>Filters can be added:</p>
+
+<ul>
+<li>  request for the city of &ldquo;Paris&rdquo; on fr-idf
+
+<ul>
+<li>  <a href="http://api.navitia.io/v1/coverage/fr-idf/places?q=paris">http://api.navitia.io/v1/coverage/fr-idf/places?q=paris</a></li>
+</ul></li>
+<li>  then pois nearby this city
+
+<ul>
+<li>  <a href="http://api.navitia.io/v1/coverage/fr-idf/places/admin:7444/places_nearby">http://api.navitia.io/v1/coverage/fr-idf/places/admin:7444/places_nearby</a></li>
+</ul></li>
+<li>  and then, let&rsquo;s catch every parking around
+
+<ul>
+<li>  &ldquo;distance=10000&rdquo; Paris is not so big</li>
+<li>  &ldquo;type[]=poi&rdquo; to take pois only</li>
+<li>  &ldquo;filter=poi_type.id=poi_type:amenity:parking&rdquo; to get parking</li>
+<li>  <a href="http://api.navitia.io/v1/coverage/fr-idf/places/admin:7444/places_nearby?distance=10000&amp;count=100&amp;type%5B%5D=poi&amp;filter=poi_type.id=poi_type:amenity:parking">http://api.navitia.io/v1/coverage/fr-idf/places/admin:7444/places_nearby?distance=10000&amp;count=100&amp;type[]=poi&amp;filter=poi_type.id=poi_type:amenity:parking</a></li>
+</ul></li>
+</ul>
+
+<h4 id="example">Example</h4>
+
+<p>Response example for this request
+<a href="https://api.navitia.io/v1/coverage/fr-idf/stop_areas/stop_area:TRN:SA:DUA8754575/places_nearby">https://api.navitia.io/v1/coverage/fr-idf/stop_areas/stop_area:TRN:SA:DUA8754575/places_nearby</a></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"places_nearby"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_area"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"stop_area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CHATEAUDUN"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"coord"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"lat"</span><span class="p">:</span><span class="w"> </span><span class="s2">"48.073402"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"lon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.338426"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_area:TRN:SA:DUA8754575"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"distance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"quality"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_area:TRN:SA:DUA8754575"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CHATEAUDUN"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">....</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="journeys-journeys">Journeys (/journeys)</h3>
+
+<p>This api computes journeys.</p>
+
+<p>If used within the coverage api, it will retrieve the next journeys from
+the selected public transport object or coordinates.</p>
+
+<p>There are two ways to access this api.</p>
+
+<p>The first one is: <a href="https://api.navitia.io/v1/%7Ba_path_to_resource%7D/journeys">https://api.navitia.io/v1/{a_path_to_resource}/journeys</a> it will
+retrieve all the journeys from the resource (<em>isochrones</em>).</p>
+
+<p>The other one, the most used, is to access the &lsquo;journey&rsquo; api endpoint:
+<a href="https://api.navitia.io/v1/journeys?from=%7Bresource_id_1%7D&amp;to=%7Bresource_id_2%7D&amp;datetime=%7Bdatetime%7D">https://api.navitia.io/v1/journeys?from={resource_id_1}&amp;to={resource_id_2}&amp;datetime={datetime}</a> .</p>
+
+<aside class="notice">
+    Navitia.io handle lot&rsquo;s of different data sets (regions). Some of them
+    can overlap. For example opendata data sets can overlap with private
+    data sets.
+    <br>
+    When using the journeys endpoint the data set used to compute the
+    journey is chosen using the possible datasets of the origin and the
+    destination.
+    <br>
+    For the moment it is not yet possible to compute journeys on different
+    data sets, but it will one day be possible (with a cross-data-set
+    system).
+    <br>
+    If you want to use a specific data set, use the journey api within the
+    data set: https://api.navitia.io/v1/coverage/{your_dataset}/journeys
+</aside>
+
+<aside class="notice">
+    Neither the 'from&rsquo; nor the 'to&rsquo; parameter of the journey are required,
+    but obviously one of them has to be provided.
+    <br>
+    If only one is defined an isochrone is computed with every possible
+    journeys from or to the point.
+</aside>
+
+<h4 id="main-parameters">Main parameters</h4>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nop</td>
+<td>from</td>
+<td>id</td>
+<td>The id of the departure of your journey If none are provided an isochrone is computed</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>to</td>
+<td>id</td>
+<td>The id of the arrival of your journey If none are provided an isochrone is computed</td>
+<td></td>
+</tr>
+<tr>
+<td>yep</td>
+<td>datetime</td>
+<td>datetime</td>
+<td>A datetime</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>datetime_represents</td>
+<td>string</td>
+<td>Can be <code class="prettyprint">departure</code> or <code class="prettyprint">arrival</code>.<br>If <code class="prettyprint">departure</code>, the request will retrieve journeys starting after datetime.<br>If <code class="prettyprint">arrival</code> it will retrieve journeys arriving before datetime.</td>
+<td>departure</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>traveler_type</td>
+<td>enum</td>
+<td>Define speeds and accessibility values for different kind of people <ul><li>standard</li><li>slow_walker</li><li>fast_walker</li><li>luggage</li> Each profile also automatically determines appropriate first and last section modes to the covered area. You can overload all parameters (especially speeds, distances, first and last modes) by setting all of them specifically</td>
+<td>standard</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>forbidden_uris[]</td>
+<td>id</td>
+<td>If you want to avoid lines, modes, networks, etc.</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>data_freshness</td>
+<td>enum</td>
+<td>Define the freshness of data to use to compute journeys <ul><li>real_time</li><li>base_schedule</li></ul> <em><strong>when using the following parameter</strong></em> &ldquo;&amp;data_freshness=base_schedule&rdquo; <br> you can get disrupted journeys in the response. You can then display the disruption message to the traveler and make a real_time request to get a new undisrupted solution.</td>
+<td>base_schedule</td>
+</tr>
+</tbody></table>
+
+<h4 id="other-parameters">Other parameters</h4>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nop</td>
+<td>first_section_mode[]</td>
+<td>array of string</td>
+<td>Force the first section mode if the first section is not a public transport one. It takes one the following values: walking, car, bike, bss.<br>bss stands for bike sharing system.<br>It&rsquo;s an array, you can give multiple modes.<br>Note: choosing bss implicitly allows the walking mode since you might have to walk to the bss station</td>
+<td>walking</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>last_section_mode[]</td>
+<td>array of string</td>
+<td>Same as first_section_mode but for the last section</td>
+<td>walking</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>max_duration_to_pt</td>
+<td>int</td>
+<td>Maximum allowed duration to reach the public transport.<br>Use this to limit the walking/biking part.<br>Unit is seconds</td>
+<td>15*60 s</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>walking_speed</td>
+<td>float</td>
+<td>Walking speed for the fallback sections<br>Speed unit must be in meter/seconds</td>
+<td>1.12 m/s<br>(4 km/h)</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>bike_speed</td>
+<td>float</td>
+<td>Biking speed for the fallback<br>Speed unit must be in meter/seconds</td>
+<td>4.1 m/s<br>(14.7 km/h)</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>bss_speed</td>
+<td>float</td>
+<td>Speed while using a bike from a bike sharing system for the fallback sections<br>Speed unit must be in meter/seconds</td>
+<td>4.1 m/s<br>(14.7 km/h)</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>car_speed</td>
+<td>float</td>
+<td>Driving speed for the fallback sections<br>Speed unit must be in meter/seconds</td>
+<td>16.8 m/s<br>(60 km/h)</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>min_nb_journeys</td>
+<td>int</td>
+<td>Minimum number of different suggested trips<br>More in multiple_journeys</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>max_nb_journeys</td>
+<td>int</td>
+<td>Maximum number of different suggested trips<br>More in multiple_journeys</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>count</td>
+<td>int</td>
+<td>Fixed number of different journeys<br>More in multiple_journeys</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>max_nb_tranfers</td>
+<td>int</td>
+<td>Maximum of number transfers</td>
+<td>10</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>disruption_act</td>
+<td>boolean</td>
+<td>If true the algorithm take the disruptions into account, and thus avoid disrupted public transport</td>
+<td>False</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>wheelchair</td>
+<td>boolean</td>
+<td>If true the traveler is considered to be using a wheelchair, thus only accessible public transport are used<br>be warned: many data are currently too faint to provide acceptable answers with this parameter on</td>
+<td>False</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>show_codes</td>
+<td>boolean</td>
+<td>If true add internal id in the response</td>
+<td>False</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>debug</td>
+<td>boolean</td>
+<td>Debug mode<br>No journeys are filtered in this mode</td>
+<td>False</td>
+</tr>
+</tbody></table>
+
+<h4 id="objects">Objects</h4>
+
+<p>Here is a typical journey, all sections are detailed below</p>
+
+<p><img alt="image" src="../images/typical_itinerary.png" /></p>
+
+<h5 id="main-response">Main response</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>journeys</td>
+<td>array of <a href="#journey">journeys</a></td>
+<td>List of computed journeys</td>
+</tr>
+<tr>
+<td>links</td>
+<td><a href="#link">link</a></td>
+<td>Links related to the journeys</td>
+</tr>
+</tbody></table>
+
+<h5 id="journey">Journey</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>duration</td>
+<td>int</td>
+<td>Duration of the journey</td>
+</tr>
+<tr>
+<td>nb_transfers</td>
+<td>int</td>
+<td>Number of transfers in the journey</td>
+</tr>
+<tr>
+<td>departure_date_time</td>
+<td><a href="#datetime">date-time</a></td>
+<td>Departure date and time of the journey</td>
+</tr>
+<tr>
+<td>requested_date_time</td>
+<td><a href="#datetime">date-time</a></td>
+<td>Requested date and time of the journey</td>
+</tr>
+<tr>
+<td>arrival_date_time</td>
+<td><a href="#datetime">date-time</a></td>
+<td>Arrival date and time of the journey</td>
+</tr>
+<tr>
+<td>sections</td>
+<td>array of <a href="#section">section</a></td>
+<td>All the sections of the journey</td>
+</tr>
+<tr>
+<td>from</td>
+<td><a href="#place">places</a></td>
+<td>The place from where the journey starts</td>
+</tr>
+<tr>
+<td>to</td>
+<td><a href="#place">places</a></td>
+<td>The place from where the journey ends</td>
+</tr>
+<tr>
+<td>links</td>
+<td><a href="#link">link</a></td>
+<td>Links related to this journey</td>
+</tr>
+<tr>
+<td>type</td>
+<td><em>enum</em> string</td>
+<td>Used to qualify a journey. See the <a href="#journey-qualif">journey-qualif</a> section for more information</td>
+</tr>
+<tr>
+<td>fare</td>
+<td><a href="#fare">fare</a></td>
+<td>Fare of the journey (tickets and price)</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>array of string</td>
+<td>List of tags on the journey. The tags add additional information on the journey beside the journey type. See for example <a href="#multiple-journeys">multiple_journeys</a>.</td>
+</tr>
+<tr>
+<td>status</td>
+<td><em>enum</em></td>
+<td>Status from the whole journey taking into acount the most disturbing information retrieved on every object used. Can be: <ul><li>NO_SERVICE</li><li>REDUCED_SERVICE</li><li>SIGNIFICANT_DELAYS</li><li>DETOUR</li><li>ADDITIONAL_SERVICE</li><li>MODIFIED_SERVICE</li><li>OTHER_EFFECT</li><li>UNKNOWN_EFFECT</li><li>STOP_MOVED</li></ul> In order to get a undisrupted journey, you just have to add a &ldquo;&amp;data_freshness=real_time&rdquo; parameter</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+    When used with just a &ldquo;from&rdquo; or a &ldquo;to&rdquo; parameter, it will not contain any sections.
+</aside>
+
+<h5 id="section">Section</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td><em>enum</em> string</td>
+<td><div data-collapse><p>Type of the section.</p><ul><li><code class="prettyprint">public_transport</code>: public transport section</li><li><code class="prettyprint">street_network</code>: street section</li><li><code class="prettyprint">waiting</code>: waiting section between transport</li><li><p><code class="prettyprint">stay_in</code>: this “stay in the vehicle” section occurs when the traveller has to stay in the vehicle when the bus change its routing. Here is an exemple for a journey from A to B: (lollipop line)</p><p><img alt="image" src="../images/stay_in.png" /></p></li><li><code class="prettyprint">transfer</code>: transfert section</li><li><p><code class="prettyprint">crow_fly</code>: teleportation section. Used when starting or arriving to a city or a stoparea (“potato shaped” objects) Useful to make navitia idempotent. Be careful: no “path” nor “geojson” items in this case</p><p><img alt="image" src="../images/crow_fly.png" /></p></li><li><code class="prettyprint">on_demand_transport</code>: vehicle may not drive along: traveler will have to call agency to confirm journey</li><li><code class="prettyprint">bss_rent</code>: taking a bike from a bike sharing system (bss)</li><li><code class="prettyprint">bss_put_back</code>: putting back a bike from a bike sharing system (bss)</li><li><code class="prettyprint">boarding</code>: boarding on plane</li><li><code class="prettyprint">landing</code>: landing off the plane</li></ul></div></td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Id of the section</td>
+</tr>
+<tr>
+<td>mode</td>
+<td><em>enum</em> string</td>
+<td>Mode of the street network: <code class="prettyprint">Walking</code>, <code class="prettyprint">Bike</code>, <code class="prettyprint">Car</code></td>
+</tr>
+<tr>
+<td>duration</td>
+<td>int</td>
+<td>Duration of this section</td>
+</tr>
+<tr>
+<td>from</td>
+<td><a href="#place">places</a></td>
+<td>Origin place of this section</td>
+</tr>
+<tr>
+<td>to</td>
+<td><a href="#place">places</a></td>
+<td>Destination place of this section</td>
+</tr>
+<tr>
+<td>links</td>
+<td>Array of <a href="#link">link</a></td>
+<td>Links related to this section</td>
+</tr>
+<tr>
+<td>display_informations</td>
+<td><a href="#display-informations">display_informations</a></td>
+<td>Useful information to display</td>
+</tr>
+<tr>
+<td>additionnal_informations</td>
+<td><em>enum</em> string</td>
+<td>Other information. It can be: <ul><li><code class="prettyprint">regular</code>: no on demand transport (odt)</li><li><code class="prettyprint">has_date_time_estimated</code>: section with at least one estimated date time</li><li><code class="prettyprint">odt_with_stop_time</code>: odt with fixed schedule, but travelers have to call agency!</li><li><code class="prettyprint">odt_with_stop_point</code>: odt where pickup or drop off are specific points</li><li><code class="prettyprint">odt_with_zone</code>: odt which is like a cab, from wherever you want to wherever you want, whenever it is possible</li></ul></td>
+</tr>
+<tr>
+<td>geojson</td>
+<td><a href="http://www.geojson.org">GeoJson</a></td>
+<td></td>
+</tr>
+<tr>
+<td>path</td>
+<td>Array of <a href="#path">path</a></td>
+<td>The path of this section</td>
+</tr>
+<tr>
+<td>transfer_type</td>
+<td><em>enum</em> string</td>
+<td>The type of this transfer it can be: <code class="prettyprint">walking</code>, <code class="prettyprint">guaranteed</code>, <code class="prettyprint">extension</code></td>
+</tr>
+<tr>
+<td>stop_date_times</td>
+<td>Array of <a href="#stop_date_time">stop_date_time</a></td>
+<td>List of the stop times of this section</td>
+</tr>
+<tr>
+<td>departure_date_time</td>
+<td><a href="#datetime">date-time</a></td>
+<td>Date and time of departure</td>
+</tr>
+<tr>
+<td>arrival_date_time</td>
+<td><a href="#datetime">date-time</a></td>
+<td>Date and time of arrival</td>
+</tr>
+</tbody></table>
+
+<h5 id="path">Path</h5>
+
+<p>A path object in composed of an array of <a href="#path-item">path_item</a> (segment).</p>
+
+<h5 id="path-item">Path item</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>length</td>
+<td>int</td>
+<td>Length (in meter) of the segment</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>name of the way corresponding to the segment</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>int</td>
+<td>duration (in seconds) of the segment</td>
+</tr>
+<tr>
+<td>direction</td>
+<td>int</td>
+<td>Angle (in degree) between the previous segment and this segment.<br><ul><li>0 means going straight</li><li>&gt; 0 means turning right</li><li>&lt; 0 means turning left</li></ul><br>Hope it&rsquo;s easier to understand with a picture: <img alt="image" src="../images/direction.png" /></td>
+</tr>
+</tbody></table>
+
+<h5 id="fare">Fare</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>total</td>
+<td><a href="#cost">cost</a></td>
+<td>total cost of the journey</td>
+</tr>
+<tr>
+<td>found</td>
+<td>boolean</td>
+<td>False if no fare has been found for the journey, True otherwise</td>
+</tr>
+<tr>
+<td>links</td>
+<td><a href="#link">link</a></td>
+<td>Links related to this object. Link with related <a href="#ticket">tickets</a></td>
+</tr>
+</tbody></table>
+
+<h5 id="cost">Cost</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>float</td>
+<td>cost</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>string</td>
+<td>currency</td>
+</tr>
+</tbody></table>
+
+<h5 id="ticket">Ticket</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Id of the ticket</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the ticket</td>
+</tr>
+<tr>
+<td>found</td>
+<td>boolean</td>
+<td>False if unknown ticket, True otherwise</td>
+</tr>
+<tr>
+<td>cost</td>
+<td><a href="#cost">cost</a></td>
+<td>Cost of the ticket</td>
+</tr>
+<tr>
+<td>links</td>
+<td>array of <a href="#link">link</a></td>
+<td>Link to the <a href="#section">section</a> using this ticket</td>
+</tr>
+</tbody></table>
+
+<h3 id="route-schedules-and-time-tables-route_schedules">Route Schedules and time tables (/route_schedules)</h3>
+
+<p>This api gives you access to schedules of routes. The response is made
+of an array of route_schedule, and another one of <a href="#note">note</a>. You can
+access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/route_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/route_schedules</a></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>yep</td>
+<td>from_datetime</td>
+<td>date_time</td>
+<td>The date_time from which you want the schedules</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>duration</td>
+<td>int</td>
+<td>Maximum duration in seconds between from_datetime and the retrieved datetimes.</td>
+<td>86400</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>max_date_times</td>
+<td>int</td>
+<td>Maximum number of columns per schedule.</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>data_freshness</td>
+<td>enum</td>
+<td>Define the freshness of data to use<br><ul><li>real_time</li><li>base_schedule</li></ul></td>
+<td>base_schedule</td>
+</tr>
+</tbody></table>
+
+<h4 id="objects">Objects</h4>
+
+<h5 id="route_schedule-object">route_schedule object</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>display_informations</td>
+<td><a href="#display-informations">display_informations</a></td>
+<td>Usefull information about the route to display</td>
+</tr>
+<tr>
+<td>Table</td>
+<td><a href="#table">table</a></td>
+<td>The schedule table</td>
+</tr>
+</tbody></table>
+
+<h5 id="table">table</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Headers</td>
+<td>Array of <a href="#header">header</a></td>
+<td>Informations about vehicle journeys</td>
+</tr>
+<tr>
+<td>Rows</td>
+<td>Array of <a href="#row">row</a></td>
+<td>A row of the schedule</td>
+</tr>
+</tbody></table>
+
+<h5 id="header">header</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>additionnal_informations</td>
+<td>Array of String</td>
+<td>Other information: TODO enum</td>
+</tr>
+<tr>
+<td>display_informations</td>
+<td><a href="#display-informations">display_informations</a></td>
+<td>Usefull information about the the vehicle journey to display</td>
+</tr>
+<tr>
+<td>links</td>
+<td>Array of <a href="#link">link</a></td>
+<td>Links to <a href="#line">line</a>, vehicle_journey, <a href="#route">route</a>, <a href="#commercial-mode">commercial_mode</a>, <a href="#physical-mode">physical_mode</a>, <a href="#network">network</a></td>
+</tr>
+</tbody></table>
+
+<h5 id="row">row</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>date_times</td>
+<td>Array of <a href="#datetime">date-time</a></td>
+<td>Array of date_time</td>
+</tr>
+<tr>
+<td>stop_point</td>
+<td><a href="#stop-point">stop_point</a></td>
+<td>The stop point of the row</td>
+</tr>
+</tbody></table>
+
+<h3 id="stop-schedules-and-other-kind-of-time-tables-stop_schedules">Stop Schedules and other kind of time tables (/stop_schedules)</h3>
+
+<p>This api gives you access to schedules of stops going through a stop
+point. The response is made of an array of stop_schedule, and another
+one of <a href="#note">note</a>. You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>yep</td>
+<td>from_datetime</td>
+<td><a href="#datetime">date-time</a></td>
+<td>The date_time from which you want the schedules</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>duration</td>
+<td>int</td>
+<td>Maximum duration in seconds between from_datetime and the retrieved datetimes.</td>
+<td>86400</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>data_freshness</td>
+<td>enum</td>
+<td>Define the freshness of data to use to compute journeys <ul><li>real_time</li><li>base_schedule</li></ul></td>
+<td>base_schedule</td>
+</tr>
+</tbody></table>
+
+<h4 id="stop_schedule-object">Stop_schedule object</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>display_informations</td>
+<td><a href="#display-informations">display_informations</a></td>
+<td>Usefull information about the route to display</td>
+</tr>
+<tr>
+<td>route</td>
+<td><a href="#route">route</a></td>
+<td>The route of the schedule</td>
+</tr>
+<tr>
+<td>date_times</td>
+<td>Array of <a href="#datetime">date-time</a></td>
+<td>When does a bus stops at the stop point</td>
+</tr>
+<tr>
+<td>stop_point</td>
+<td><a href="#stop-point">stop_point</a></td>
+<td>The stop point of the schedule</td>
+</tr>
+</tbody></table>
+
+<h3 id="departures-departures">Departures (/departures)</h3>
+
+<p>This api retrieves a list of departures from a datetime of a selected
+object. Departures are ordered chronologically in ascending order.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>yep</td>
+<td>from_datetime</td>
+<td><a href="#datetime">date-time</a></td>
+<td>The date_time from which you want the schedules</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>duration</td>
+<td>int</td>
+<td>Maximum duration in seconds between from_datetime and the retrieved datetimes.</td>
+<td>86400</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>data_freshness</td>
+<td>enum</td>
+<td>Define the freshness of data to use to compute journeys <ul><li>real_time</li><li>base_schedule</li></ul></td>
+<td>real_time</td>
+</tr>
+</tbody></table>
+
+<h4 id="departure-objects">Departure objects</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>route</td>
+<td><a href="#route">route</a></td>
+<td>The route of the schedule</td>
+</tr>
+<tr>
+<td>stop_date_time</td>
+<td>Array of <a href="#stop_date_time">stop_date_time</a></td>
+<td>When does a bus stops at the stop point</td>
+</tr>
+<tr>
+<td>stop_point</td>
+<td><a href="#stop-point">stop_point</a></td>
+<td>The stop point of the schedule</td>
+</tr>
+</tbody></table>
+
+<h3 id="arrivals-arrivals">Arrivals (/arrivals)</h3>
+
+<p>This api retrieves a list of arrivals from a datetime of a selected
+object. Arrivals are ordered chronologically in ascending order.</p>
+
+<h3 id="traffic-reports-and-disruptions-traffic_reports">Traffic reports and disruptions (/traffic_reports)</h3>
+
+<p>This service provides the state of public transport traffic. It can be
+called for an overall coverage or for a specific object.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<p>You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/traffic_reports">https://api.navitia.io/v1/{a_path_to_a_resource}/traffic_reports</a></p>
+
+<p>For example:</p>
+
+<ul>
+<li>  overall public transport traffic report on Ile de France coverage
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/traffic_reports">https://api.navitia.io/v1/coverage/fr-idf/traffic_reports</a></li>
+</ul></li>
+<li>  Is there any perturbations on the RER network ?
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/traffic_reports">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/traffic_reports</a></li>
+</ul></li>
+<li>  Is there any perturbations on the &ldquo;RER A&rdquo; line ?
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:TRN:DUA810801043/traffic_reports">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:TRN:DUA810801043/traffic_reports</a></li>
+</ul></li>
+</ul>
+
+<p>The response is made of an array of <a href="#traffic-reports">traffic_reports</a>, and another one
+of <a href="#disruption">disruptions</a>. There are inner links between this 2 arrays: see the
+<a href="#inner-reference">inner-reference</a> section to use them.</p>
+
+<h4 id="objects">Objects</h4>
+
+<h5 id="traffic-report">Traffic report</h5>
+
+<p>Traffic_reports is an array of some traffic_report object. One
+traffic_report object is a complex object, made of a network, an array
+of lines and an array of stop_areas. A typical traffic_report object
+will contain:</p>
+
+<ul>
+<li>  1 network which is the grouping object
+
+<ul>
+<li>  it can contain links to its disruptions. These disruptions are globals and might not be applied on lines or stop_areas.</li>
+</ul></li>
+<li>  0..n lines
+
+<ul>
+<li>  each line contains at least a link to its disruptions</li>
+</ul></li>
+<li>  0..n stop_areas
+
+<ul>
+<li>  each stop_area contains at least a link to its disruptions</li>
+</ul></li>
+</ul>
+
+<p>It means that if a stop_area is used by many networks, it will appear
+many times.</p>
+
+<p>Here is a typical response</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+</span><span class="nt">"traffic_reports"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"network"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bob"</span><span class="p">,</span><span class="w"> </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"network:bob"</span><span class="p">},</span><span class="w">
+    </span><span class="s2">"lines"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+         </span><span class="err">...</span><span class="w"> </span><span class="err">,</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-green"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12"</span><span class="p">,</span><span class="w">
+         </span><span class="err">...</span><span class="w"> </span><span class="err">,</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-pink"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"stop_areas"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bobito"</span><span class="p">,</span><span class="w">
+         </span><span class="err">...</span><span class="w"> </span><span class="err">,</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-red"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+ </span><span class="p">],</span><span class="w">
+ </span><span class="err">[</span><span class="w">
+    </span><span class="nt">"network"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bobette"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"network:bobette"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-blue"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span><span class="w">
+         </span><span class="err">...</span><span class="w"> </span><span class="err">,</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-green"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C"</span><span class="p">,</span><span class="w">
+         </span><span class="err">...</span><span class="w"> </span><span class="err">,</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-yellow"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"stop_areas"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bobito"</span><span class="p">,</span><span class="w">
+         </span><span class="err">...</span><span class="w"> </span><span class="err">,</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-red"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+
+</span><span class="p">],</span><span class="w">
+</span><span class="nt">"disruptions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w"> </span><span class="nt">"effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNKNOWN_EFFECT"</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"green, super green"</span><span class="p">,</span><span class="w"> </span><span class="err">...}</span><span class="w"> </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-green"</span><span class="p">},</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="err">}</span><span class="p">,{</span><span class="w">
+        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"futur"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pink, floyd pink"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-pink"</span><span class="p">},</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="err">}</span><span class="p">,{</span><span class="w">
+        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"futur"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"red, mine"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-red"</span><span class="p">},</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="err">}</span><span class="p">,{</span><span class="w">
+        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"futur"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blue, grass"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-to-blue"</span><span class="p">},</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="err">}</span><span class="p">,{</span><span class="w">
+        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"futur"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yellow, submarine"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="err">}</span><span class="w">
+        </span><span class="s2">"id"</span><span class="err">:</span><span class="w"> </span><span class="s2">"link-to-yellow"</span><span class="err">}</span><span class="p">,</span><span class="w">
+        </span><span class="err">...}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="nt">"link"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+</span><span class="nt">"pagination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This typical response means:</p>
+
+<ul>
+<li>  traffic_reports
+
+<ul>
+<li>  network &ldquo;bob&rdquo;
+
+<ul>
+<li>  line &ldquo;1&rdquo; &gt; internal link to disruption &ldquo;green&rdquo;</li>
+<li>  line &ldquo;12&rdquo; &gt; internal link to disruption &ldquo;pink&rdquo;</li>
+<li>  stop_area &ldquo;bobito&rdquo; &gt; internal link to disruption &ldquo;red&rdquo;</li>
+</ul></li>
+<li>  network &ldquo;bobette&rdquo; &gt; internal link to disruption &ldquo;blue&rdquo;
+
+<ul>
+<li>  line &ldquo;A&rdquo; &gt; internal link to disruption &ldquo;green&rdquo;</li>
+<li>  line &ldquo;C&rdquo; &gt; internal link to disruption &ldquo;yellow&rdquo;</li>
+<li>  stop_area &ldquo;bobito&rdquo; &gt; internal link to disruption &ldquo;red&rdquo;</li>
+</ul></li>
+</ul></li>
+<li>  disruptions (disruption target links)
+
+<ul>
+<li>  disruption &ldquo;green&rdquo;</li>
+<li>  disruption &ldquo;pink&rdquo;</li>
+<li>  disruption &ldquo;red&rdquo;</li>
+<li>  disruption &ldquo;blue&rdquo;</li>
+<li>  disruption &ldquo;yellow&rdquo;</li>
+<li>  Each disruption contains the messages to show.</li>
+</ul></li>
+</ul>
+
+<p>Here is the details of the disruption object:</p>
+
+<h5 id="disruption">Disruption</h5>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>between: &ldquo;past&rdquo;, &ldquo;active&rdquo; or &ldquo;future&rdquo;</td>
+<td>state of the disruption</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Id of the disruption</td>
+</tr>
+<tr>
+<td>disruption_id</td>
+<td>string</td>
+<td>for traceability: Id of original input disruption</td>
+</tr>
+<tr>
+<td>severity</td>
+<td><a href="#severity">severity</a></td>
+<td>gives some categorization element</td>
+</tr>
+<tr>
+<td>application_periods</td>
+<td>array of <a href="#period">period</a></td>
+<td>dates where the current disruption is active</td>
+</tr>
+<tr>
+<td>messages</td>
+<td><a href="#message">message</a></td>
+<td>text to provide to the traveler</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td><a href="#datetime">date-time</a></td>
+<td>date_time of last modifications</td>
+</tr>
+<tr>
+<td>cause</td>
+<td>string</td>
+<td>why is there such a disruption?</td>
+</tr>
+</tbody></table>
+
+<h2 id="objects">Objects</h2>
+
+<h3 id="geographical-objects">Geographical Objects</h3>
+
+<h4 id="coord">Coord</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>lon</td>
+<td>float</td>
+<td>Longitude</td>
+</tr>
+<tr>
+<td>lat</td>
+<td>float</td>
+<td>Latitude</td>
+</tr>
+</tbody></table>
+
+<h3 id="public-transport-objects">Public transport objects</h3>
+
+<h4 id="network">Network</h4>
+
+<p>Networks are fed by agencies in GTFS format.</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the network</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the network</td>
+</tr>
+</tbody></table>
+
+<h4 id="line">Line</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the line</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the line</td>
+</tr>
+<tr>
+<td>code</td>
+<td>string</td>
+<td>Code name of the line</td>
+</tr>
+<tr>
+<td>color</td>
+<td>string</td>
+<td>Color of the line</td>
+</tr>
+<tr>
+<td>routes</td>
+<td>array of <a href="#route">route</a></td>
+<td>Routes of the line</td>
+</tr>
+<tr>
+<td>commercial_mode</td>
+<td><a href="#commercial-mode">commercial_mode</a></td>
+<td>Commercial mode of the line</td>
+</tr>
+</tbody></table>
+
+<h4 id="route">Route</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the route</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the route</td>
+</tr>
+<tr>
+<td>is_frequence</td>
+<td>bool</td>
+<td>Is the route has frequency or not</td>
+</tr>
+<tr>
+<td>line</td>
+<td><a href="#line">line</a></td>
+<td>The line of this route</td>
+</tr>
+<tr>
+<td>direction</td>
+<td><a href="#place">places</a></td>
+<td>The direction of this route</td>
+</tr>
+</tbody></table>
+
+<p>As &ldquo;direction&rdquo; is a <a href="#place">places</a> , it can be a poi in some data.</p>
+
+<h4 id="stop-point">Stop Point</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the stop point</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the stop point</td>
+</tr>
+<tr>
+<td>coord</td>
+<td><a href="#coord">coord</a></td>
+<td>Coordinates of the stop point</td>
+</tr>
+<tr>
+<td>administrative_regions</td>
+<td>array of <a href="#admin">admin</a></td>
+<td>Administrative regions of the stop point in which is the stop point</td>
+</tr>
+<tr>
+<td>equipments</td>
+<td>array of string</td>
+<td>list of <a href="#equipment">equipment</a> of the stop point</td>
+</tr>
+<tr>
+<td>stop_area</td>
+<td><a href="#stop-area">stop_area</a></td>
+<td>Stop Area containing this stop point</td>
+</tr>
+</tbody></table>
+
+<h4 id="stop-area">Stop Area</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the stop area</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the stop area</td>
+</tr>
+<tr>
+<td>coord</td>
+<td><a href="#coord">coord</a></td>
+<td>Coordinates of the stop area</td>
+</tr>
+<tr>
+<td>administrative_regions</td>
+<td>array of <a href="#admin">admin</a></td>
+<td>Administrative regions of the stop area in which is the stop area</td>
+</tr>
+<tr>
+<td>stop_points</td>
+<td>array of <a href="#stop-point">stop_point</a></td>
+<td>Stop points contained in this stop area</td>
+</tr>
+</tbody></table>
+
+<h4 id="commercial-mode">Commercial Mode</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the commercial mode</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the commercial mode</td>
+</tr>
+<tr>
+<td>physical_modes</td>
+<td>array of <a href="#physical-mode">physical_mode</a></td>
+<td>Physical modes of this commercial mode</td>
+</tr>
+</tbody></table>
+
+<h4 id="physical-mode">Physical Mode</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the physical mode</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the physical mode</td>
+</tr>
+<tr>
+<td>commercial_modes</td>
+<td>array of <a href="#commercial-mode">commercial_mode</a></td>
+<td>Commercial modes of this physical mode</td>
+</tr>
+</tbody></table>
+
+<p>Physical modes are fastened and normalized. If you want to propose modes
+filter in your application, you should use <a href="#physical-mode">physical_mode</a> rather than
+<a href="#commercial-mode">commercial_mode</a>.</p>
+
+<p>Here is the valid id list:</p>
+
+<ul>
+<li>  physical_mode:Air</li>
+<li>  physical_mode:Boat</li>
+<li>  physical_mode:Bus</li>
+<li>  physical_mode:BusRapidTransit</li>
+<li>  physical_mode:Coach</li>
+<li>  physical_mode:Ferry</li>
+<li>  physical_mode:Funicular</li>
+<li>  physical_mode:LocalTrain</li>
+<li>  physical_mode:LongDistanceTrain</li>
+<li>  physical_mode:Metro</li>
+<li>  physical_mode:RapidTransit</li>
+<li>  physical_mode:Shuttle</li>
+<li>  physical_mode:Taxi</li>
+<li>  physical_mode:Train</li>
+<li>  physical_mode:Tramway</li>
+</ul>
+
+<p>You can use these ids in the forbidden_uris[] parameter from
+<a href="#journeys-parameters">journeys_parameters</a> for exemple.</p>
+
+<h4 id="company">Company</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the company</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the company</td>
+</tr>
+</tbody></table>
+
+<h4 id="place">Place</h4>
+
+<p>A container containing either a <a href="#admin">admin</a>, <a href="#poi">poi</a>, <a href="#address">address</a>, <a href="#stop-area">stop_area</a>,
+<a href="#stop-point">stop_point</a>, <a href="#network">network</a>, <a href="#commercial-mode">commercial_mode</a>, <a href="#line">line</a>, <a href="#route">route</a></p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the embedded object</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>The id of the embedded object</td>
+</tr>
+<tr>
+<td>embedded_type</td>
+<td><a href="#embedded_type_place">embedded_type_place</a></td>
+<td>The type of the embedded object</td>
+</tr>
+<tr>
+<td>administrative_region</td>
+<td><em>optional</em> <a href="#admin">admin</a></td>
+<td>Embedded administrative region</td>
+</tr>
+<tr>
+<td>stop_area</td>
+<td><em>optional</em> <a href="#stop-area">stop_area</a></td>
+<td>Embedded Stop area</td>
+</tr>
+<tr>
+<td>poi</td>
+<td><em>optional</em> <a href="#poi">poi</a></td>
+<td>Embedded poi</td>
+</tr>
+<tr>
+<td>address</td>
+<td><em>optional</em> <a href="#address">address</a></td>
+<td>Embedded address</td>
+</tr>
+<tr>
+<td>stop_point</td>
+<td><em>optional</em> <a href="#stop-point">stop_point</a></td>
+<td>Embedded Stop point</td>
+</tr>
+<tr>
+<td>network</td>
+<td><em>optional</em> <a href="#network">network</a></td>
+<td>Embedded network</td>
+</tr>
+<tr>
+<td>commercial_mode</td>
+<td><em>optional</em> <a href="#commercial-mode">commercial_mode</a></td>
+<td>Embedded commercial_mode</td>
+</tr>
+<tr>
+<td>stop_area</td>
+<td><em>optional</em> <a href="#stop-area">stop_area</a></td>
+<td>Embedded Stop area</td>
+</tr>
+<tr>
+<td>line</td>
+<td><em>optional</em> <a href="#line">line</a></td>
+<td>Embedded line</td>
+</tr>
+<tr>
+<td>route</td>
+<td><em>optional</em> <a href="#route">route</a></td>
+<td>Embedded route</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+    Using /places API, navitia would returned objects among
+    administrative_region, stop_area, poi, address and stop_point types
+    <br>
+    Using /pt_objects API, navitia would returned objects among network,
+    commercial_mode, stop_area, line and route types
+</aside>
+
+<h5 id="embedded-type">Embedded type</h5>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>stop_point</td>
+<td>a location where vehicles can pickup or drop off passengers</td>
+</tr>
+<tr>
+<td>stop_area</td>
+<td>a nameable zone, where there are some stop points</td>
+</tr>
+<tr>
+<td>address</td>
+<td>a point located in a street</td>
+</tr>
+<tr>
+<td>poi</td>
+<td>a point of interest</td>
+</tr>
+<tr>
+<td>administrative_region</td>
+<td>a city, a district, a neighborhood</td>
+</tr>
+</tbody></table>
+
+<h3 id="street-network-objects">Street network objects</h3>
+
+<h4 id="poi">Poi</h4>
+
+<p>Poi = Point Of Interest</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the poi</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the poi</td>
+</tr>
+<tr>
+<td>poi_type</td>
+<td><a href="#poi-type">poi_type</a></td>
+<td>Type of the poi</td>
+</tr>
+</tbody></table>
+
+<h4 id="poi-type">Poi Type</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the poi type</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the poi type</td>
+</tr>
+</tbody></table>
+
+<h4 id="address">Address</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the address</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the address</td>
+</tr>
+<tr>
+<td>coord</td>
+<td><a href="#coord">coord</a></td>
+<td>Coordinates of the address</td>
+</tr>
+<tr>
+<td>house_number</td>
+<td>int</td>
+<td>House number of the address</td>
+</tr>
+<tr>
+<td>administrative_regions</td>
+<td>array of <a href="#admin">admin</a></td>
+<td>Administrative regions of the address in which is the stop area</td>
+</tr>
+</tbody></table>
+
+<h4 id="administrative-region">Administrative region</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the address</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the address</td>
+</tr>
+<tr>
+<td>coord</td>
+<td><a href="#coord">coord</a></td>
+<td>Coordinates of the address</td>
+</tr>
+<tr>
+<td>level</td>
+<td>int</td>
+<td>Level of the admin</td>
+</tr>
+<tr>
+<td>zip_code</td>
+<td>string</td>
+<td>Zip code of the admin</td>
+</tr>
+</tbody></table>
+
+<p>Cities are mainly on the 8 level, dependant on the country
+(<a href="http://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative">http://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative</a>)</p>
+
+<h3 id="disruptions-objects">disruptions objects</h3>
+
+<h4 id="message">Message</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>text</td>
+<td>string</td>
+<td>a message to bring to a traveler</td>
+</tr>
+<tr>
+<td>channel</td>
+<td><a href="#channel">channel</a></td>
+<td>destination media. Be careful, no normalized enum for now</td>
+</tr>
+</tbody></table>
+
+<h4 id="severity">Severity</h4>
+
+<p>Severity object can be used to make visual grouping.</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>color</td>
+<td>&gt; string</td>
+<td>HTML color for classification</td>
+</tr>
+<tr>
+<td>priority</td>
+<td>&gt; integer</td>
+<td>given by the agency : 0 is strongest priority. it can be null</td>
+</tr>
+<tr>
+<td>name</td>
+<td>&gt; string</td>
+<td>name of severity</td>
+</tr>
+<tr>
+<td>effect</td>
+<td>&gt; Enum</td>
+<td>Normalized value of the effect on the public transport object See the GTFS RT documentation at <a href="https://developers.google.com/transit/gtfs-realtime/reference#Effect">https://developers.google.com/transit/gtfs-realtime/reference#Effect</a></td>
+</tr>
+</tbody></table>
+
+<h4 id="channel">Channel</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the address</td>
+</tr>
+<tr>
+<td>content_type</td>
+<td>string</td>
+<td>Like text/html, you know? Otherwise, take a look at <a href="http://www.w3.org/Protocols/rfc1341/4_Content-Type.html">http://www.w3.org/Protocols/rfc1341/4_Content-Type.html</a></td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>name of the Channel</td>
+</tr>
+</tbody></table>
+
+<h4 id="period">Period</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>begin</td>
+<td><a href="#datetime">date-time</a></td>
+<td>Beginning date and time of an activity period</td>
+</tr>
+<tr>
+<td>end</td>
+<td><a href="#datetime">date-time</a></td>
+<td>Closing date and time of an activity period</td>
+</tr>
+</tbody></table>
+
+<h3 id="other-objects">Other objects</h3>
+
+<h4 id="date-time">date time</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>additionnal_informations</td>
+<td>Array of String</td>
+<td>Other information: TODO enum</td>
+</tr>
+<tr>
+<td>date_times</td>
+<td>Array of String</td>
+<td>Date time</td>
+</tr>
+<tr>
+<td>links</td>
+<td>Array of <a href="#link">link</a></td>
+<td>internal links to notes</td>
+</tr>
+</tbody></table>
+
+<h4 id="note">note</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>String</td>
+<td>id of the note</td>
+</tr>
+<tr>
+<td>value</td>
+<td>String</td>
+<td>The content of the note</td>
+</tr>
+</tbody></table>
+
+<h4 id="stop_date_time">stop_date_time</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>date_time</td>
+<td><a href="#datetime">date-time</a></td>
+<td>A date time</td>
+</tr>
+<tr>
+<td>stop_point</td>
+<td><a href="#stop-point">stop_point</a></td>
+<td>A stop point</td>
+</tr>
+</tbody></table>
+
+<h4 id="equipment">equipment</h4>
+
+<p>Enum from</p>
+
+<ul>
+<li>  has_wheelchair_accessibility</li>
+<li>  has_bike_accepted</li>
+<li>  has_air_conditioned</li>
+<li>  has_visual_announcement</li>
+<li>  has_audible_announcement</li>
+<li>  has_appropriate_escort</li>
+<li>  has_appropriate_signage</li>
+<li>  has_school_vehicle</li>
+<li>  has_wheelchair_boarding</li>
+<li>  has_sheltered</li>
+<li>  has_elevator</li>
+<li>  has_escalator</li>
+<li>  has_bike_depot</li>
+</ul>
+
+<h4 id="display-informations">display informations</h4>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>network</td>
+<td>String</td>
+<td>The name of the network</td>
+</tr>
+<tr>
+<td>direction</td>
+<td>String</td>
+<td>A direction</td>
+</tr>
+<tr>
+<td>commercial_mode</td>
+<td>String</td>
+<td>The commercial mode</td>
+</tr>
+<tr>
+<td>physical_mode</td>
+<td>String</td>
+<td>The physical mode</td>
+</tr>
+<tr>
+<td>label</td>
+<td>String</td>
+<td>The label of the object</td>
+</tr>
+<tr>
+<td>color</td>
+<td>String</td>
+<td>The hexadecimal code of the line</td>
+</tr>
+<tr>
+<td>code</td>
+<td>String</td>
+<td>The code of the line</td>
+</tr>
+<tr>
+<td>description</td>
+<td>String</td>
+<td>A description</td>
+</tr>
+<tr>
+<td>equipments</td>
+<td>Array of String</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h4 id="link">link</h4>
+
+<p>See <a href="#interface">interface</a> section.</p>
+
+<h3 id="special-parameters">Special Parameters</h3>
+
+<h4 id="datetime">datetime</h4>
+
+<p>A date time with the format YYYYMMDDThhmmss</p>
+
+<h2 id="misc-mechanisms-and-few-boring-stuff">Misc mechanisms (and few boring stuff)</h2>
+
+<h3 id="multiple-journeys">Multiple journeys</h3>
+
+<p>Navitia can compute several kind of trips within a journey query.</p>
+
+<p>The
+<a href="http://research.microsoft.com/apps/pubs/default.aspx?id=156567">RAPTOR</a>
+algorithm used in Navitia is a multi-objective algorithm. Thus it might
+return multiple journeys if it cannot know that one is better than the
+other. For example it cannot decide that a one hour trip with no
+connection is better than a 45 minutes trip with one connection
+(it is called the <a href="http://en.wikipedia.org/wiki/Pareto_efficiency">pareto front</a>).</p>
+
+<p>If the user asks for more journeys than the number of journeys given by
+RAPTOR (with the parameter <code class="prettyprint">min_nb_journeys</code> or <code class="prettyprint">count</code>), Navitia will
+ask RAPTOR again, but for the following journeys (or the previous ones
+if the user asked with <code class="prettyprint">datetime_represents=arrival</code>).</p>
+
+<p>Those journeys have the <code class="prettyprint">next</code> (or <code class="prettyprint">previous</code>) value in their tags.</p>
+
+<h3 id="journey-qualification-process">Journey qualification process</h3>
+
+<p>Since Navitia can return several journeys, it tags them to help the user
+choose the best one for his needs.</p>
+
+<p>The different journey types are:</p>
+
+<table><thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>best</td>
+<td>The best trip</td>
+</tr>
+<tr>
+<td>rapid</td>
+<td>A good trade off between duration, changes and constraint respect</td>
+</tr>
+<tr>
+<td>no_train</td>
+<td>Alternative trip without train</td>
+</tr>
+<tr>
+<td>comfort</td>
+<td>A trip with less changes and walking</td>
+</tr>
+<tr>
+<td>car</td>
+<td>A trip with car to get to the public transport</td>
+</tr>
+<tr>
+<td>less_fallback_walk</td>
+<td>A trip with less walking</td>
+</tr>
+<tr>
+<td>less_fallback_bike</td>
+<td>A trip with less biking</td>
+</tr>
+<tr>
+<td>less_fallback_bss</td>
+<td>A trip with less bss</td>
+</tr>
+<tr>
+<td>fastest</td>
+<td>A trip with minimum duration</td>
+</tr>
+<tr>
+<td>non_pt_walk</td>
+<td>A trip without public transport, only walking</td>
+</tr>
+<tr>
+<td>non_pt_bike</td>
+<td>A trip without public transport, only biking</td>
+</tr>
+<tr>
+<td>non_pt_bss</td>
+<td>A trip without public transport, only bike sharing</td>
+</tr>
+</tbody></table>
+
+<h3 id="on-demand-transportation">On demand transportation</h3>
+
+<p>Some transit agencies force travelers to call them to arrange a pickup at a particular place or stop point.</p>
+
+<p>Besides, some stop times can be &ldquo;estimated&rdquo; <em>in data by design</em> :</p>
+
+<ul>
+<li>A standard GTFS contains only regular time: that means transport agencies should arrive on time :)</li>
+<li>But navitia can be fed with more specific data, where &ldquo;estimated time&rdquo; means that there will be
+no guarantee on time respect by the agency. It often occurs in suburban or rural zone.</li>
+</ul>
+
+<p>After all, the stop points can be standard (such as bus stop or railway station)
+or &ldquo;zonal&rdquo; (where agency can pick you up you anywhere, like a cab).</p>
+
+<p>That&rsquo;s some kind of &ldquo;responsive locomotion&rdquo; (ɔ).</p>
+
+<p>So public transport lines can mix different methods to pickup travelers:</p>
+
+<ul>
+<li>  regular
+
+<ul>
+<li>  line does not contain any estimated stop times, nor zonal stop point location.</li>
+<li>  No need to call too.</li>
+</ul></li>
+<li>  odt_with_stop_time
+
+<ul>
+<li>  line does not contain any estimated stop times, nor zonal stop point location.</li>
+<li>  But you will have to call to take it.</li>
+</ul></li>
+<li>  odt_with_stop_point
+
+<ul>
+<li>  line can contain some estimated stop times, but no zonal stop point location.</li>
+<li>  And you will have to call to take it.</li>
+</ul></li>
+<li>  odt_with_zone
+
+<ul>
+<li>  line can contain some estimated stop times, and zonal stop point location.</li>
+<li>  And you will have to call to take it</li>
+<li>  well, not really a public transport line, more a cab&hellip;</li>
+</ul></li>
+</ul>
+
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>
