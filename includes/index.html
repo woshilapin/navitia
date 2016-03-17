@@ -32,11 +32,11 @@
       <div class="content">
         <h1 id="welcome-to-navitia-io">Welcome to navitia.io</h1>
 
-<p>(pronounce [navi-sia])</p>
+<p>The API to build cool stuff with public transport</p>
 
-<h2 id="an-api-to-build-cool-stuff-with-public-transport">An API to build cool stuff with public transport</h2>
+<h2 id="overview">Overview</h2>
 
-<p>We provide:</p>
+<p><em>navitia</em> is a RESTful API which provide:</p>
 
 <ul>
 <li>journeys computation</li>
@@ -51,51 +51,43 @@
     We will add it to navitia.io
 </aside>
 
-<h2 id="getting-started">Getting started</h2>
-
-<p>The easiest is probably to jump to <a href="#examples">Examples</a> below.</p>
-
-<p>At some point you will want to read:</p>
-
-<ul>
-<li><a href="#a-small-introduction-to-public-transportation-data">public_transport</a></li>
-<li><a href="#navitia-documentation-v1-interface">integration</a></li>
-</ul>
-
-<p>There are no restrictions in using our API. However, please don&rsquo;t make more than one request per second.</p>
-
 <p>Let us know if you build something with our API, we will be happy to highlight it on this page. The more feedback we get, the more cities you will get
 and the more effort we will put to make the API durable.</p>
-
-<h3 id="using-my-token">Using my token</h3>
-
-<p>If you use a web browser, you only have to paste it in the user area,
-with no password. Or, in a simplier way, you can add your token in the
-address bar like :</p>
-
-<aside class="success">
-https://01234567-89ab-cdef-0123-456789abcdef@api.navitia.io/v1/coverage/fr-idf/networks
-</aside>
-
-<p>See <a href="#authentication">authentication</a> section to find out more details on <strong>how to use your token</strong>.</p>
-
-<h3 id="overview">Overview</h3>
-
-<p><em>navitia</em> is a RESTful API that returns <a href="http://en.wikipedia.org/wiki/Json">JSON</a> formated results.</p>
 
 <p>Our APIs are available at the following url: <a href="http://api.navitia.io/v1">http://api.navitia.io/v1</a> (the latest API version is <code class="prettyprint">v1</code>).</p>
 
 <p>The API has been built on the <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS model</a> so the API should be quite self explanatory since the interactions are defined in hypermedia.</p>
 
-<p>The different possible actions on a given API level are given in the <code class="prettyprint">links</code> section of the response.</p>
+<p>Have a look at the examples below to learn what services we provide and how to use them.</p>
 
-<p>To provide additional arguments to the API, add them at the end of the query with the following syntax:  <code class="prettyprint">?arg1=val1&amp;arg2=val2</code>.</p>
+<h2 id="getting-started">Getting started</h2>
 
-<p>Have a look at the examples below to learn what API we provide and how to use them.</p>
+<h4 id="first">First,</h4>
+
+<p>get a token here <a href="http://navitia.io/register/">http://navitia.io/register/</a></p>
+
+<h4 id="second">Second,</h4>
+
+<p>use the token : if you use a web browser, you only have to <strong>paste it in the user area</strong>,
+with <strong>no password</strong>. 
+Or, in a simplier way, you can add your token in the address bar like :</p>
 
 <aside class="success">
-    The results are paginated to avoid crashing your parser. The parameters to get the next or previous page are within the &ldquo;links&rdquo; section of the result.
+<b>https://01234567-89ab-cdef-0123-456789abcdef@api.navitia.io/v1/coverage/fr-idf/networks</b>
 </aside>
+
+<p>See <a href="#authentication">authentication</a> section to find out more details on <strong>how to use your token</strong>.</p>
+
+<h4 id="then">Then,</h4>
+
+<p>use the API ! The easiest is probably to jump to <a href="#examples">Examples</a> below.</p>
+
+<p>At some point you will want to read:</p>
+
+<ul>
+<li><a href="#lexicon">transport public lexicon</a></li>
+<li><a href="#v1 interface">integration</a></li>
+</ul>
 
 <h2 id="examples">Examples</h2>
 
@@ -181,7 +173,6 @@ In this case it needs a region id. This id can the found in the <code class="pre
 <p>We could push the exploration further and:</p>
 
 <ul>
-<li>Geographical coverage of the service &gt; <a href="https://api.navitia.io/v1/coverage">https://api.navitia.io/v1/coverage</a></li>
 <li>Where am I? (WGS 84 coordinates)
 
 <ul>
@@ -266,28 +257,6 @@ This API is not accessible from the main endpoint but has to be applied on a sto
 <p>Stay tuned on twitter @navitia.</p>
 
 <p>At last, we are present on IRC on the network <a href="https://webchat.freenode.net/">Freenode</a>, channel <b>#navitia</b>.</p>
-
-<h2 id="about…">About…</h2>
-
-<h3 id="about-the-service">About the service</h3>
-
-<p>If you plan to build something successful, contact us to get an access with more vitamins and even more support.
-And if you wanna build really hard stuff with it, don&rsquo;t be doubtful and take the source code <a href="https://github.com/CanalTP/navitia">https://github.com/CanalTP/navitia</a></p>
-
-<h3 id="about-the-data">About the data</h3>
-
-<p>The street network is extracted from <a href="http://www.openstreetmap.org">OpenStreetMap</a>.</p>
-
-<p>The public transport data are provided by networks that provide their timetables as open data.</p>
-
-<p>Some data improvement are achieved by Kisio Digital.</p>
-
-<h3 id="about-kisio-digital">About Kisio Digital</h3>
-
-<p><a href="http://www.canaltp.fr">Kisio Digital</a> is the editor of <em>navitia</em>. We are a company based in Paris, leader in
-France for public transport information systems.</p>
-
-<p>If you speak French, visit our technical blog <a href="http://labs.canaltp.fr">http://labs.canaltp.fr</a> .</p>
 
       </div>
       <div class="dark-box">
