@@ -781,6 +781,43 @@ error is sent. If filter can not be parsed, an &ldquo;unable_to_parse&rdquo; err
 is sent. If object or attribute provided is not handled, the filter is
 ignored.</p>
 
+<h4 id="collection-has_code">{collection}.has_code</h4>
+
+<p>Every object managed by Navitia comes with its own list of ids. 
+You will find some source ids, merge ids, etc. in &ldquo;codes&rdquo; list in json responses.
+Be careful, there are not unique. Navitia id is the only lonely unique id.</p>
+<pre class="highlight json"><code><span class="w">        </span><span class="err">codes</span><span class="w"> </span><span class="err">:</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="mi">0</span><span class="w"> </span><span class="err">:</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"external_code"</span><span class="err">,</span><span class="w">
+                </span><span class="err">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"OBO5852"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="mi">1</span><span class="w"> </span><span class="err">:</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"gtfs_stop_code"</span><span class="err">,</span><span class="w">
+                </span><span class="err">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"PLA40A"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="mi">2</span><span class="w"> </span><span class="err">:</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"source"</span><span class="err">,</span><span class="w">
+                </span><span class="err">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"5852"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>You may have to request an object by one of these ids, in order to call an external service for example.</p>
+
+<p>The filter format is <code class="prettyprint">filter={collection_name}.has_code({code_type},{code_value})</code></p>
+
+<p>Examples :</p>
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/stop_points?filter=stop_point.has_code(source,5852)">https://api.navitia.io/v1/coverage/fr-sw/stop_points?filter=stop_point.has_code(source,5852)</a></li>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/stop_areas?filter=stop_area.has_code(gtfs_stop_code,1)">https://api.navitia.io/v1/coverage/fr-sw/stop_areas?filter=stop_area.has_code(gtfs_stop_code,1)</a></li>
+<li>  <a href="http://vip-jormpre-ws.mutu.prod.canaltp.fr/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891615)">http://vip-jormpre-ws.mutu.prod.canaltp.fr/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891615)</a></li>
+</ul>
+
 <h4 id="line-code">line.code</h4>
 
 <p>It allows you to request navitia objects referencing a line whose code
@@ -842,6 +879,9 @@ is the one provided, especially lines themselves and routes.</p>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/physical_modes/physical_mode:Metro/lines">https://api.navitia.io/v1/coverage/fr-idf/physical_modes/physical_mode:Metro/lines</a></li>
 </ul></li>
 </ul>
+
+<p>But you will find lots of more advanced example in <a href="#a-quick-exploration">a quick exploration</a>
+chapter</p>
 
 <h2 id="autocomplete-on-public-transport-objects"><a name="pt-objects"></a>Autocomplete on Public Transport objects </h2>
 
