@@ -15,7 +15,7 @@
 
   </head>
 
-  <body class="includes includes_index">
+  <body class="includes includes_examples">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -30,110 +30,11 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="welcome-to-navitia-io">Welcome to navitia.io</h1>
-
-<p>The API to build cool stuff with public transport</p>
-
-<h2 id="overview">Overview</h2>
-
-<p><em>navitia</em> is a RESTful API which provide:</p>
-
-<ul>
-<li>journeys computation</li>
-<li>line schedules</li>
-<li>next departures</li>
-<li>exploration of public transport data</li>
-<li>sexy things such as isochrones</li>
-</ul>
-
-<aside class="success">
-    We are gradually supporting more and more cities. If your city has open public transport data and is missing, drop us a note.
-    We will add it to navitia.io
-</aside>
-
-<p>Let us know if you build something with our API, we will be happy to highlight it on this page.
-The more feedback we get, the more cities you will get and the more effort we will put to make the API durable.</p>
-
-<p>Our APIs are available at the following url: <a href="https://api.navitia.io/v1">https://api.navitia.io/v1</a> (the latest API version is <code class="prettyprint">v1</code>).</p>
-
-<p>The API has been built on the <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS model</a> so the API should be quite self explanatory since the interactions are defined in hypermedia.</p>
-
-<p>Have a look at the examples below to learn what services we provide and how to use them.</p>
-
-<h2 id="getting-started">Getting started</h2>
-
-<h4 id="first">First,</h4>
-
-<p>get a token here <a href="http://navitia.io/register/">http://navitia.io/register/</a></p>
-
-<h4 id="second">Second,</h4>
-
-<p>use the token : if you use a web browser, you only have to <strong>paste it in the user area</strong>,
-with <strong>no password</strong>. 
-Or, in a simplier way, you can add your token in the address bar like :</p>
-
-<aside class="success">
-<b>https://01234567-89ab-cdef-0123-456789abcdef@api.navitia.io/v1/coverage/fr-idf/networks</b>
-</aside>
-
-<p>See <a href="#authentication">authentication</a> section to find out more details on <strong>how to use your token</strong>.</p>
-
-<h4 id="then">Then,</h4>
-
-<p>use the API ! The easiest is probably to jump to <a href="#examples">Examples</a> below.</p>
-
-<p>At some point you will want to read:</p>
-
-<ul>
-<li><a href="#lexicon">transport public lexicon</a></li>
-<li><a href="#v1 interface">integration</a></li>
-</ul>
-
-<h2 id="examples">Examples</h2>
+        <h1 id="some-examples"><a name="some_examples"></a>Some examples</h1>
 
 <p>This chapter shows some usages with the minimal required arguments. However, this is not a reference and not all APIs nor arguments are shown.</p>
 
-<h3 id="a-simple-route-computation">A simple route computation</h3>
-
-<p>Let&rsquo;s find out how to get from the view point of the Golden Gate bridge to the Transamerica Pyramid in San Francisco.
-We need to use the <code class="prettyprint">journeys</code> API.</p>
-
-<p>The coordinates of the view point are <code class="prettyprint">longitude = -122.4752</code>, <code class="prettyprint">latitude = 37.80826</code> and the coordinates of the Transamercia Pyramid are <code class="prettyprint">longitude = -122.402770</code>, <code class="prettyprint">latitude = 37.794682</code>.
-The coordinates are always in decimal degrees as WGS84 (also known as GPS coordinates). The coordinates are given to the API with the following format: <code class="prettyprint">longitute;latitude</code>.</p>
-
-<p>The arguments are the following:</p>
-
-<ul>
-<li><code class="prettyprint">from=-122.4752;37.80826</code></li>
-<li><code class="prettyprint">to=-122.402770;37.794682</code>
-Hence, the complete URL: <a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682</a>.</li>
-</ul>
-
-<aside class="success">
-A &ldquo;journeys&rdquo; request might return multiple journeys. Those journeys are said to be equivalent. For instance
-a journey can be faster than an other but requires more changes or more walking.
-</aside>
-
-<p>This API has more options explained in the reference as:</p>
-
-<ul>
-<li><p>The dates are given in the basic form of the ISO 8601 datetime format: <code class="prettyprint">YYYYMMDDTHHMM</code>. 
-For example, if you want to compute a journey on friday, April 22 <code class="prettyprint">datetime=20160422T0800</code>
-<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800</a></p></li>
-<li><p>Latest departure
-To get the latest departure, you can query for some journeys arriving before the end of the service
-<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival</a></p></li>
-<li><p>You can also change the <a href="#traveler-type">traveler profile</a> (to adapt the walking/biking/driving parts and comfort of journeys):
-<a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker</a></p></li>
-<li><p>Forbid certain lines, routes or modes
-For example you can forbid the line 1 and the cable car mode with the url:
-<a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;forbidden_uris%5B%5D=line:OSF:10867&amp;forbidden_uris%5B%5D=commercial_mode:cablecar">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;forbidden_uris[]=line:OSF:10867&amp;forbidden_uris[]=commercial_mode:cablecar</a></p></li>
-<li><p>Enable biking, driving or use of bike sharing system on Paris area
-For example you can allow bss (and walking since it&rsquo;s implicitly allowed with bss) at the departure:
-<a href="https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&amp;to=2.3643739;48.854&amp;first_section_mode%5B%5D=bss&amp;first_section_mode%5B%5D=walking&amp;first_section_mode%5B%5D=bike">https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&amp;to=2.3643739;48.854&amp;first_section_mode[]=bss&amp;first_section_mode[]=walking&amp;first_section_mode[]=bike</a></p></li>
-</ul>
-
-<h3 id="a-quick-exploration-of-the-api">A quick exploration of the API</h3>
+<h2 id="a-quick-exploration">A quick exploration</h2>
 
 <p><em>navitia</em> allows to dive into the public transport data.</p>
 
@@ -217,6 +118,8 @@ In this case it needs a region id. This id can the found in the <code class="pre
 </ul></li>
 </ul>
 
+<h2 id="seek-and-search">Seek and search</h2>
+
 <h3 id="what-places-have-a-name-that-start-with-39-eiff-39">What places have a name that start with &lsquo;eiff&rsquo;</h3>
 
 <p>The <a href="#places">/places</a> API finds any object whose name matches the first letters of the query.</p>
@@ -236,6 +139,48 @@ This API is not accessible from the main endpoint but has to be applied on a sto
 
 <p>Optionally you can select what object types to return and change the radius.</p>
 
+<h2 id="about-itinerary">About itinerary</h2>
+
+<h3 id="a-simple-route-computation">A simple route computation</h3>
+
+<p>Let&rsquo;s find out how to get from the view point of the Golden Gate bridge to the Transamerica Pyramid in San Francisco.
+We need to use the <code class="prettyprint">journeys</code> API.</p>
+
+<p>The coordinates of the view point are <code class="prettyprint">longitude = -122.4752</code>, <code class="prettyprint">latitude = 37.80826</code> and the coordinates of the Transamercia Pyramid are <code class="prettyprint">longitude = -122.402770</code>, <code class="prettyprint">latitude = 37.794682</code>.
+The coordinates are always in decimal degrees as WGS84 (also known as GPS coordinates). The coordinates are given to the API with the following format: <code class="prettyprint">longitute;latitude</code>.</p>
+
+<p>The arguments are the following:</p>
+
+<ul>
+<li><code class="prettyprint">from=-122.4752;37.80826</code></li>
+<li><code class="prettyprint">to=-122.402770;37.794682</code>
+Hence, the complete URL: <a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682</a>.</li>
+</ul>
+
+<aside class="success">
+A &ldquo;journeys&rdquo; request might return multiple journeys. Those journeys are said to be equivalent. For instance
+a journey can be faster than an other but requires more changes or more walking.
+</aside>
+
+<p>This API has more options explained in the reference as:</p>
+
+<ul>
+<li><p>The dates are given in the basic form of the ISO 8601 datetime format: <code class="prettyprint">YYYYMMDDTHHMM</code>. 
+For example, if you want to compute a journey on friday, April 22 <code class="prettyprint">datetime=20160422T0800</code>
+<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800</a></p></li>
+<li><p>Latest departure
+To get the latest departure, you can query for some journeys arriving before the end of the service
+<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival</a></p></li>
+<li><p>You can also change the <a href="#traveler-type">traveler profile</a> (to adapt the walking/biking/driving parts and comfort of journeys):
+<a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker</a></p></li>
+<li><p>Forbid certain lines, routes or modes
+For example you can forbid the line 1 and the cable car mode with the url:
+<a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;forbidden_uris%5B%5D=line:OSF:10867&amp;forbidden_uris%5B%5D=commercial_mode:cablecar">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;forbidden_uris[]=line:OSF:10867&amp;forbidden_uris[]=commercial_mode:cablecar</a></p></li>
+<li><p>Enable biking, driving or use of bike sharing system on Paris area
+For example you can allow bss (and walking since it&rsquo;s implicitly allowed with bss) at the departure:
+<a href="https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&amp;to=2.3643739;48.854&amp;first_section_mode%5B%5D=bss&amp;first_section_mode%5B%5D=walking&amp;first_section_mode%5B%5D=bike">https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&amp;to=2.3643739;48.854&amp;first_section_mode[]=bss&amp;first_section_mode[]=walking&amp;first_section_mode[]=bike</a></p></li>
+</ul>
+
 <h3 id="what-stations-can-be-reached-in-the-next-20-minutes">What stations can be reached in the next 20 minutes</h3>
 
 <p>The API can computes <em>all</em> the reachable stop points from an origin within a given maximum travel duration.</p>
@@ -244,19 +189,6 @@ This API is not accessible from the main endpoint but has to be applied on a sto
 <a href="https://api.navitia.io/v1/coverage/us-ca/coords/-122.402770;37.794682/journeys?max_duration=1200">https://api.navitia.io/v1/coverage/us-ca/coords/-122.402770;37.794682/journeys?max_duration=1200</a></p>
 
 <p>It returns for each destination stop point the earliest arrival and a link to the journey detail.</p>
-
-<h2 id="getting-help">Getting help</h2>
-
-<p>All available functions are documented in <a href="#navitia-documentation-v1-interface">integration part</a></p>
-
-<p>A mailing list is available to ask question: <a href="mailto:navitia@googlegroups.com">navitia@googlegroups.com</a></p>
-
-<p>In order to report bug and make requests we created a github navitia project
-<a href="https://github.com/CanalTP/navitia/issues">https://github.com/CanalTP/navitia/issues</a>.</p>
-
-<p>Stay tuned on twitter @navitia.</p>
-
-<p>At last, we are present on IRC on the network <a href="https://webchat.freenode.net/">Freenode</a>, channel <b>#navitia</b>.</p>
 
       </div>
       <div class="dark-box">

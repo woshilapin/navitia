@@ -32,6 +32,7 @@
       </div>
         <ul class="toc-footer">
             <li><a href='http://navitia.io/register/'>Get an access</a></li>
+            <li><a href='http://www.navitia.io/datasets/'>Explore Data</a></li>
             <li><a href='https://groups.google.com/forum/#!forum/navitia'>Help !</a></li>
             <li><a href='http://navitia.io'>Navitia.io</a></li>
             <li><a href='https://github.com/CanalTP/navitia'>Navitia on Github</a></li>
@@ -43,31 +44,23 @@
         
           <h1 id="welcome-to-navitia-io">Welcome to navitia.io</h1>
 
-<p>The API to build cool stuff with public transport</p>
-
 <h2 id="overview">Overview</h2>
 
-<p><em>navitia</em> is a RESTful API which provide:</p>
+<p><em>navitia.io</em> is the open API for building cool stuff with transport data.
+It provide the following services</p>
 
 <ul>
 <li>journeys computation</li>
 <li>line schedules</li>
 <li>next departures</li>
-<li>exploration of public transport data</li>
-<li>sexy things such as isochrones</li>
+<li>exploration of public transport data / search places</li>
+<li>and sexy things such as isochrones</li>
 </ul>
 
-<aside class="success">
-    We are gradually supporting more and more cities. If your city has open public transport data and is missing, drop us a note.
-    We will add it to navitia.io
-</aside>
-
-<p>Let us know if you build something with our API, we will be happy to highlight it on this page.
-The more feedback we get, the more cities you will get and the more effort we will put to make the API durable.</p>
+<p>navitia is a RESTful API that returns JSON formated results.
+The API has been built on the <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS model</a> so it should be quite self explanatory since the interactions are defined in hypermedia.</p>
 
 <p>Our APIs are available at the following url: <a href="https://api.navitia.io/v1">https://api.navitia.io/v1</a> (the latest API version is <code class="prettyprint">v1</code>).</p>
-
-<p>The API has been built on the <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS model</a> so the API should be quite self explanatory since the interactions are defined in hypermedia.</p>
 
 <p>Have a look at the examples below to learn what services we provide and how to use them.</p>
 
@@ -91,60 +84,42 @@ Or, in a simplier way, you can add your token in the address bar like :</p>
 
 <h4 id="then">Then,</h4>
 
-<p>use the API ! The easiest is probably to jump to <a href="#examples">Examples</a> below.</p>
+<p>use the API ! The easiest is probably to jump to <a href="#some_examples">Examples</a> below.</p>
 
 <p>At some point you will want to read:</p>
 
 <ul>
 <li><a href="#lexicon">transport public lexicon</a></li>
-<li><a href="#v1 interface">integration</a></li>
+<li><a href="#ressources">Ressources overview</a></li>
 </ul>
 
-<h2 id="examples">Examples</h2>
+<h2 id="about-the-data">About the data</h2>
+
+<p>The street network is extracted from <a href="#http://www.openstreetmap.org">OpenStreetMap</a>. The public transport data are provided by networks that provide their timetables as open data. Some data improvement are achieved by Kisio Digital.</p>
+
+<aside class="success">
+    We are gradually supporting more and more cities. If your city has open public transport data and is missing, drop us a note.
+    We will add it to navitia.io
+</aside>
+
+<h2 id="getting-help">Getting help</h2>
+
+<p>All available functions are documented in <a href="#navitia-documentation-v1-interface">integration part</a></p>
+
+<p>A mailing list is available to ask question: <a href="mailto:navitia@googlegroups.com">navitia@googlegroups.com</a></p>
+
+<p>In order to report bug and make requests we created a github navitia project
+<a href="https://github.com/CanalTP/navitia/issues">https://github.com/CanalTP/navitia/issues</a>.</p>
+
+<p>Stay tuned on twitter @navitia.</p>
+
+<p>At last, we are present on IRC on the network <a href="https://webchat.freenode.net/">Freenode</a>, channel <b>#navitia</b>.</p>
+
+          <h1 id="some-examples"><a name="some_examples"></a>Some examples</h1>
 
 <p>This chapter shows some usages with the minimal required arguments. However, this is not a reference and not all APIs nor arguments are shown.</p>
 
-<h3 id="a-simple-route-computation">A simple route computation</h3>
-
-<p>Let&rsquo;s find out how to get from the view point of the Golden Gate bridge to the Transamerica Pyramid in San Francisco.
-We need to use the <code class="prettyprint">journeys</code> API.</p>
-
-<p>The coordinates of the view point are <code class="prettyprint">longitude = -122.4752</code>, <code class="prettyprint">latitude = 37.80826</code> and the coordinates of the Transamercia Pyramid are <code class="prettyprint">longitude = -122.402770</code>, <code class="prettyprint">latitude = 37.794682</code>.
-The coordinates are always in decimal degrees as WGS84 (also known as GPS coordinates). The coordinates are given to the API with the following format: <code class="prettyprint">longitute;latitude</code>.</p>
-
-<p>The arguments are the following:</p>
-
-<ul>
-<li><code class="prettyprint">from=-122.4752;37.80826</code></li>
-<li><code class="prettyprint">to=-122.402770;37.794682</code>
-Hence, the complete URL: <a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682</a>.</li>
-</ul>
-
-<aside class="success">
-A &ldquo;journeys&rdquo; request might return multiple journeys. Those journeys are said to be equivalent. For instance
-a journey can be faster than an other but requires more changes or more walking.
-</aside>
-
-<p>This API has more options explained in the reference as:</p>
-
-<ul>
-<li><p>The dates are given in the basic form of the ISO 8601 datetime format: <code class="prettyprint">YYYYMMDDTHHMM</code>. 
-For example, if you want to compute a journey on friday, April 22 <code class="prettyprint">datetime=20160422T0800</code>
-<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800</a></p></li>
-<li><p>Latest departure
-To get the latest departure, you can query for some journeys arriving before the end of the service
-<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival</a></p></li>
-<li><p>You can also change the <a href="#traveler-type">traveler profile</a> (to adapt the walking/biking/driving parts and comfort of journeys):
-<a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker</a></p></li>
-<li><p>Forbid certain lines, routes or modes
-For example you can forbid the line 1 and the cable car mode with the url:
-<a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;forbidden_uris%5B%5D=line:OSF:10867&amp;forbidden_uris%5B%5D=commercial_mode:cablecar">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;forbidden_uris[]=line:OSF:10867&amp;forbidden_uris[]=commercial_mode:cablecar</a></p></li>
-<li><p>Enable biking, driving or use of bike sharing system on Paris area
-For example you can allow bss (and walking since it&rsquo;s implicitly allowed with bss) at the departure:
-<a href="https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&amp;to=2.3643739;48.854&amp;first_section_mode%5B%5D=bss&amp;first_section_mode%5B%5D=walking&amp;first_section_mode%5B%5D=bike">https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&amp;to=2.3643739;48.854&amp;first_section_mode[]=bss&amp;first_section_mode[]=walking&amp;first_section_mode[]=bike</a></p></li>
-</ul>
-
-<h3 id="a-quick-exploration-of-the-api">A quick exploration of the API</h3>
+<h2 id="a-quick-exploration">A quick exploration</h2>
 
 <p><em>navitia</em> allows to dive into the public transport data.</p>
 
@@ -228,6 +203,8 @@ In this case it needs a region id. This id can the found in the <code class="pre
 </ul></li>
 </ul>
 
+<h2 id="seek-and-search">Seek and search</h2>
+
 <h3 id="what-places-have-a-name-that-start-with-39-eiff-39">What places have a name that start with &lsquo;eiff&rsquo;</h3>
 
 <p>The <a href="#places">/places</a> API finds any object whose name matches the first letters of the query.</p>
@@ -247,6 +224,48 @@ This API is not accessible from the main endpoint but has to be applied on a sto
 
 <p>Optionally you can select what object types to return and change the radius.</p>
 
+<h2 id="about-itinerary">About itinerary</h2>
+
+<h3 id="a-simple-route-computation">A simple route computation</h3>
+
+<p>Let&rsquo;s find out how to get from the view point of the Golden Gate bridge to the Transamerica Pyramid in San Francisco.
+We need to use the <code class="prettyprint">journeys</code> API.</p>
+
+<p>The coordinates of the view point are <code class="prettyprint">longitude = -122.4752</code>, <code class="prettyprint">latitude = 37.80826</code> and the coordinates of the Transamercia Pyramid are <code class="prettyprint">longitude = -122.402770</code>, <code class="prettyprint">latitude = 37.794682</code>.
+The coordinates are always in decimal degrees as WGS84 (also known as GPS coordinates). The coordinates are given to the API with the following format: <code class="prettyprint">longitute;latitude</code>.</p>
+
+<p>The arguments are the following:</p>
+
+<ul>
+<li><code class="prettyprint">from=-122.4752;37.80826</code></li>
+<li><code class="prettyprint">to=-122.402770;37.794682</code>
+Hence, the complete URL: <a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682</a>.</li>
+</ul>
+
+<aside class="success">
+A &ldquo;journeys&rdquo; request might return multiple journeys. Those journeys are said to be equivalent. For instance
+a journey can be faster than an other but requires more changes or more walking.
+</aside>
+
+<p>This API has more options explained in the reference as:</p>
+
+<ul>
+<li><p>The dates are given in the basic form of the ISO 8601 datetime format: <code class="prettyprint">YYYYMMDDTHHMM</code>. 
+For example, if you want to compute a journey on friday, April 22 <code class="prettyprint">datetime=20160422T0800</code>
+<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800</a></p></li>
+<li><p>Latest departure
+To get the latest departure, you can query for some journeys arriving before the end of the service
+<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival</a></p></li>
+<li><p>You can also change the <a href="#traveler-type">traveler profile</a> (to adapt the walking/biking/driving parts and comfort of journeys):
+<a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker</a></p></li>
+<li><p>Forbid certain lines, routes or modes
+For example you can forbid the line 1 and the cable car mode with the url:
+<a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;forbidden_uris%5B%5D=line:OSF:10867&amp;forbidden_uris%5B%5D=commercial_mode:cablecar">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;forbidden_uris[]=line:OSF:10867&amp;forbidden_uris[]=commercial_mode:cablecar</a></p></li>
+<li><p>Enable biking, driving or use of bike sharing system on Paris area
+For example you can allow bss (and walking since it&rsquo;s implicitly allowed with bss) at the departure:
+<a href="https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&amp;to=2.3643739;48.854&amp;first_section_mode%5B%5D=bss&amp;first_section_mode%5B%5D=walking&amp;first_section_mode%5B%5D=bike">https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&amp;to=2.3643739;48.854&amp;first_section_mode[]=bss&amp;first_section_mode[]=walking&amp;first_section_mode[]=bike</a></p></li>
+</ul>
+
 <h3 id="what-stations-can-be-reached-in-the-next-20-minutes">What stations can be reached in the next 20 minutes</h3>
 
 <p>The API can computes <em>all</em> the reachable stop points from an origin within a given maximum travel duration.</p>
@@ -256,25 +275,7 @@ This API is not accessible from the main endpoint but has to be applied on a sto
 
 <p>It returns for each destination stop point the earliest arrival and a link to the journey detail.</p>
 
-<h2 id="getting-help">Getting help</h2>
-
-<p>All available functions are documented in <a href="#navitia-documentation-v1-interface">integration part</a></p>
-
-<p>A mailing list is available to ask question: <a href="mailto:navitia@googlegroups.com">navitia@googlegroups.com</a></p>
-
-<p>In order to report bug and make requests we created a github navitia project
-<a href="https://github.com/CanalTP/navitia/issues">https://github.com/CanalTP/navitia/issues</a>.</p>
-
-<p>Stay tuned on twitter @navitia.</p>
-
-<p>At last, we are present on IRC on the network <a href="https://webchat.freenode.net/">Freenode</a>, channel <b>#navitia</b>.</p>
-
-          <h1 id="v1-interface">v1 interface</h1>
-
-<p>This document describes how to call navitia via the v1 interface, and
-the returned resources. </p>
-
-<h2 id="authentication">Authentication</h2>
+          <h1 id="authentication">Authentication</h1>
 
 <p>You must authenticate to use <strong>navitia.io</strong>. When you register we give
 you an authentication key to the API.</p>
@@ -292,7 +293,7 @@ where the username is the key, and without password.</p>
 
 <p><code class="prettyprint">curl https://01234567-89ab-cdef-0123-456789abcdef@api.navitia.io/v1/Ressources</code></p>
 
-<h2 id="ressources-overview">Ressources overview</h2>
+          <h1 id="ressources-overview"><a name="ressources"></a>Ressources overview</h1>
 
 <p>The only endpoint of this version of the api is :
 <a href="https://api.navitia.io/v1/">https://api.navitia.io/v1/</a></p>
@@ -446,6 +447,14 @@ Compute time tables for a given resource</li>
 </tr>
 </tbody></table>
 
+          <h1 id="interface">interface</h1>
+
+<p>We aim to implement <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS</a>
+concept with Navitia.</p>
+
+<p>Each response contains a linkable object and lots of links. Links allow
+you to know all accessible uris and services for a given point.</p>
+
 <h2 id="paging">Paging</h2>
 
 <aside class="success">
@@ -504,15 +513,7 @@ Compute time tables for a given resource</li>
 </tr>
 </tbody></table>
 
-<h2 id="interface">Interface</h2>
-
-<p>We aim to implement <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS</a>
-concept with Navitia.</p>
-
-<p>Each response contains a linkable object and lots of links. Links allow
-you to know all accessible uris and services for a given point.</p>
-
-<h3 id="templated-url">Templated url</h3>
+<h2 id="templated-url">Templated url</h2>
 
 <p>Under some link sections, you will find a &ldquo;templated&rdquo; property. If
 &ldquo;templated&rdquo; is true, then you will have to format the link with one id.</p>
@@ -530,7 +531,7 @@ you to know all accessible uris and services for a given point.</p>
 <p>You have to put one line id instead of <em>{lines.id}</em>. For example:
 <a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:043043001:N1OIF658/stop_schedules">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:043043001:N1OIF658/stop_schedules</a></p>
 
-<h3 id="inner-references">Inner references</h3>
+<h2 id="inner-references">Inner references</h2>
 
 <p>Some link sections look like</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
@@ -548,16 +549,20 @@ you to know all accessible uris and services for a given point.</p>
 details of your object ( <em>&ldquo;id&rdquo;: &ldquo;edc46f3a-ad3d-11e4-a5e1-005056a44da2&rdquo;</em>
 ).</p>
 
-<h2 id="apis">Apis</h2>
+          <h1 id="apis">APIs</h1>
 
-<h3 id="coverage-coverage"><a name="coverage"></a>Coverage (/coverage)</h3>
+<h2 id="coverage"><a name="coverage"></a>Coverage</h2>
+
+<p>Also known as <code class="prettyprint">/coverage</code> service.</p>
 
 <p>You can easily navigate through regions covered by navitia.io, with the
 coverage api. The shape of the region is provided in GeoJSON.</p>
 
 <p>The only arguments are the ones of <a href="#paging">paging</a>.</p>
 
-<h3 id="inverted-geocoding-coord"><a name="coord"></a>Inverted geocoding (/coord)</h3>
+<h2 id="inverted-geocoding"><a name="coord"></a>Inverted geocoding</h2>
+
+<p>Also known as <code class="prettyprint">/coord</code> service.</p>
 
 <p>Very simple service: you give Navitia some coordinates, it answers you
 where you are:</p>
@@ -617,7 +622,9 @@ accessible local mobility services:</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="public-transportation-objects-exploration-networks-or-lines-or-routes"><a name="pt-ref"></a>Public transportation objects exploration (/networks or /lines or /routes&hellip;)</h3>
+<h2 id="public-transportation-objects-exploration"><a name="pt-ref"></a>Public transportation objects exploration</h2>
+
+<p>Also known as <code class="prettyprint">/networks</code>, <code class="prettyprint">/lines</code>, <code class="prettyprint">/stop_areas</code>&hellip; services.</p>
 
 <p>Once you have selected a region, you can explore the public
 transportation objects easily with these apis. You just need to add at
@@ -626,7 +633,7 @@ particular collection. To see an object add the id of this object at the
 end of the collection&rsquo;s url. The <a href="#paging">paging</a> arguments may be used to
 paginate results.</p>
 
-<h4 id="collections">Collections</h4>
+<h3 id="collections">Collections</h3>
 
 <ul>
 <li>  <a href="#network">networks</a></li>
@@ -641,11 +648,7 @@ paginate results.</p>
 <li>  <a href="#disruption">disruptions</a></li>
 </ul>
 
-<h4 id="specific-parameters">Specific parameters</h4>
-
-<p>There are other specific parameters.</p>
-
-<h5 id="quot-depth-quot">&ldquo;depth&rdquo;</h5>
+<h4 id="depth"><a name="depth"></a>depth</h4>
 
 <p>This tiny parameter can expand Navitia power by making it more wordy.
 Here is some examples around &ldquo;metro line 1&rdquo; from the Parisian network:</p>
@@ -687,7 +690,7 @@ Here is some examples around &ldquo;metro line 1&rdquo; from the Parisian networ
 </ul></li>
 </ul>
 
-<h5 id="odt-level">odt level</h5>
+<h4 id="odt-level">odt level</h4>
 
 <ul>
 <li>  Type: String</li>
@@ -717,7 +720,7 @@ whatever its type</li>
 
 <p><a href="https://api.navitia.io/v1/coverage/fr-nw/networks/network:Lignes18/lines?odt_level=scheduled">https://api.navitia.io/v1/coverage/fr-nw/networks/network:Lignes18/lines?odt_level=scheduled</a></p>
 
-<h5 id="distance">distance</h5>
+<h4 id="distance">distance</h4>
 
 <ul>
 <li>  Type: Integer</li>
@@ -728,7 +731,7 @@ whatever its type</li>
 the proximity search.
 <a href="https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/stop_schedules?distance=500">https://api.navitia.io/v1/coverage/fr-idf/coords/2.377310;48.847002/stop_schedules?distance=500</a></p>
 
-<h5 id="headsign">headsign</h5>
+<h4 id="headsign">headsign</h4>
 
 <ul>
 <li>  Type: String</li>
@@ -750,7 +753,7 @@ as headsign (on vehicle journey itself or at a stop time).</p>
     exists a stop time with the headsign CANE.
 </aside>
 
-<h5 id="since-until">since / until</h5>
+<h4 id="since-until">since / until</h4>
 
 <ul>
 <li>  Type: <a href="#iso-date-time">iso-date-time</a></li>
@@ -770,7 +773,7 @@ period. Both parameters &ldquo;until&rdquo; and &ldquo;since&rdquo; are optional
     vehicle journey, &ldquo;since&rdquo; is included and &ldquo;until&rdquo; is excluded.
 </aside>
 
-<h4 id="filter">Filter</h4>
+<h3 id="filter">Filter</h3>
 
 <p>It is possible to apply a filter to the returned collection, using
 &ldquo;filter&rdquo; parameter. If no object matches the filter, a &ldquo;bad_filter&rdquo;
@@ -778,7 +781,7 @@ error is sent. If filter can not be parsed, an &ldquo;unable_to_parse&rdquo; err
 is sent. If object or attribute provided is not handled, the filter is
 ignored.</p>
 
-<h5 id="line-code">line.code</h5>
+<h4 id="line-code">line.code</h4>
 
 <p>It allows you to request navitia objects referencing a line whose code
 is the one provided, especially lines themselves and routes.</p>
@@ -790,7 +793,7 @@ is the one provided, especially lines themselves and routes.</p>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/routes?filter=line.code=%22m%C3%A9tro%20347%22">https://api.navitia.io/v1/coverage/fr-idf/routes?filter=line.code=&ldquo;métro 347&rdquo;</a></li>
 </ul>
 
-<h4 id="examples">Examples</h4>
+<h3 id="few-exploration-examples">Few exploration examples</h3>
 
 <p>Response example for this request
 <a href="https://api.navitia.io/v1/coverage/fr-idf/physical_modes">https://api.navitia.io/v1/coverage/fr-idf/physical_modes</a></p>
@@ -840,13 +843,15 @@ is the one provided, especially lines themselves and routes.</p>
 </ul></li>
 </ul>
 
-<h3 id="public-transport-objects-autocomplete-pt_objects"><a name="pt-objects"></a>Public Transport objects autocomplete (/pt_objects)</h3>
+<h2 id="autocomplete-on-public-transport-objects"><a name="pt-objects"></a>Autocomplete on Public Transport objects </h2>
+
+<p>Also known as <code class="prettyprint">/pt_objects</code> service.</p>
 
 <p>This api search in public transport objects via their names. It&rsquo;s a kind
 of magical autocomplete on public transport data. It returns, in
 addition of classic objects, a collection of <a href="#place">places</a>.</p>
 
-<h4 id="how-does-it-works">How does it works</h4>
+<h3 id="how-does-it-works">How does it works</h3>
 
 <p>Differents kind of objects can be returned (sorted as):</p>
 
@@ -859,7 +864,8 @@ addition of classic objects, a collection of <a href="#place">places</a>.</p>
 </ul>
 
 <p>Here is a typical use case. A traveler has to find a line between the
-1500 lines around Paris. Without any filters:</p>
+1500 lines around Paris. 
+For example, he could key without any filters:</p>
 
 <div data-collapse>
     <p>traveler input: &ldquo;bob&rdquo;</p>
@@ -898,7 +904,7 @@ addition of classic objects, a collection of <a href="#place">places</a>.</p>
     </ul>
 </div>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -929,7 +935,7 @@ addition of classic objects, a collection of <a href="#place">places</a>.</p>
 There is no pagination for this api
 </aside>
 
-<h4 id="example">Example</h4>
+<h3 id="example">Example</h3>
 
 <p>Response example for :
 <a href="https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=bus%20ratp%20%39&amp;type%5B%5D=line&amp;type%5B%5D=route">https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=bus%20ratp%20%39&amp;type[]=line&amp;type[]=route</a></p>
@@ -951,7 +957,9 @@ There is no pagination for this api
 </span><span class="err">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="places-autocomplete-places"><a name="places"></a>Places autocomplete (/places)</h3>
+<h2 id="autocomplete-on-geographical-objects"><a name="places"></a>Autocomplete on geographical objects</h2>
+
+<p>Also known as <code class="prettyprint">/places</code> service.</p>
 
 <p>This api search in all geographical objects via their names. It returns,
 in addition of classic objects, a collection of <a href="#place">places</a> . This api is
@@ -972,7 +980,7 @@ filter)</li>
     There is no pagination for this api.
 </aside>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -1006,9 +1014,9 @@ filter)</li>
 </tr>
 </tbody></table>
 
-<h4 id="how-does-it-works">How does it works</h4>
+<h3 id="how-does-it-works">How does it works</h3>
 
-<h4 id="example">Example</h4>
+<h3 id="example">Example</h3>
 
 <p>Response example for :
 <a href="https://api.navitia.io/v1/coverage/fr-idf/places?q=rue">https://api.navitia.io/v1/coverage/fr-idf/places?q=rue</a></p>
@@ -1032,7 +1040,9 @@ filter)</li>
 </span><span class="err">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="places-nearby-places_nearby"><a name="places-nearby"></a>Places Nearby (/places_nearby)</h3>
+<h2 id="places-nearby"><a name="places-nearby"></a>Places Nearby</h2>
+
+<p>Also known as <code class="prettyprint">/places_nearby</code> service.</p>
 
 <p>This api search for public transport object near another object, or near
 coordinates. It returns, in addition of classic objects, a collection of
@@ -1042,7 +1052,7 @@ coordinates. It returns, in addition of classic objects, a collection of
     There is no pagination for this api.
 </aside>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -1072,7 +1082,7 @@ coordinates. It returns, in addition of classic objects, a collection of
 <td>admin_uri[]</td>
 <td>array of string</td>
 <td>If filled, will restrained the search within the given admin uris</td>
-<td>&ldquo;&rdquo;</td>
+<td></td>
 </tr>
 <tr>
 <td>nop</td>
@@ -1106,7 +1116,7 @@ coordinates. It returns, in addition of classic objects, a collection of
 </ul></li>
 </ul>
 
-<h4 id="example">Example</h4>
+<h3 id="example">Example</h3>
 
 <p>Response example for this request
 <a href="https://api.navitia.io/v1/coverage/fr-idf/stop_areas/stop_area:TRN:SA:DUA8754575/places_nearby">https://api.navitia.io/v1/coverage/fr-idf/stop_areas/stop_area:TRN:SA:DUA8754575/places_nearby</a></p>
@@ -1132,9 +1142,9 @@ coordinates. It returns, in addition of classic objects, a collection of
 </span><span class="err">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="journeys-journeys"><a name="journeys"></a>Journeys (/journeys)</h3>
+<h2 id="journeys"><a name="journeys"></a>Journeys</h2>
 
-<p>This api computes journeys.</p>
+<p>Also known as <code class="prettyprint">/journeys</code> service. This api computes journeys.</p>
 
 <p>If used within the coverage api, it will retrieve the next journeys from
 the selected public transport object or coordinates.</p>
@@ -1180,7 +1190,7 @@ However when no coordinates are provided, you need to provide on what region you
     journeys from or to the point.
 </aside>
 
-<h4 id="main-parameters"><a name="journeys-parameters"></a>Main parameters</h4>
+<h3 id="main-parameters"><a name="journeys-parameters"></a>Main parameters</h3>
 
 <table><thead>
 <tr>
@@ -1242,7 +1252,7 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
-<h4 id="other-parameters">Other parameters</h4>
+<h3 id="other-parameters">Other parameters</h3>
 
 <table><thead>
 <tr>
@@ -1360,13 +1370,13 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
-<h4 id="objects">Objects</h4>
+<h3 id="objects">Objects</h3>
 
 <p>Here is a typical journey, all sections are detailed below</p>
 
 <p><img alt="image" src="images/typical_itinerary.png" /></p>
 
-<h5 id="main-response">Main response</h5>
+<h4 id="main-response">Main response</h4>
 
 <table><thead>
 <tr>
@@ -1387,7 +1397,7 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
-<h5 id="journey">Journey</h5>
+<h4 id="journey">Journey</h4>
 
 <table><thead>
 <tr>
@@ -1467,7 +1477,7 @@ However when no coordinates are provided, you need to provide on what region you
     When used with just a &ldquo;from&rdquo; or a &ldquo;to&rdquo; parameter, it will not contain any sections.
 </aside>
 
-<h5 id="section">Section</h5>
+<h4 id="section">Section</h4>
 
 <table><thead>
 <tr>
@@ -1553,11 +1563,11 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
-<h5 id="path">Path</h5>
+<h4 id="path">Path</h4>
 
 <p>A path object in composed of an array of <a href="#path-item">path_item</a> (segment).</p>
 
-<h5 id="path-item">Path item</h5>
+<h4 id="path-item">Path item</h4>
 
 <table><thead>
 <tr>
@@ -1588,7 +1598,7 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
-<h5 id="fare">Fare</h5>
+<h4 id="fare">Fare</h4>
 
 <table><thead>
 <tr>
@@ -1614,7 +1624,7 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
-<h5 id="cost">Cost</h5>
+<h4 id="cost">Cost</h4>
 
 <table><thead>
 <tr>
@@ -1635,7 +1645,7 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
-<h5 id="ticket">Ticket</h5>
+<h4 id="ticket">Ticket</h4>
 
 <table><thead>
 <tr>
@@ -1671,13 +1681,15 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
-<h3 id="route-schedules-and-time-tables-route_schedules"><a name="route-schedules"></a>Route Schedules and time tables (/route_schedules)</h3>
+<h2 id="route-schedules-and-time-tables"><a name="route-schedules"></a>Route Schedules and time tables</h2>
+
+<p>Also known as <code class="prettyprint">/route_schedules</code> service.</p>
 
 <p>This api gives you access to schedules of routes. The response is made
 of an array of route_schedule, and another one of <a href="#note">note</a>. You can
 access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/route_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/route_schedules</a></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -1725,9 +1737,9 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 </tbody></table>
 
-<h4 id="objects">Objects</h4>
+<h3 id="objects">Objects</h3>
 
-<h5 id="route_schedule-object">route_schedule object</h5>
+<h4 id="route_schedule-object">route_schedule object</h4>
 
 <table><thead>
 <tr>
@@ -1748,7 +1760,7 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 </tbody></table>
 
-<h5 id="table">table</h5>
+<h4 id="table">table</h4>
 
 <table><thead>
 <tr>
@@ -1769,7 +1781,7 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 </tbody></table>
 
-<h5 id="header">header</h5>
+<h4 id="header">header</h4>
 
 <table><thead>
 <tr>
@@ -1795,7 +1807,7 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 </tbody></table>
 
-<h5 id="row">row</h5>
+<h4 id="row">row</h4>
 
 <table><thead>
 <tr>
@@ -1816,13 +1828,15 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 </tbody></table>
 
-<h3 id="stop-schedules-and-other-kind-of-time-tables-stop_schedules"><a name="stop-schedules"></a>Stop Schedules and other kind of time tables (/stop_schedules)</h3>
+<h2 id="stop-schedules-and-other-kind-of-time-tables"><a name="stop-schedules"></a>Stop Schedules and other kind of time tables</h2>
+
+<p>Also known as <code class="prettyprint">/stop_schedules</code> service.</p>
 
 <p>This api gives you access to schedules of stops going through a stop
 point. The response is made of an array of stop_schedule, and another
 one of <a href="#note">note</a>. You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -1870,7 +1884,7 @@ one of <a href="#note">note</a>. You can access it via that kind of url: <a href
 </tr>
 </tbody></table>
 
-<h4 id="stop_schedule-object">Stop_schedule object</h4>
+<h3 id="stop_schedule-object">Stop_schedule object</h3>
 
 <table><thead>
 <tr>
@@ -1901,12 +1915,14 @@ one of <a href="#note">note</a>. You can access it via that kind of url: <a href
 </tr>
 </tbody></table>
 
-<h3 id="departures-departures"><a name="departures"></a>Departures (/departures)</h3>
+<h2 id="departures"><a name="departures"></a>Departures</h2>
+
+<p>Also known as <code class="prettyprint">/departures</code> service.</p>
 
 <p>This api retrieves a list of departures from a datetime of a selected
 object. Departures are ordered chronologically in ascending order.</p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -1947,7 +1963,7 @@ object. Departures are ordered chronologically in ascending order.</p>
 </tr>
 </tbody></table>
 
-<h4 id="departure-objects">Departure objects</h4>
+<h3 id="departure-objects">Departure objects</h3>
 
 <table><thead>
 <tr>
@@ -1973,17 +1989,21 @@ object. Departures are ordered chronologically in ascending order.</p>
 </tr>
 </tbody></table>
 
-<h3 id="arrivals-arrivals"><a name="arrivals"></a>Arrivals (/arrivals)</h3>
+<h2 id="arrivals"><a name="arrivals"></a>Arrivals</h2>
+
+<p>Also known as <code class="prettyprint">/arrivals</code> service.</p>
 
 <p>This api retrieves a list of arrivals from a datetime of a selected
 object. Arrivals are ordered chronologically in ascending order.</p>
 
-<h3 id="traffic-reports-traffic_reports"><a name="traffic-reports"></a>Traffic reports (/traffic_reports)</h3>
+<h2 id="traffic-reports"><a name="traffic-reports"></a>Traffic reports</h2>
+
+<p>Also known as <code class="prettyprint">/traffic_reports</code> service.</p>
 
 <p>This service provides the state of public transport traffic. It can be
 called for an overall coverage or for a specific object.</p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <p>You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/traffic_reports">https://api.navitia.io/v1/{a_path_to_a_resource}/traffic_reports</a></p>
 
@@ -2011,9 +2031,9 @@ called for an overall coverage or for a specific object.</p>
 of <a href="#disruption">disruptions</a>. There are inner links between this 2 arrays: see the
 <a href="#inner-reference">inner-reference</a> section to use them.</p>
 
-<h4 id="objects">Objects</h4>
+<h3 id="objects">Objects</h3>
 
-<h5 id="traffic-report">Traffic report</h5>
+<h4 id="traffic-report">Traffic report</h4>
 
 <p>Traffic_reports is an array of some traffic_report object. One
 traffic_report object is a complex object, made of a network, an array
@@ -2202,11 +2222,11 @@ many times.</p>
 
 <p>Details for disruption objects : <a href="#disruptions">disruptions</a></p>
 
-<h2 id="objects">Objects</h2>
+          <h1 id="objects">Objects</h1>
 
-<h3 id="standard-objects">Standard Objects</h3>
+<h2 id="standard-objects">Standard Objects</h2>
 
-<h4 id="coord">Coord</h4>
+<h3 id="coord">Coord</h3>
 
 <p>Lots of object are geographically localized :</p>
 
@@ -2229,7 +2249,7 @@ many times.</p>
 </tr>
 </tbody></table>
 
-<h4 id="iso-date-time">Iso-date-time</h4>
+<h3 id="iso-date-time">Iso-date-time</h3>
 
 <p>Navitia manages every date or time as a UTC date-time. The web-service </p>
 
@@ -2242,9 +2262,9 @@ many times.</p>
 
 <p>There are lots of ISO 8601 libraries in every kind of language that you should use before breaking down <a href="https://youtu.be/-5wpm-gesOY">https://youtu.be/-5wpm-gesOY</a></p>
 
-<h3 id="public-transport-objects">Public transport objects</h3>
+<h2 id="public-transport-objects">Public transport objects</h2>
 
-<h4 id="network">Network</h4>
+<h3 id="network">Network</h3>
 
 <p>Networks are fed by agencies in GTFS format.</p>
 
@@ -2267,7 +2287,7 @@ many times.</p>
 </tr>
 </tbody></table>
 
-<h4 id="line">Line</h4>
+<h3 id="line">Line</h3>
 
 <table><thead>
 <tr>
@@ -2308,7 +2328,7 @@ many times.</p>
 </tr>
 </tbody></table>
 
-<h4 id="route">Route</h4>
+<h3 id="route">Route</h3>
 
 <table><thead>
 <tr>
@@ -2346,7 +2366,7 @@ many times.</p>
 
 <p>As &ldquo;direction&rdquo; is a <a href="#place">place</a> , it can be a poi in some data.</p>
 
-<h4 id="stop-point"><a name="stop-point"></a>Stop Point</h4>
+<h3 id="stop-point"><a name="stop-point"></a>Stop Point</h3>
 
 <table><thead>
 <tr>
@@ -2387,7 +2407,7 @@ many times.</p>
 </tr>
 </tbody></table>
 
-<h4 id="stop-area"><a name="stop-area"></a>Stop Area</h4>
+<h3 id="stop-area"><a name="stop-area"></a>Stop Area</h3>
 
 <table><thead>
 <tr>
@@ -2423,7 +2443,7 @@ many times.</p>
 </tr>
 </tbody></table>
 
-<h4 id="commercial-mode"><a name="commercial-mode"></a>Commercial Mode</h4>
+<h3 id="commercial-mode"><a name="commercial-mode"></a>Commercial Mode</h3>
 
 <table><thead>
 <tr>
@@ -2449,7 +2469,7 @@ many times.</p>
 </tr>
 </tbody></table>
 
-<h4 id="physical-mode"><a name="physical-mode"></a>Physical Mode</h4>
+<h3 id="physical-mode"><a name="physical-mode"></a>Physical Mode</h3>
 
 <table><thead>
 <tr>
@@ -2502,7 +2522,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <p>You can use these ids in the forbidden_uris[] parameter from
 <a href="#journeys-parameters">journeys parameters</a> for exemple.</p>
 
-<h4 id="company"><a name="company"></a>Company</h4>
+<h3 id="company"><a name="company"></a>Company</h3>
 
 <table><thead>
 <tr>
@@ -2523,7 +2543,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="place">Place</h4>
+<h3 id="place">Place</h3>
 
 <p>A container containing either a <a href="#admin">admin</a>, <a href="#poi">poi</a>, <a href="#address">address</a>, <a href="#stop-area">stop_area</a>,
 <a href="#stop-point">stop_point</a></p>
@@ -2577,7 +2597,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="pt_object">Pt_object</h4>
+<h3 id="pt_object">Pt_object</h3>
 
 <p>A container containing either a <a href="#network">network</a>, <a href="#commercial-mode">commercial_mode</a>, <a href="#line">line</a>, <a href="#route">route</a>,
 <a href="#stop_point">stop_area</a>, <a href="#stop_point">stop_area</a></p>
@@ -2641,9 +2661,9 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h3 id="real-time-and-disruption-objects">Real time and disruption objects</h3>
+<h2 id="real-time-and-disruption-objects">Real time and disruption objects</h2>
 
-<h4 id="disruption">Disruption</h4>
+<h3 id="disruption">Disruption</h3>
 
 <table><thead>
 <tr>
@@ -2699,7 +2719,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="message">Message</h4>
+<h3 id="message">Message</h3>
 
 <table><thead>
 <tr>
@@ -2720,7 +2740,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="severity">Severity</h4>
+<h3 id="severity">Severity</h3>
 
 <p>Severity object can be used to make visual grouping.</p>
 
@@ -2753,7 +2773,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="channel">Channel</h4>
+<h3 id="channel">Channel</h3>
 
 <table><thead>
 <tr>
@@ -2779,7 +2799,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="period">Period</h4>
+<h3 id="period">Period</h3>
 
 <table><thead>
 <tr>
@@ -2800,9 +2820,9 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h3 id="street-network-objects">Street network objects</h3>
+<h2 id="street-network-objects">Street network objects</h2>
 
-<h4 id="poi">Poi</h4>
+<h3 id="poi">Poi</h3>
 
 <p>Poi = Point Of Interest</p>
 
@@ -2830,7 +2850,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="poi-type">Poi Type</h4>
+<h3 id="poi-type">Poi Type</h3>
 
 <table><thead>
 <tr>
@@ -2851,7 +2871,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="address">Address</h4>
+<h3 id="address">Address</h3>
 
 <table><thead>
 <tr>
@@ -2887,7 +2907,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="administrative-region">Administrative region</h4>
+<h3 id="administrative-region">Administrative region</h3>
 
 <table><thead>
 <tr>
@@ -2926,9 +2946,9 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <p>Cities are mainly on the 8 level, dependant on the country
 (<a href="http://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative">http://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative</a>)</p>
 
-<h3 id="other-objects">Other objects</h3>
+<h2 id="other-objects">Other objects</h2>
 
-<h4 id="pt-date-time">pt-date-time</h4>
+<h3 id="pt-date-time">pt-date-time</h3>
 
 <p>pt-date-time (pt stands for &ldquo;public transport&rdquo;) is a complex date time object to manage the difference between stop and leaving times at a stop.</p>
 
@@ -2961,7 +2981,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="note">note</h4>
+<h3 id="note">note</h3>
 
 <table><thead>
 <tr>
@@ -2982,7 +3002,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="stop_date_time">stop_date_time</h4>
+<h3 id="stop_date_time">stop_date_time</h3>
 
 <table><thead>
 <tr>
@@ -3003,7 +3023,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h5 id="embedded-type"><a name="embedded-type"></a> Embedded type</h5>
+<h3 id="embedded-type"><a name="embedded-type"></a>Embedded type</h3>
 
 <p>Enum used to identify what kind of objects <em><a href="#places">/places</a></em>, <em><a href="#pt-objects">/pt_objects</a></em> or <em><a href="#disruption">/disruptions</a></em> services are managing.</p>
 
@@ -3060,7 +3080,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
     </ul>
 </aside>
 
-<h4 id="equipment">equipment</h4>
+<h3 id="equipment">equipment</h3>
 
 <p>Enum from</p>
 
@@ -3080,7 +3100,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <li>  has_bike_depot</li>
 </ul>
 
-<h4 id="display-informations">display informations</h4>
+<h3 id="display-informations">display informations</h3>
 
 <table><thead>
 <tr>
@@ -3136,19 +3156,23 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h4 id="link">link</h4>
+<h3 id="link">link</h3>
 
 <p>See <a href="#interface">interface</a> section.</p>
 
-<h3 id="special-parameters">Special Parameters</h3>
+<h2 id="special-parameters">Special Parameters</h2>
 
-<h4 id="datetime">datetime</h4>
+<h3 id="datetime">datetime</h3>
 
 <p>A date time with the format YYYYMMDDThhmmss</p>
 
-<h2 id="misc-mechanisms-and-few-boring-stuff">Misc mechanisms (and few boring stuff)</h2>
+<h4 id="depth">depth</h4>
 
-<h3 id="multiple-journeys">Multiple journeys</h3>
+<p>This tiny parameter can expand Navitia power by making it more wordy. As it is valuable on every API, take a look at <a href="#depth">depth</a></p>
+
+          <h1 id="misc-mechanisms-and-few-boring-stuff">Misc mechanisms (and few boring stuff)</h1>
+
+<h2 id="multiple-journeys">Multiple journeys</h2>
 
 <p>Navitia can compute several kind of journeys with a journey query.</p>
 
@@ -3167,7 +3191,7 @@ if the user asked with <code class="prettyprint">datetime_represents=arrival</co
 
 <p>Those journeys have the <code class="prettyprint">next</code> (or <code class="prettyprint">previous</code>) value in their tags.</p>
 
-<h3 id="journey-qualification-process">Journey qualification process</h3>
+<h2 id="journey-qualification-process">Journey qualification process</h2>
 
 <p>Since Navitia can return several journeys, it tags them to help the user
 choose the best one for his needs.</p>
@@ -3226,7 +3250,7 @@ choose the best one for his needs.</p>
 </tr>
 </tbody></table>
 
-<h3 id="on-demand-transportation">On demand transportation</h3>
+<h2 id="on-demand-transportation">On demand transportation</h2>
 
 <p>Some transit agencies force travelers to call them to arrange a pickup at a particular place or stop point.</p>
 
