@@ -95,7 +95,7 @@ Or, in a simplier way, you can add your token in the address bar like :</p>
 
 <h2 id="about-the-data">About the data</h2>
 
-<p>The street network is extracted from <a href="#http://www.openstreetmap.org">OpenStreetMap</a>. The public transport data are provided by networks that provide their timetables as open data. Some data improvement are achieved by Kisio Digital.</p>
+<p>The street network is extracted from <a href="#http://www.openstreetmap.org">OpenStreetMap</a>. The public transport data are provided by networks that provide their timetables as open data. Some data improvements are achieved by Kisio Digital and are published back there https://navitia.opendatasoft.com/</p>
 
 <aside class="success">
     We are gradually supporting more and more cities. If your city has open public transport data and is missing, drop us a note.
@@ -183,7 +183,7 @@ In this case it needs a region id. This id can the found in the <code class="pre
 <li><a href="https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro">https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro</a></li>
 <li>Response contain one network, one mode, and many lines</li>
 </ul></li>
-<li>Let&rsquo;s try some filtering (see <a href="#ptreferential">ptreferential</a>)
+<li>Let&rsquo;s try some filtering (see <a href="#pt-ref">PT objects exploration</a>)
 
 <ul>
 <li>filter on the specific metro network (&ldquo;id&rdquo;: &ldquo;network:OIF:439&rdquo; extracted from last request)</li>
@@ -268,7 +268,8 @@ For example you can allow bss (and walking since it&rsquo;s implicitly allowed w
 
 <h3 id="what-stations-can-be-reached-in-the-next-20-minutes">What stations can be reached in the next 20 minutes</h3>
 
-<p>The API can computes <em>all</em> the reachable stop points from an origin within a given maximum travel duration.</p>
+<p>The API can computes <em>all</em> the reachable stop points from an origin within a given maximum travel duration.
+That&rsquo;s what we call an <code class="prettyprint">isochron</code> (see <a href="#journeys">journeys section</a> )</p>
 
 <p>All the stop points that can be reached from the Transamerica Pyramid can be fetched with the following request:
 <a href="https://api.navitia.io/v1/coverage/us-ca/coords/-122.402770;37.794682/journeys?max_duration=1200">https://api.navitia.io/v1/coverage/us-ca/coords/-122.402770;37.794682/journeys?max_duration=1200</a></p>
@@ -785,23 +786,20 @@ ignored.</p>
 
 <p>Every object managed by Navitia comes with its own list of ids. 
 You will find some source ids, merge ids, etc. in &ldquo;codes&rdquo; list in json responses.
-Be careful, there are not unique. Navitia id is the only lonely unique id.</p>
-<pre class="highlight json"><code><span class="w">        </span><span class="err">codes</span><span class="w"> </span><span class="err">:</span><span class="w">
+Be careful, these codes may not be unique. The navitia id is the only unique id.</p>
+<pre class="highlight json"><code><span class="w">        </span><span class="s2">"codes"</span><span class="w"> </span><span class="err">:</span><span class="w">
         </span><span class="p">[</span><span class="w">
-            </span><span class="mi">0</span><span class="w"> </span><span class="err">:</span><span class="w">
             </span><span class="p">{</span><span class="w">
-                </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"external_code"</span><span class="err">,</span><span class="w">
-                </span><span class="err">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"OBO5852"</span><span class="w">
+                </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"external_code"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"value"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"OBO5852"</span><span class="w">
             </span><span class="p">},</span><span class="w">
-            </span><span class="mi">1</span><span class="w"> </span><span class="err">:</span><span class="w">
             </span><span class="p">{</span><span class="w">
-                </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"gtfs_stop_code"</span><span class="err">,</span><span class="w">
-                </span><span class="err">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"PLA40A"</span><span class="w">
+                </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"gtfs_stop_code"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"value"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"PLA40A"</span><span class="w">
             </span><span class="p">},</span><span class="w">
-            </span><span class="mi">2</span><span class="w"> </span><span class="err">:</span><span class="w">
             </span><span class="p">{</span><span class="w">
-                </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"source"</span><span class="err">,</span><span class="w">
-                </span><span class="err">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"5852"</span><span class="w">
+                </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"source"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"value"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"5852"</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">]</span><span class="w">
 </span></code></pre>
@@ -815,7 +813,7 @@ Be careful, there are not unique. Navitia id is the only lonely unique id.</p>
 <ul>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/stop_points?filter=stop_point.has_code(source,5852)">https://api.navitia.io/v1/coverage/fr-sw/stop_points?filter=stop_point.has_code(source,5852)</a></li>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/stop_areas?filter=stop_area.has_code(gtfs_stop_code,1)">https://api.navitia.io/v1/coverage/fr-sw/stop_areas?filter=stop_area.has_code(gtfs_stop_code,1)</a></li>
-<li>  <a href="http://vip-jormpre-ws.mutu.prod.canaltp.fr/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891615)">http://vip-jormpre-ws.mutu.prod.canaltp.fr/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891615)</a></li>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891615)">https://api.navitia.io/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891615)</a></li>
 </ul>
 
 <h4 id="line-code">line.code</h4>
@@ -1952,6 +1950,11 @@ one of <a href="#note">note</a>. You can access it via that kind of url: <a href
 <td>stop_point</td>
 <td><a href="#stop-point">stop_point</a></td>
 <td>The stop point of the schedule</td>
+</tr>
+<tr>
+<td>additional_informations</td>
+<td><a href="#additional-informations">additional_informations</a></td>
+<td>Other informations, when no departures <div data-collapse><p>enum values:</p><ul><li>date_out_of_bound</li><li>terminus</li><li>active_disruption</li></ul></div></td>
 </tr>
 </tbody></table>
 
@@ -3348,6 +3351,8 @@ employed in www.navitia.io</p>
 
 <p>You can read a mobility lexicon at
 <a href="https://github.com/OpenTransport/vocabulary/blob/master/vocabulary.md">https://github.com/OpenTransport/vocabulary/blob/master/vocabulary.md</a></p>
+
+<p>You will often read &ldquo;PT&rdquo; in this document. PT stands for public transport.</p>
 
 <h2 id="stop-point">Stop Point</h2>
 

@@ -98,7 +98,7 @@ In this case it needs a region id. This id can the found in the <code class="pre
 <li><a href="https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro">https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro</a></li>
 <li>Response contain one network, one mode, and many lines</li>
 </ul></li>
-<li>Let&rsquo;s try some filtering (see <a href="#ptreferential">ptreferential</a>)
+<li>Let&rsquo;s try some filtering (see <a href="#pt-ref">PT objects exploration</a>)
 
 <ul>
 <li>filter on the specific metro network (&ldquo;id&rdquo;: &ldquo;network:OIF:439&rdquo; extracted from last request)</li>
@@ -183,7 +183,8 @@ For example you can allow bss (and walking since it&rsquo;s implicitly allowed w
 
 <h3 id="what-stations-can-be-reached-in-the-next-20-minutes">What stations can be reached in the next 20 minutes</h3>
 
-<p>The API can computes <em>all</em> the reachable stop points from an origin within a given maximum travel duration.</p>
+<p>The API can computes <em>all</em> the reachable stop points from an origin within a given maximum travel duration.
+That&rsquo;s what we call an <code class="prettyprint">isochron</code> (see <a href="#journeys">journeys section</a> )</p>
 
 <p>All the stop points that can be reached from the Transamerica Pyramid can be fetched with the following request:
 <a href="https://api.navitia.io/v1/coverage/us-ca/coords/-122.402770;37.794682/journeys?max_duration=1200">https://api.navitia.io/v1/coverage/us-ca/coords/-122.402770;37.794682/journeys?max_duration=1200</a></p>
