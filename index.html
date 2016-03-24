@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Documentation Navitia.io</title>
+    <title>Navitia.io documentation</title>
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -66,21 +66,31 @@ The API has been built on the <a href="http://en.wikipedia.org/wiki/HATEOAS">HAT
 
 <h2 id="getting-started">Getting started</h2>
 
-<h4 id="first">First,</h4>
+<h4 id="first-step">First step,</h4>
 
 <p>get a token here <a href="http://navitia.io/register/">http://navitia.io/register/</a></p>
 
-<h4 id="second">Second,</h4>
+<h4 id="second-step">Second step,</h4>
 
-<p>use the token : if you use a web browser, you only have to <strong>paste it in the user area</strong>,
-with <strong>no password</strong>. 
-Or, in a simplier way, you can add your token in the address bar like :</p>
+<p>Go to the API  <a href="https://api.navitia.io">https://api.navitia.io</a></p>
+
+<p>The simpliest way is to use a web browser. 
+Our humble opinion is that <a href="#http://www.getfirefox.com">firefox browser</a> and a json viewer extension like <a href="#https://addons.mozilla.org/en-us/firefox/addon/json-dataview">JSON-DataView</a> is a good setup.</p>
+
+<h4 id="third-step">Third step,</h4>
+
+<p>use the token : if you use a modern web browser, you only have to <strong>paste it</strong> in the <strong>user name area</strong>,
+with <strong>no password</strong>.</p>
+
+<p><img alt="Put token in Firefox browser" src="images/firefox_token.png" /></p>
+
+<p>Or, in a simplier way, you can add your token in the address bar like :</p>
 
 <aside class="success">
 <b>https://01234567-89ab-cdef-0123-456789abcdef@api.navitia.io/v1/coverage/fr-idf/networks</b>
 </aside>
 
-<p>See <a href="#authentication">authentication</a> section to find out more details on <strong>how to use your token</strong>.</p>
+<p>See <a href="#authentication">authentication</a> section to find out more details on <strong>how to use your token</strong> when coding.</p>
 
 <h4 id="then">Then,</h4>
 
@@ -95,7 +105,7 @@ Or, in a simplier way, you can add your token in the address bar like :</p>
 
 <h2 id="about-the-data">About the data</h2>
 
-<p>The street network is extracted from <a href="#http://www.openstreetmap.org">OpenStreetMap</a>. The public transport data are provided by networks that provide their timetables as open data. Some data improvements are achieved by Kisio Digital and are published back there https://navitia.opendatasoft.com/</p>
+<p>The street network is extracted from <a href="#http://www.openstreetmap.org">OpenStreetMap</a>. The public transport data are provided by networks that provide their timetables as open data. Some data improvements are achieved by Kisio Digital and are published back there <a href="https://navitia.opendatasoft.com">https://navitia.opendatasoft.com</a></p>
 
 <aside class="success">
     We are gradually supporting more and more cities. If your city has open public transport data and is missing, drop us a note.
@@ -1954,7 +1964,7 @@ one of <a href="#note">note</a>. You can access it via that kind of url: <a href
 <tr>
 <td>additional_informations</td>
 <td><a href="#additional-informations">additional_informations</a></td>
-<td>Other informations, when no departures <div data-collapse><p>enum values:</p><ul><li>date_out_of_bound</li><li>terminus</li><li>active_disruption</li></ul></div></td>
+<td>Other informations, when no departures <div data-collapse><p>enum values:</p><ul><li>date_out_of_bound</li><li>terminus</li><li>active_disruption</li><li>no_departures_known</li></ul></div></td>
 </tr>
 </tbody></table>
 
