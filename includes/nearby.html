@@ -15,7 +15,7 @@
 
   </head>
 
-  <body class="includes includes_ressources">
+  <body class="includes includes_nearby">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -30,13 +30,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="ressources-overview"><a name="ressources"></a>Ressources overview</h1>
-
-<p>The only endpoint of this version of the api is :
-<a href="https://api.navitia.io/v1/">https://api.navitia.io/v1/</a></p>
-
-<p>All the resources return a response containing a links object, a paging
-object, and the requested object.</p>
+        <h1 id="places-nearby"><a name="nearby"></a>Places nearby</h1>
 
 <ul>
 <li>  <strong><a href="#coverage">Coverage</a></strong> : List of the region covered by navitia</li>
@@ -92,27 +86,7 @@ objects of a region</li>
 </tbody></table>
 
 <ul>
-<li>  <strong><a href="#journeys">Journeys</a></strong> : Compute journeys</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/journeys</td>
-<td>List of journeys or isochrones</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /journeys</td>
-<td>List of journeys or isochrones</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#route-schedules">Route Schedules</a></strong>, <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
+<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
 Compute time tables for a given resource</li>
 </ul>
 
@@ -123,40 +97,28 @@ Compute time tables for a given resource</li>
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/route_schedules</td>
-<td>List of the entire route schedules for a given resource</td>
-</tr>
-<tr>
 <td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/stop_schedules</td>
 <td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for a given resource</td>
+</tr>
+<tr>
+<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/stop_schedules</td>
+<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for coordinates</td>
 </tr>
 <tr>
 <td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/departures</td>
 <td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
 </tr>
 <tr>
+<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/departures</td>
+<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+<tr>
 <td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/arrivals</td>
 <td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
 </tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#places">Places</a></strong> and <strong><a href="#pt-objects">PT_objects</a></strong> : Search in the datas</li>
-</ul>
-
-<table><thead>
 <tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/places</td>
-<td>List of geographical objects</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/pt_objects</td>
-<td>List of public transport objects</td>
+<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/arrivals</td>
+<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
 </tr>
 </tbody></table>
 

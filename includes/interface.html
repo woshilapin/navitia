@@ -32,10 +32,14 @@
       <div class="content">
         <h1 id="interface">interface</h1>
 
+<p>The only endpoint of this version of the api is :
+<a href="https://api.navitia.io/v1/">https://api.navitia.io/v1/</a></p>
+
 <p>We aim to implement <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS</a>
 concept with Navitia.</p>
 
-<p>Each response contains a linkable object and lots of links. Links allow
+<p>All the resources return a response containing a links object, a paging
+object, and the requested object. That&rsquo;s lots of links. Links allow
 you to know all accessible uris and services for a given point.</p>
 
 <h2 id="paging">Paging</h2>
