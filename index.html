@@ -57,10 +57,7 @@ It provide the following services</p>
 <li>and sexy things such as isochrones</li>
 </ul>
 
-<p>navitia is a RESTful API that returns JSON formated results.
-The API has been built on the <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS model</a> so it should be quite self explanatory since the interactions are defined in hypermedia.</p>
-
-<p>Our APIs are available at the following url: <a href="https://api.navitia.io/v1">https://api.navitia.io/v1</a> (the latest API version is <code class="prettyprint">v1</code>).</p>
+<p>navitia is a <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS</a> API that returns JSON formated results, available at <a href="https://api.navitia.io">https://api.navitia.io</a></p>
 
 <p>Have a look at the examples below to learn what services we provide and how to use them.</p>
 
@@ -304,6 +301,105 @@ where the username is the key, and without password.</p>
 
 <p><code class="prettyprint">curl https://01234567-89ab-cdef-0123-456789abcdef@api.navitia.io/v1/Ressources</code></p>
 
+          <h1 id="journey-planning"><a name="journey_planning"></a><img alt="Journey planning" src="images/journeys.png" />Journey planning</h1>
+
+<p>The multi-modal itinerary feature allows you to compute the best routes from point A to point B 
+using all available means of travel, including: bus, train, subway, bike, public bike, walking, car, etc.
+This function returns a roadmap with specific instructions for a route based on available information, 
+such as: time of departure and arrival, journey time, possible modes of transport, and walking distance.</p>
+
+<p>In order to compute a journey, you may have to use these APIs (click on them for details):</p>
+
+<ul>
+<li>  <strong><a href="#places">Places</a></strong> : autocomplete on geographical data to find the departure and destination points from an input text.</li>
+<li>  <strong><a href="#journeys">Journeys</a></strong> : compute journeys from points or coordinates</li>
+</ul>
+
+          <h1 id="next-departures-and-arrivals"><a name="next_departures_and_arrivals"></a><img alt="Departures" src="images/departures.png" />Next departures and arrivals</h1>
+
+<p>The &ldquo;Next Departures&rdquo; feature provides the next scheduled departures or arrivals 
+for a specific mode of public transport (bus, tram, metro, train) at your selected stop, near coordinates, etc. </p>
+
+<ul>
+<li><p>use <code class="prettyprint">stop_schedules</code> if you want to display departures grouped by route (2 next departures for each route for example)
+<img alt="stop_schedules" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Panneau_SIEL_couleurs_Paris-Op%C3%A9ra.jpg/640px-Panneau_SIEL_couleurs_Paris-Op%C3%A9ra.jpg" /></p></li>
+<li><p>use <code class="prettyprint">departures</code> or <code class="prettyprint">arrivals</code> if you want to display a multi-route table (like big departure boards in train stations)
+<img alt="departures" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Display_at_bus_stop_sign_in_Karlovo_n%C3%A1m%C4%9Bst%C3%AD%2C_T%C5%99eb%C3%AD%C4%8D%2C_T%C5%99eb%C3%AD%C4%8D_District.JPG/640px-Display_at_bus_stop_sign_in_Karlovo_n%C3%A1m%C4%9Bst%C3%AD%2C_T%C5%99eb%C3%AD%C4%8D%2C_T%C5%99eb%C3%AD%C4%8D_District.JPG" /></p></li>
+</ul>
+
+<p>In order to display departures, you may have to use these APIs (click on them for details):</p>
+
+<ul>
+<li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
+objects of a region</li>
+<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
+Compute time tables for a given resource</li>
+</ul>
+
+          <h1 id="timetables"><a name="timetables"></a><img alt="Timetables" src="images/line_schedules.png" />Timetables</h1>
+
+<p>The Timetables features gives you access to line schedules on public transport, 
+allowing you to find the times public transport is expected at specific stops.</p>
+
+<p>It returns a variety of differents informations, including: stop points in right order, times, 
+accessibility informations, vehicle informations, etc.</p>
+
+<p>In order to display line schedules, you may have to use these APIs (click on them for details):</p>
+
+<ul>
+<li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
+objects of a region</li>
+<li>  <strong><a href="#route-schedules">Route Schedules</a></strong> and <strong><a href="#stop-schedules">Stop Schedules</a></strong> : 
+Compute time tables for a given resource</li>
+</ul>
+
+          <h1 id="places-nearby"><a name="nearby"></a><img alt="PLaces nearby" src="images/places_nearby.png" />Places nearby</h1>
+
+<p>The Places Nearby feature displays the different transport options around a location - a GPS coordinate, 
+or an address, for example.</p>
+
+<p>Using OpenStreetMap data, this function also provides information about bicycle parking, public park schedules, and parking fees.</p>
+
+<p>You can use these APIs (click on them for details):</p>
+
+<ul>
+<li>  <strong><a href="#coverage">Coverage</a></strong> : List of the region covered by navitia</li>
+<li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
+objects of a region</li>
+<li>  <strong><a href="#places-nearby">Places nearby</a></strong> : List of objects near an object or a coord</li>
+<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
+Compute time tables for a given resource</li>
+</ul>
+
+          <h1 id="explore-transport"><a name="explore"></a><img alt="Explore transport" src="images/search_places.png" />Explore transport</h1>
+
+<p>The Explore Transport feature lets you explore places, coordinates, bus stops, subway stations, etc. 
+to navigate all the data available on the API (collection service). </p>
+
+<p>You can use these APIs (click on them for details):</p>
+
+<ul>
+<li>  <strong><a href="#coverage">Coverage</a></strong> : List of the region covered by navitia</li>
+<li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
+objects of a region</li>
+<li>  <strong><a href="#places">Places</a></strong> and <strong><a href="#pt-objects">PT_objects</a></strong> : Search in the datas using autocomplete input.</li>
+</ul>
+
+          <h1 id="isochrones"><a name="isochrones"></a><img alt="Isochrones" src="images/isochrons.png" />Isochrones</h1>
+
+<p>Whether using a specific set of coordinates or a general location, you can find places within 
+your reach and their corresponding travel times, using a variety of transportation options. 
+You can even specify the maximum amount of time you want to spare on travel and find 
+the quickest way to reach your destination. 
+The Isochrone function provides information in the form of a table with all the possible stops 
+from a potential destination with their respective arrival times, travel times and number of matches. </p>
+
+<p>You have to use these APIs (click on them for details):</p>
+
+<ul>
+<li>  <strong><a href="#journeys">Journeys</a></strong> : Compute journeys</li>
+</ul>
+
           <h1 id="interface">interface</h1>
 
 <p>The only endpoint of this version of the api is :
@@ -313,7 +409,7 @@ where the username is the key, and without password.</p>
 concept with Navitia.</p>
 
 <p>All the resources return a response containing a links object, a paging
-object, and the requested object. That&rsquo;s lots of links. Links allow
+object, and the requested objects. That&rsquo;s lots of links. Links allow
 you to know all accessible uris and services for a given point.</p>
 
 <h2 id="paging">Paging</h2>
@@ -410,308 +506,7 @@ you to know all accessible uris and services for a given point.</p>
 details of your object ( <em>&ldquo;id&rdquo;: &ldquo;edc46f3a-ad3d-11e4-a5e1-005056a44da2&rdquo;</em>
 ).</p>
 
-          <h1 id="journey-planning"><a name="journey_planning"></a>Journey planning</h1>
-
-<ul>
-<li>  <strong><a href="#journeys">Journeys</a></strong> : Compute journeys</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/journeys</td>
-<td>List of journeys</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /journeys</td>
-<td>List of journeys</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#places">Places</a></strong> : autocomplete for geographical data</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/places</td>
-<td>List of geographical objects</td>
-</tr>
-</tbody></table>
-
-          <h1 id="next-departures-and-arrivals"><a name="next_departures_and_arrivals"></a>Next departures and arrivals</h1>
-
-<ul>
-<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
-Compute time tables for a given resource</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/stop_schedules</td>
-<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for a given resource</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/departures</td>
-<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/arrivals</td>
-<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-</tbody></table>
-
-          <h1 id="timetables"><a name="timetables"></a>Timetables</h1>
-
-<ul>
-<li>  <strong><a href="#route-schedules">Route Schedules</a></strong> and <strong><a href="#stop-schedules">Stop Schedules</a></strong> : 
-Compute time tables for a given resource</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/route_schedules</td>
-<td>List of the entire route schedules for a given resource</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/stop_schedules</td>
-<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for a given resource</td>
-</tr>
-</tbody></table>
-
-          <h1 id="places-nearby"><a name="nearby"></a>Places nearby</h1>
-
-<ul>
-<li>  <strong><a href="#coverage">Coverage</a></strong> : List of the region covered by navitia</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage</td>
-<td>List of the areas covered by navitia</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em></td>
-<td>Information about a specific region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/coords/<em>lon;lat</em></td>
-<td>Information about a specific region</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
-objects of a region</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/<em>collection_name</em></td>
-<td>Collection of objects of a region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/region_id/collection_name/object_id</td>
-<td>Information about a specific region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em></td>
-<td>Collection of objects of a region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em>/<em>object_id</em></td>
-<td>Information about a specific region</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
-Compute time tables for a given resource</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/stop_schedules</td>
-<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for a given resource</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/stop_schedules</td>
-<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for coordinates</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/departures</td>
-<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/departures</td>
-<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/arrivals</td>
-<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/arrivals</td>
-<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#places-nearby">Places nearby</a></strong> : List of objects near an object or a coord</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coord/<em>lon;lat</em>/places_nearby</td>
-<td>List of objects near the resource without any region id</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/places_nearby</td>
-<td>List of objects near the resource without any region id</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/places_nearby</td>
-<td>List of objects near the resource</td>
-</tr>
-</tbody></table>
-
-          <h1 id="explore-transport"><a name="explore"></a>Explore transport</h1>
-
-<ul>
-<li>  <strong><a href="#coverage">Coverage</a></strong> : List of the region covered by navitia</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage</td>
-<td>List of the areas covered by navitia</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em></td>
-<td>Information about a specific region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/coords/<em>lon;lat</em></td>
-<td>Information about a specific region</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
-objects of a region</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/<em>collection_name</em></td>
-<td>Collection of objects of a region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/region_id/collection_name/object_id</td>
-<td>Information about a specific region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em></td>
-<td>Collection of objects of a region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em>/<em>object_id</em></td>
-<td>Information about a specific region</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#places">Places</a></strong> and <strong><a href="#pt-objects">PT_objects</a></strong> : Search in the datas</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/places</td>
-<td>List of geographical objects</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/pt_objects</td>
-<td>List of public transport objects</td>
-</tr>
-</tbody></table>
-
-          <h1 id="isochrones"><a name="isochrones"></a>Isochrones</h1>
-
-<ul>
-<li>  <strong><a href="#journeys">Journeys</a></strong> : Compute journeys</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/journeys</td>
-<td>List of isochrones</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /journeys</td>
-<td>List of isochrones</td>
-</tr>
-</tbody></table>
-
-          <h1 id="apis">APIs</h1>
+          <h1 id="api-catalog">API catalog</h1>
 
 <h2 id="coverage"><a name="coverage"></a>Coverage</h2>
 
@@ -721,6 +516,28 @@ objects of a region</li>
 coverage api. The shape of the region is provided in GeoJSON.</p>
 
 <p>The only arguments are the ones of <a href="#paging">paging</a>.</p>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">coverage</code></td>
+<td>List of the areas covered by navitia</td>
+</tr>
+<tr>
+<td><code class="prettyprint">coverage/{region_id}</code></td>
+<td>Information about a specific region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">coverage/{region_id}/coords/{lon;lat}</code></td>
+<td>Information about a specific region</td>
+</tr>
+</tbody></table>
 
 <h2 id="inverted-geocoding"><a name="coord"></a>Inverted geocoding</h2>
 
@@ -795,6 +612,32 @@ particular collection. To see an object add the id of this object at the
 end of the collection&rsquo;s url. The <a href="#paging">paging</a> arguments may be used to
 paginate results.</p>
 
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/{region_id}/{collection_name}</code></td>
+<td>Collection of objects of a region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{region_id}/{collection_name}/{object_id}</code></td>
+<td>Information about a specific region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/{collection_name}</code></td>
+<td>Collection of objects of a region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/{collection_name}/{object_id}</code></td>
+<td>Information about a specific region</td>
+</tr>
+</tbody></table>
+
 <h3 id="collections">Collections</h3>
 
 <ul>
@@ -809,6 +652,8 @@ paginate results.</p>
 <li>  <a href="#vehicle-journey">vehicle_journeys</a></li>
 <li>  <a href="#disruption">disruptions</a></li>
 </ul>
+
+<h3 id="parameters">Parameters</h3>
 
 <h4 id="depth"><a name="depth"></a>depth</h4>
 
@@ -1050,6 +895,20 @@ chapter</p>
 of magical autocomplete on public transport data. It returns, in
 addition of classic objects, a collection of <a href="#place">places</a>.</p>
 
+<h3 id="access">Access</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/pt_objects</code></td>
+<td>List of public transport objects</td>
+</tr>
+</tbody></table>
+
 <h3 id="how-does-it-works">How does it works</h3>
 
 <p>Differents kind of objects can be returned (sorted as):</p>
@@ -1179,6 +1038,20 @@ filter)</li>
     There is no pagination for this api.
 </aside>
 
+<h3 id="access">Access</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/places</code></td>
+<td>List of geographical objects</td>
+</tr>
+</tbody></table>
+
 <h3 id="parameters">Parameters</h3>
 
 <table><thead>
@@ -1250,6 +1123,28 @@ coordinates. It returns, in addition of classic objects, a collection of
 <aside class="warning">
     There is no pagination for this api.
 </aside>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coord/{lon;lat}/places_nearby</code></td>
+<td>List of objects near the resource without any region id</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/places_nearby</code></td>
+<td>List of objects near the resource without any region id</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{resource_path}/places_nearby</code></td>
+<td>List of objects near the resource</td>
+</tr>
+</tbody></table>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -1388,6 +1283,24 @@ However when no coordinates are provided, you need to provide on what region you
     If only one is defined an isochrone is computed with every possible
     journeys from or to the point.
 </aside>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/journeys</code></td>
+<td>List of journeys from wherever land</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{region_id}/journeys</code></td>
+<td>List of journeys on a specific coverage</td>
+</tr>
+</tbody></table>
 
 <h3 id="main-parameters"><a name="journeys-parameters"></a>Main parameters</h3>
 
@@ -1888,6 +1801,24 @@ However when no coordinates are provided, you need to provide on what region you
 of an array of route_schedule, and another one of <a href="#note">note</a>. You can
 access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/route_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/route_schedules</a></p>
 
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">coverage/{resource_path}/route_schedules</code></td>
+<td>List of the entire route schedules for a given resource</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/route_schedules</code></td>
+<td>List of the entire route schedules for coordinates</td>
+</tr>
+</tbody></table>
+
 <h3 id="parameters">Parameters</h3>
 
 <table><thead>
@@ -2035,6 +1966,24 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 point. The response is made of an array of stop_schedule, and another
 one of <a href="#note">note</a>. You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
 
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/stop_schedules</code></td>
+<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for coordinates</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{resource_path}/stop_schedules</code></td>
+<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for a given resource</td>
+</tr>
+</tbody></table>
+
 <h3 id="parameters">Parameters</h3>
 
 <table><thead>
@@ -2126,6 +2075,24 @@ one of <a href="#note">note</a>. You can access it via that kind of url: <a href
 <p>This api retrieves a list of departures from a datetime of a selected
 object. Departures are ordered chronologically in ascending order.</p>
 
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/{resource_path}/departures</code></td>
+<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/departures</code></td>
+<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+</tbody></table>
+
 <h3 id="parameters">Parameters</h3>
 
 <table><thead>
@@ -2199,6 +2166,24 @@ object. Departures are ordered chronologically in ascending order.</p>
 
 <p>This api retrieves a list of arrivals from a datetime of a selected
 object. Arrivals are ordered chronologically in ascending order.</p>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/{resource_path}/arrivals</code></td>
+<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/arrivals</code></td>
+<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+</tbody></table>
 
 <h2 id="traffic-reports"><a name="traffic-reports"></a>Traffic reports</h2>
 

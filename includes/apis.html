@@ -30,7 +30,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="apis">APIs</h1>
+        <h1 id="api-catalog">API catalog</h1>
 
 <h2 id="coverage"><a name="coverage"></a>Coverage</h2>
 
@@ -40,6 +40,28 @@
 coverage api. The shape of the region is provided in GeoJSON.</p>
 
 <p>The only arguments are the ones of <a href="#paging">paging</a>.</p>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">coverage</code></td>
+<td>List of the areas covered by navitia</td>
+</tr>
+<tr>
+<td><code class="prettyprint">coverage/{region_id}</code></td>
+<td>Information about a specific region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">coverage/{region_id}/coords/{lon;lat}</code></td>
+<td>Information about a specific region</td>
+</tr>
+</tbody></table>
 
 <h2 id="inverted-geocoding"><a name="coord"></a>Inverted geocoding</h2>
 
@@ -114,6 +136,32 @@ particular collection. To see an object add the id of this object at the
 end of the collection&rsquo;s url. The <a href="#paging">paging</a> arguments may be used to
 paginate results.</p>
 
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/{region_id}/{collection_name}</code></td>
+<td>Collection of objects of a region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{region_id}/{collection_name}/{object_id}</code></td>
+<td>Information about a specific region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/{collection_name}</code></td>
+<td>Collection of objects of a region</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/{collection_name}/{object_id}</code></td>
+<td>Information about a specific region</td>
+</tr>
+</tbody></table>
+
 <h3 id="collections">Collections</h3>
 
 <ul>
@@ -128,6 +176,8 @@ paginate results.</p>
 <li>  <a href="#vehicle-journey">vehicle_journeys</a></li>
 <li>  <a href="#disruption">disruptions</a></li>
 </ul>
+
+<h3 id="parameters">Parameters</h3>
 
 <h4 id="depth"><a name="depth"></a>depth</h4>
 
@@ -369,6 +419,20 @@ chapter</p>
 of magical autocomplete on public transport data. It returns, in
 addition of classic objects, a collection of <a href="#place">places</a>.</p>
 
+<h3 id="access">Access</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/pt_objects</code></td>
+<td>List of public transport objects</td>
+</tr>
+</tbody></table>
+
 <h3 id="how-does-it-works">How does it works</h3>
 
 <p>Differents kind of objects can be returned (sorted as):</p>
@@ -498,6 +562,20 @@ filter)</li>
     There is no pagination for this api.
 </aside>
 
+<h3 id="access">Access</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/places</code></td>
+<td>List of geographical objects</td>
+</tr>
+</tbody></table>
+
 <h3 id="parameters">Parameters</h3>
 
 <table><thead>
@@ -569,6 +647,28 @@ coordinates. It returns, in addition of classic objects, a collection of
 <aside class="warning">
     There is no pagination for this api.
 </aside>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coord/{lon;lat}/places_nearby</code></td>
+<td>List of objects near the resource without any region id</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/places_nearby</code></td>
+<td>List of objects near the resource without any region id</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{resource_path}/places_nearby</code></td>
+<td>List of objects near the resource</td>
+</tr>
+</tbody></table>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -707,6 +807,24 @@ However when no coordinates are provided, you need to provide on what region you
     If only one is defined an isochrone is computed with every possible
     journeys from or to the point.
 </aside>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/journeys</code></td>
+<td>List of journeys from wherever land</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{region_id}/journeys</code></td>
+<td>List of journeys on a specific coverage</td>
+</tr>
+</tbody></table>
 
 <h3 id="main-parameters"><a name="journeys-parameters"></a>Main parameters</h3>
 
@@ -1207,6 +1325,24 @@ However when no coordinates are provided, you need to provide on what region you
 of an array of route_schedule, and another one of <a href="#note">note</a>. You can
 access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/route_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/route_schedules</a></p>
 
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">coverage/{resource_path}/route_schedules</code></td>
+<td>List of the entire route schedules for a given resource</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/route_schedules</code></td>
+<td>List of the entire route schedules for coordinates</td>
+</tr>
+</tbody></table>
+
 <h3 id="parameters">Parameters</h3>
 
 <table><thead>
@@ -1354,6 +1490,24 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 point. The response is made of an array of stop_schedule, and another
 one of <a href="#note">note</a>. You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
 
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/stop_schedules</code></td>
+<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for coordinates</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{resource_path}/stop_schedules</code></td>
+<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for a given resource</td>
+</tr>
+</tbody></table>
+
 <h3 id="parameters">Parameters</h3>
 
 <table><thead>
@@ -1445,6 +1599,24 @@ one of <a href="#note">note</a>. You can access it via that kind of url: <a href
 <p>This api retrieves a list of departures from a datetime of a selected
 object. Departures are ordered chronologically in ascending order.</p>
 
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/{resource_path}/departures</code></td>
+<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/departures</code></td>
+<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+</tbody></table>
+
 <h3 id="parameters">Parameters</h3>
 
 <table><thead>
@@ -1518,6 +1690,24 @@ object. Departures are ordered chronologically in ascending order.</p>
 
 <p>This api retrieves a list of arrivals from a datetime of a selected
 object. Arrivals are ordered chronologically in ascending order.</p>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/{resource_path}/arrivals</code></td>
+<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{lon;lat}/arrivals</code></td>
+<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+</tr>
+</tbody></table>
 
 <h2 id="traffic-reports"><a name="traffic-reports"></a>Traffic reports</h2>
 

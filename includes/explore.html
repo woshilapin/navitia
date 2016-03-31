@@ -30,80 +30,19 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="explore-transport"><a name="explore"></a>Explore transport</h1>
+        <h1 id="explore-transport"><a name="explore"></a><img alt="Explore transport" src="../images/search_places.png" />Explore transport</h1>
+
+<p>The Explore Transport feature lets you explore places, coordinates, bus stops, subway stations, etc. 
+to navigate all the data available on the API (collection service). </p>
+
+<p>You can use these APIs (click on them for details):</p>
 
 <ul>
 <li>  <strong><a href="#coverage">Coverage</a></strong> : List of the region covered by navitia</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage</td>
-<td>List of the areas covered by navitia</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em></td>
-<td>Information about a specific region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/coords/<em>lon;lat</em></td>
-<td>Information about a specific region</td>
-</tr>
-</tbody></table>
-
-<ul>
 <li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
 objects of a region</li>
+<li>  <strong><a href="#places">Places</a></strong> and <strong><a href="#pt-objects">PT_objects</a></strong> : Search in the datas using autocomplete input.</li>
 </ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/<em>collection_name</em></td>
-<td>Collection of objects of a region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/region_id/collection_name/object_id</td>
-<td>Information about a specific region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em></td>
-<td>Collection of objects of a region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em>/<em>object_id</em></td>
-<td>Information about a specific region</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#places">Places</a></strong> and <strong><a href="#pt-objects">PT_objects</a></strong> : Search in the datas</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/places</td>
-<td>List of geographical objects</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/pt_objects</td>
-<td>List of public transport objects</td>
-</tr>
-</tbody></table>
 
       </div>
       <div class="dark-box">

@@ -30,121 +30,23 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="places-nearby"><a name="nearby"></a>Places nearby</h1>
+        <h1 id="places-nearby"><a name="nearby"></a><img alt="PLaces nearby" src="../images/places_nearby.png" />Places nearby</h1>
+
+<p>The Places Nearby feature displays the different transport options around a location - a GPS coordinate, 
+or an address, for example.</p>
+
+<p>Using OpenStreetMap data, this function also provides information about bicycle parking, public park schedules, and parking fees.</p>
+
+<p>You can use these APIs (click on them for details):</p>
 
 <ul>
 <li>  <strong><a href="#coverage">Coverage</a></strong> : List of the region covered by navitia</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage</td>
-<td>List of the areas covered by navitia</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em></td>
-<td>Information about a specific region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/coords/<em>lon;lat</em></td>
-<td>Information about a specific region</td>
-</tr>
-</tbody></table>
-
-<ul>
 <li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
 objects of a region</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>region_id</em>/<em>collection_name</em></td>
-<td>Collection of objects of a region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/region_id/collection_name/object_id</td>
-<td>Information about a specific region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em></td>
-<td>Collection of objects of a region</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/<em>collection_name</em>/<em>object_id</em></td>
-<td>Information about a specific region</td>
-</tr>
-</tbody></table>
-
-<ul>
+<li>  <strong><a href="#places-nearby">Places nearby</a></strong> : List of objects near an object or a coord</li>
 <li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
 Compute time tables for a given resource</li>
 </ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/stop_schedules</td>
-<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for a given resource</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/stop_schedules</td>
-<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for coordinates</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/departures</td>
-<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/departures</td>
-<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/arrivals</td>
-<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/arrivals</td>
-<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
-</tr>
-</tbody></table>
-
-<ul>
-<li>  <strong><a href="#places-nearby">Places nearby</a></strong> : List of objects near an object or a coord</li>
-</ul>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">get</code> /coord/<em>lon;lat</em>/places_nearby</td>
-<td>List of objects near the resource without any region id</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>lon;lat</em>/places_nearby</td>
-<td>List of objects near the resource without any region id</td>
-</tr>
-<tr>
-<td><code class="prettyprint">get</code> /coverage/<em>resource_path</em>/places_nearby</td>
-<td>List of objects near the resource</td>
-</tr>
-</tbody></table>
 
       </div>
       <div class="dark-box">
