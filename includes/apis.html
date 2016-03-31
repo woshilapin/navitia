@@ -419,20 +419,6 @@ chapter</p>
 of magical autocomplete on public transport data. It returns, in
 addition of classic objects, a collection of <a href="#place">places</a>.</p>
 
-<h3 id="access">Access</h3>
-
-<table><thead>
-<tr>
-<th>url</th>
-<th>Result</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">/coverage/pt_objects</code></td>
-<td>List of public transport objects</td>
-</tr>
-</tbody></table>
-
 <h3 id="how-does-it-works">How does it works</h3>
 
 <p>Differents kind of objects can be returned (sorted as):</p>
@@ -485,6 +471,20 @@ For example, he could key without any filters:</p>
         <li>route : &ldquo;bobby metro 11 to Steven&rdquo;</li>
     </ul>
 </div>
+
+<h3 id="access">Access</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/coverage/pt_objects</code></td>
+<td>List of public transport objects</td>
+</tr>
+</tbody></table>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -609,8 +609,6 @@ filter)</li>
 <td></td>
 </tr>
 </tbody></table>
-
-<h3 id="how-does-it-works">How does it works</h3>
 
 <h3 id="example">Example</h3>
 
@@ -1708,6 +1706,10 @@ object. Arrivals are ordered chronologically in ascending order.</p>
 <td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
 </tr>
 </tbody></table>
+
+<h3 id="parameters">Parameters</h3>
+
+<p>there are exactly the same as <a href="#departures">departures</a></p>
 
 <h2 id="traffic-reports"><a name="traffic-reports"></a>Traffic reports</h2>
 
