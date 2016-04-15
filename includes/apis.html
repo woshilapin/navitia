@@ -127,15 +127,15 @@ accessible local mobility services:</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h2 id="public-transportation-objects-exploration"><a name="pt-ref"></a>Public transportation objects exploration</h2>
+<h2 id="public-transportation-objects-exploration"><a name="pt-ref"></a>Public Transportation Objects exploration</h2>
 
 <p>Also known as <code class="prettyprint">/networks</code>, <code class="prettyprint">/lines</code>, <code class="prettyprint">/stop_areas</code>&hellip; services.</p>
 
 <p>Once you have selected a region, you can explore the public
-transportation objects easily with these apis. You just need to add at
-the end of your url a collection name to see all the objects of a
-particular collection. To see an object add the id of this object at the
-end of the collection&rsquo;s url. The <a href="#paging">paging</a> arguments may be used to
+transportation objects easily with these APIs. You just need to add at
+the end of your URL a collection name to see every objects within a
+particular collection. To see an object detail, add the id of this object at the
+end of the collection&rsquo;s URL. The <a href="#paging">paging</a> arguments may be used to
 paginate results.</p>
 
 <h3 id="accesses">Accesses</h3>
@@ -417,9 +417,9 @@ chapter</p>
 
 <p>Also known as <code class="prettyprint">/pt_objects</code> service.</p>
 
-<p>This api search in public transport objects via their names. It&rsquo;s a kind
-of magical autocomplete on public transport data. It returns, in
-addition of classic objects, a collection of <a href="#place">places</a>.</p>
+<p>This endpoint allows you to search in public transport objects using their names. It&rsquo;s a kind
+of magical <a href="https://en.wikipedia.org/wiki/Autocomplete">autocomplete</a> on public transport data. 
+It returns a collection of <a href="#pt-object">pt_object</a>.</p>
 
 <h3 id="how-does-it-works">How does it works</h3>
 
@@ -545,9 +545,11 @@ There is no pagination for this api
 
 <p>Also known as <code class="prettyprint">/places</code> service.</p>
 
-<p>This api search in all geographical objects via their names. It returns,
-in addition of classic objects, a collection of <a href="#place">places</a> . This api is
-very useful to make some autocomplete stuff.</p>
+<p>This endpoint allows you to search in all geographical objects using their names, returning
+a <a href="#place">place</a> collection.</p>
+
+<p>It is very useful to make some <a href="https://en.wikipedia.org/wiki/Autocomplete">autocomplete</a> stuff ie 
+to understand the user input even if he has mittens.</p>
 
 <p>Differents kind of objects can be returned (sorted as):</p>
 
@@ -607,7 +609,7 @@ filter)</li>
 <td>nop</td>
 <td>admin_uri[]</td>
 <td>array of string</td>
-<td>If filled, will restrained the search within the given admin uris</td>
+<td>If filled, it will filter the search within the given admin uris</td>
 <td></td>
 </tr>
 </tbody></table>
@@ -640,9 +642,8 @@ filter)</li>
 
 <p>Also known as <code class="prettyprint">/places_nearby</code> service.</p>
 
-<p>This api search for public transport object near another object, or near
-coordinates. It returns, in addition of classic objects, a collection of
-<a href="#place">places</a>.</p>
+<p>This endpoint allowe you to search for public transport objects that are near another object, or nearby
+coordinates, returning a <a href="#place">places</a> collection.</p>
 
 <aside class="warning">
     There is no pagination for this api.
@@ -699,14 +700,14 @@ coordinates. It returns, in addition of classic objects, a collection of
 <td>nop</td>
 <td>admin_uri[]</td>
 <td>array of string</td>
-<td>If filled, will restrained the search within the given admin uris</td>
+<td>If filled, will filter the search within the given admin uris</td>
 <td></td>
 </tr>
 <tr>
 <td>nop</td>
 <td>filter</td>
 <td>string</td>
-<td>Use to restrain returned objects. for example: places_type.id=theater</td>
+<td>Use to filter returned objects. for example: places_type.id=theater</td>
 <td></td>
 </tr>
 </tbody></table>
@@ -764,16 +765,13 @@ coordinates. It returns, in addition of classic objects, a collection of
 
 <p>Also known as <code class="prettyprint">/journeys</code> service. This api computes journeys.</p>
 
-<p>If used within the coverage api, it will retrieve the next journeys from
-the selected public transport object or coordinates.</p>
-
 <p>There are two ways to access this api.</p>
 
 <p>The first one is: <a href="https://api.navitia.io/v1/%7Ba_path_to_resource%7D/journeys">https://api.navitia.io/v1/{a_path_to_resource}/journeys</a> it will
-retrieve all the journeys from the resource (<em>isochrones</em>).</p>
+retrieve all the journeys from the resource (in order to make <em><a href="https://en.wikipedia.org/wiki/Isochrone_map">isochrone maps</a></em>).</p>
 
 <p>The other one, the most used, is to access the &lsquo;journey&rsquo; api endpoint:
-&lt;<a href="https://api.navitia.io/v1/journeys?from=%7Bresource_id_1%7D&amp;to=%7Bresource_id_2%7D&amp;datetime=%7Bdate_time_to_leave%7D">https://api.navitia.io/v1/journeys?from={resource_id_1}&amp;to={resource_id_2}&amp;datetime={date_time_to_leave}</a> .</p>
+<a href="https://api.navitia.io/v1/journeys?from=%7Bresource_id_1%7D&amp;to=%7Bresource_id_2%7D&amp;datetime=%7Bdate_time_to_leave%7D">https://api.navitia.io/v1/journeys?from={resource_id_1}&amp;to={resource_id_2}&amp;datetime={date_time_to_leave}</a> .</p>
 
 <aside class="notice">
     Navitia.io handle lot&rsquo;s of different data sets (regions). Some of them
@@ -1321,8 +1319,8 @@ However when no coordinates are provided, you need to provide on what region you
 
 <p>Also known as <code class="prettyprint">/route_schedules</code> service.</p>
 
-<p>This api gives you access to schedules of routes. The response is made
-of an array of route_schedule, and another one of <a href="#note">note</a>. You can
+<p>This endpoint gives you access to schedules of routes, with a response made
+of an array of <a href="#route-schedule">route_schedule</a>, and another one of <a href="#note">note</a>. You can
 access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/route_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/route_schedules</a></p>
 
 <h3 id="accesses">Accesses</h3>
@@ -1393,7 +1391,7 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 
 <h3 id="objects">Objects</h3>
 
-<h4 id="route_schedule-object">route_schedule object</h4>
+<h4 id="route_schedule-object"><a name="route-schedule">route_schedule object</h4>
 
 <table><thead>
 <tr>
@@ -1486,9 +1484,13 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 
 <p>Also known as <code class="prettyprint">/stop_schedules</code> service.</p>
 
-<p>This api gives you access to schedules of stops going through a stop
-point. The response is made of an array of stop_schedule, and another
-one of <a href="#note">note</a>. You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
+<p>This endpoint gives you access to time tables going through a stop
+point as:
+<img alt="stop_schedules" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Panneau_SIEL_couleurs_Paris-Op%C3%A9ra.jpg/640px-Panneau_SIEL_couleurs_Paris-Op%C3%A9ra.jpg" /></p>
+
+<p>The response is made of an array of <a href="#stop-schedule">stop_schedule</a>, and another
+one of <a href="#note">note</a>. 
+You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
 
 <h3 id="accesses">Accesses</h3>
 
@@ -1556,7 +1558,7 @@ one of <a href="#note">note</a>. You can access it via that kind of url: <a href
 </tr>
 </tbody></table>
 
-<h3 id="stop_schedule-object">Stop_schedule object</h3>
+<h3 id="stop_schedule-object"><a name="stop-schedule"></a>Stop_schedule object</h3>
 
 <table><thead>
 <tr>
@@ -1596,8 +1598,10 @@ one of <a href="#note">note</a>. You can access it via that kind of url: <a href
 
 <p>Also known as <code class="prettyprint">/departures</code> service.</p>
 
-<p>This api retrieves a list of departures from a datetime of a selected
-object. Departures are ordered chronologically in ascending order.</p>
+<p>This endpoint retrieves a list of departures from a specific datetime of a selected
+object. 
+Departures are ordered chronologically in ascending order as:
+<img alt="departures" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Display_at_bus_stop_sign_in_Karlovo_n%C3%A1m%C4%9Bst%C3%AD%2C_T%C5%99eb%C3%AD%C4%8D%2C_T%C5%99eb%C3%AD%C4%8D_District.JPG/640px-Display_at_bus_stop_sign_in_Karlovo_n%C3%A1m%C4%9Bst%C3%AD%2C_T%C5%99eb%C3%AD%C4%8D%2C_T%C5%99eb%C3%AD%C4%8D_District.JPG" /></p>
 
 <h3 id="accesses">Accesses</h3>
 
@@ -1675,7 +1679,7 @@ object. Departures are ordered chronologically in ascending order.</p>
 <tr>
 <td>stop_date_time</td>
 <td>Array of <a href="#stop_date_time">stop_date_time</a></td>
-<td>When does a bus stops at the stop point</td>
+<td>Occurs when a bus does a stopover at the stop point</td>
 </tr>
 <tr>
 <td>stop_point</td>
@@ -1688,7 +1692,7 @@ object. Departures are ordered chronologically in ascending order.</p>
 
 <p>Also known as <code class="prettyprint">/arrivals</code> service.</p>
 
-<p>This api retrieves a list of arrivals from a datetime of a selected
+<p>This endpoint retrieves a list of arrivals from a specific datetime of a selected
 object. Arrivals are ordered chronologically in ascending order.</p>
 
 <h3 id="accesses">Accesses</h3>
