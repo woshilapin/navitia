@@ -34,20 +34,25 @@
       <div class="content">
         <h1 id="errors">Errors</h1>
 
-<aside class="notice">When there&rsquo;s an error you&rsquo;ll receive a response with a error object
-containing a unique error id
-</aside>
-
-<h3 id="example">Example</h3>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bad_filter"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ptref : Filters: Unable to find object"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
 <h2 id="code-40x">Code 40x</h2>
+
+<blockquote>
+<p>When there&rsquo;s an error you&rsquo;ll receive a response with a error object
+containing a unique error id</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="c">#request</span>
+<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/stop_areas/wrong-one'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+<span class="c">#response</span>
+HTTP/1.1 404 OK
+
+<span class="o">{</span>
+    <span class="s2">"error"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: <span class="s2">"bad_filter"</span>,
+        <span class="s2">"message"</span>: <span class="s2">"ptref : Filters: Unable to find object"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
 
 <p>This errors appears when there is an error in the request</p>
 

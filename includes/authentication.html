@@ -34,6 +34,21 @@
       <div class="content">
         <h1 id="authentication">Authentication</h1>
 
+<blockquote>
+<p>3 ways to request Navitia</p>
+</blockquote>
+<pre class="highlight shell"><code>
+<span class="c">#using "headers"</span>
+<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span> 
+
+<span class="c">#using "users": don't forget ":" at the end of line !</span>
+<span class="gp">$ </span>curl https://api.navitia.io/v1/coverage -u 3b036afe-0110-4202-b9ed-99718476c2e0:
+
+<span class="c">#using "straight URL"</span>
+<span class="gp">$ </span>curl https://3b036afe-0110-4202-b9ed-99718476c2e0@api.navitia.io/v1/coverage
+
+</code></pre>
+
 <p>Authentication is required to use <strong>navitia.io</strong>. When you register we will give you 
 an authentication key that must accompany each API call you make.</p>
 
@@ -42,17 +57,17 @@ for authentication, where the username is the key, and password remains empty.</
 
 <p>For example, in a <a href="https://en.wikipedia.org/wiki/CURL">Curl</a> way, you can request either :</p>
 
-<p><code class="prettyprint">curl https://api.navitia.io/v1/coverage -u 01234567-89ab-cdef-0123-456789abcdef:</code></p>
+<p><code class="prettyprint">curl &#39;https://api.navitia.io/v1/coverage&#39; -H &#39;Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0&#39;</code></p>
+
+<p>or</p>
+
+<p><code class="prettyprint">curl https://api.navitia.io/v1/coverage -u 3b036afe-0110-4202-b9ed-99718476c2e0:</code></p>
 
 <p>(don&rsquo;t forget <code class="prettyprint">:</code> after the key)</p>
 
 <p>or</p>
 
-<p><code class="prettyprint">curl -H &#39;Authorization: 01234567-89ab-cdef-0123-456789abcdef&#39; &#39;https://api.navitia.io/v1/coverage&#39;</code></p>
-
-<p>or</p>
-
-<p><code class="prettyprint">curl https://01234567-89ab-cdef-0123-456789abcdef@api.navitia.io/v1/coverage</code></p>
+<p><code class="prettyprint">curl https://3b036afe-0110-4202-b9ed-99718476c2e0@api.navitia.io/v1/coverage</code></p>
 
       </div>
       <div class="dark-box">

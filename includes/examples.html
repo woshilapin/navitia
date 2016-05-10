@@ -36,7 +36,24 @@
 
 <p>This chapter shows some usages with the minimal required arguments. However, this is not a reference and not all APIs nor arguments are shown.</p>
 
+<aside class="notice">
+You will have to use your own token with the examples below.
+</aside>
+
 <h2 id="a-quick-exploration">A quick exploration</h2>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"start_production_date"</span>: <span class="s2">"20140105"</span>,
+    <span class="s2">"status"</span>: <span class="s2">"running"</span>,
+    <span class="s2">"shape"</span>: <span class="s2">"POLYGON((-74.500997 40.344999,-74.500997 41.096999,-73.226 41.096999,-73.226 40.344999,-74.500997 40.344999))"</span>,
+    <span class="s2">"id"</span>: <span class="s2">"sandbox"</span>,
+    <span class="s2">"end_production_date"</span>: <span class="s2">"20140406"</span>
+<span class="o">}</span>
+</code></pre>
 
 <p><em>navitia</em> allows to dive into the public transport data.</p>
 
@@ -46,7 +63,7 @@
 
 <p>As you can see there are several possibilities like for example <a href="#coverage">coverage</a> to navigate through the covered regions data or <a href="#journeys">journeys</a> to compute a journey.</p>
 
-<p>Now let&rsquo;s see what interactions are possible with <code class="prettyprint">coverage</code>: <a href="https://api.navitia.io/v1/coverage">https://api.navitia.io/v1/coverage</a></p>
+<p>Now let&rsquo;s see what interactions are possible with <code class="prettyprint">coverage</code>:</p>
 
 <p>This request will give you:</p>
 
@@ -59,15 +76,7 @@
 
 <p>This link is about lines (according to its <code class="prettyprint">rel</code> attribute) and is templated which means that it needs additional parameters.<br>
 The parameters are identified with the <code class="prettyprint">{</code> <code class="prettyprint">}</code> syntax.
-In this case it needs a region id. This id can the found in the <code class="prettyprint">regions</code> section. For example let&rsquo;s consider this region:</p>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"start_production_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20140105"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"running"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"shape"</span><span class="p">:</span><span class="w"> </span><span class="s2">"POLYGON((-74.500997 40.344999,-74.500997 41.096999,-73.226 41.096999,-73.226 40.344999,-74.500997 40.344999))"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"us-ny"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"end_production_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20140406"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+In this case it needs a region id. This id can the found in the <code class="prettyprint">regions</code> section. </p>
 
 <p>To query for the public transport lines of New York we thus have to call: <a href="https://api.navitia.io/v1/coverage/us-ny/lines">https://api.navitia.io/v1/coverage/us-ny/lines</a></p>
 

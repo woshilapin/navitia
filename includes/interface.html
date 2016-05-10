@@ -109,39 +109,86 @@ That&rsquo;s lots of links. Links allow you to know all accessible uris and serv
 
 <h2 id="templated-url">Templated URL</h2>
 
-<p>Under some link sections, you will find a &ldquo;templated&rdquo; property. If
-&ldquo;templated&rdquo; is true, then you will have to format the link with your right id.</p>
+<blockquote>
+<p>From every object collection</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="c">#first request</span>
 
-<p>For example, in response of
-<a href="https://api.navitia.io/v1/coverage/fr-idf/lines">https://api.navitia.io/v1/coverage/fr-idf/lines</a> you will find a
-<em>links</em> section:</p>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.navitia.io/v1/coverage/fr-idf/lines/{lines.id}/stop_schedules"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"route_schedules"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/lines'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
 
-<p>You have to put one line id instead of <em>{lines.id}</em>. For example:
-<a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:043043001:N1OIF658/stop_schedules">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:043043001:N1OIF658/stop_schedules</a></p>
+<span class="c">#response</span>
+HTTP/1.1 200 OK
+
+<span class="c">#first line is like:</span>
+
+<span class="o">{</span>
+    <span class="s2">"lines"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"id"</span>: <span class="s2">"line:RAT:M1"</span>,
+            <span class="s2">"code"</span>: <span class="s2">"1"</span>,
+            <span class="s2">"name"</span>: <span class="s2">"Château de Vincennes - La Défense"</span>,
+            <span class="s2">"..."</span>: <span class="s2">"..."</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>...<span class="o">}</span>
+        <span class="o">]</span>,
+    ...,
+
+<span class="c">#and a templated link from the example above:</span>
+
+    <span class="s2">"links"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"https://api.navitia.io/v1/coverage/sandbox/lines/{lines.id}/stop_schedules"</span>,
+            <span class="s2">"rel"</span>: <span class="s2">"stop_schedules"</span>,
+            <span class="s2">"templated"</span>: <span class="nb">true</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>...<span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+
+<span class="c">#you can then request for "stop_schedules" service using templating</span>
+<span class="c">#be careful, without any filter, the response can be huge</span>
+
+<span class="c">#second request</span>
+<span class="c">#{line.id} has to be replaced by "line:RAT:M1"</span>
+<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/stop_schedules'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+<span class="c">#here is a smarter request for a line AND a stop_area</span>
+<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/stop_areas/stop_area:RAT:SA:PLROY/stop_schedules'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+</code></pre>
+
+<p>Under some link sections, you will find a &ldquo;templated&rdquo; property.</p>
+
+<p>If &ldquo;templated&rdquo; is true, then you will have to format the link with your right id as describe in the example.
+In order to do that, you will have to </p>
+
+<ul>
+<li>take the id from the object you want to get the linked service</li>
+<li>replace {lines.id} in the url as the example</li>
+</ul>
 
 <h2 id="inner-references">Inner references</h2>
+<pre class="highlight shell"><code><span class="c">#You may find "disruptions" link, as</span>
 
-<p>Some link sections look like</p>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"internal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruption"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"edc46f3a-ad3d-11e4-a5e1-005056a44da2"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disruptions"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<span class="o">{</span>
+    <span class="s2">"internal"</span>: <span class="nb">true</span>,
+    <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
+    <span class="s2">"id"</span>: <span class="s2">"edc46f3a-ad3d-11e4-a5e1-005056a44da2"</span>,
+    <span class="s2">"rel"</span>: <span class="s2">"disruptions"</span>,
+    <span class="s2">"templated"</span>: <span class="nb">false</span>
+<span class="o">}</span>
+</code></pre>
 
-<p>That means you will find inside the same stream ( <em>&ldquo;internal&rdquo;: true</em> ) a
-<em>disruptions</em> section ( <em>&ldquo;rel&rdquo;: &ldquo;disruptions&rdquo;</em> ) containing some
-<a href="#disruption">disruptions</a> objects ( <em>&ldquo;type&rdquo;: &ldquo;disruption&rdquo;</em> ) where you can find the
-details of your object ( <em>&ldquo;id&rdquo;: &ldquo;edc46f3a-ad3d-11e4-a5e1-005056a44da2&rdquo;</em>
-).</p>
+<p>Some link sections holds disruption links. These links are templated.</p>
+
+<p>That means :</p>
+
+<ul>
+<li>inside the self stream ( <strong>&ldquo;internal&rdquo;: true</strong> ) </li>
+<li>you will find a <strong>disruptions</strong> section ( <strong>&ldquo;rel&rdquo;: &ldquo;disruptions&rdquo;</strong> ) </li>
+<li>containing some <a href="#disruption">disruptions</a> objects ( <strong>&ldquo;type&rdquo;: &ldquo;disruption&rdquo;</strong> ) </li>
+<li>where you can find the details of your object ( <strong>&ldquo;id&rdquo;: &ldquo;edc46f3a-ad3d-11e4-a5e1-005056a44da2&rdquo;</strong> ).</li>
+</ul>
 
       </div>
       <div class="dark-box">
