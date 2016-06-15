@@ -547,7 +547,7 @@ For example, he could key without any filters:</p>
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">/coverage/pt_objects</code></td>
+<td><code class="prettyprint">/coverage/{resource_path}/pt_objects</code></td>
 <td>List of public transport objects</td>
 </tr>
 </tbody></table>
@@ -636,10 +636,20 @@ filter)</li>
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">/coverage/places</code></td>
-<td>List of geographical objects</td>
+<td><code class="prettyprint">/coverage/{region_id}/places</code></td>
+<td>List of geographical objects within a coverage</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/places</code></td>
+<td><em>Beta</em>: List of geographical objects within Earth</td>
 </tr>
 </tbody></table>
+
+<aside class="warning">
+    Until now, you have to specify the right coverage to get `/places`.<br>
+    If you like to play, you can test the &ldquo;beta&rdquo; `/places`, without any coverage: 
+    it will soon be able to request entire Earth on adresses, POIs, stop areas&hellip; with geographical sort.
+</aside>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -792,56 +802,111 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 </ul>
 
 <h2 id="journeys"><a name="journeys"></a>Journeys</h2>
+<pre class="highlight shell"><code><span class="c">#request</span>
+<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/journeys?from=2.3749036;48.8467927&amp;to=2.2922926;48.8583736'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="c">#response</span>
+HTTP/1.1 200 OK
 
-<p>Also known as <code class="prettyprint">/journeys</code> service. This api computes journeys.</p>
+<span class="o">{</span>
+    <span class="s2">"tickets"</span>: <span class="o">[]</span>,
+    <span class="s2">"links"</span>: <span class="o">[</span>...],
+    <span class="s2">"journeys"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+        <span class="s2">"fare"</span>: <span class="o">{</span>...<span class="o">}</span>,
+        <span class="s2">"status"</span>: <span class="s2">""</span>,
+        <span class="s2">"tags"</span>: <span class="o">[]</span>,
+        <span class="s2">"type"</span>: <span class="s2">"comfort"</span>,
+        <span class="s2">"nb_transfers"</span>: 0,
+        <span class="s2">"duration"</span>: 2671,
+        <span class="s2">"requested_date_time"</span>: <span class="s2">"20160613T133748"</span>,
+        <span class="s2">"departure_date_time"</span>: <span class="s2">"20160613T133830"</span>,
+        <span class="s2">"arrival_date_time"</span>: <span class="s2">"20160613T142301"</span>,
+        <span class="s2">"calendars"</span>: <span class="o">[</span>...],
+        <span class="s2">"co2_emission"</span>: <span class="o">{</span><span class="s2">"unit"</span>: <span class="s2">"gEC"</span>, <span class="s2">"value"</span>: 24.642<span class="o">}</span>,
+        <span class="s2">"sections"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"from"</span>: <span class="o">{</span>... , <span class="s2">"name"</span>: <span class="s2">"Rue Abel"</span><span class="o">}</span>,
+            <span class="s2">"to"</span>: <span class="o">{</span>... , <span class="s2">"name"</span>: <span class="s2">"Bercy (Paris)"</span><span class="o">}</span>,
+            <span class="s2">"arrival_date_time"</span>: <span class="s2">"20160613T135400"</span>,
+            <span class="s2">"departure_date_time"</span>: <span class="s2">"20160613T133830"</span>,
+            <span class="s2">"duration"</span>: 930,
+            <span class="s2">"type"</span>: <span class="s2">"street_network"</span>,
+            <span class="s2">"mode"</span>: <span class="s2">"walking"</span>,
+            <span class="s2">"geojson"</span>: <span class="o">{</span>...<span class="o">}</span>,
+            <span class="s2">"path"</span>: <span class="o">[</span>...],
+            <span class="s2">"links"</span>: <span class="o">[]</span>
+        <span class="o">}</span>,<span class="o">{</span>
+            <span class="s2">"from"</span>: <span class="o">{</span>... , <span class="s2">"name"</span>: <span class="s2">"Bercy (Paris)"</span><span class="o">}</span>,
+            <span class="s2">"to"</span>: <span class="o">{</span>... , <span class="s2">"name"</span>: <span class="s2">"Bir-Hakeim Tour Eiffel (Paris)"</span><span class="o">}</span>,
+            <span class="s2">"type"</span>: <span class="s2">"public_transport"</span>,
+            <span class="s2">"display_informations"</span>: <span class="o">{</span>
+                <span class="s2">"direction"</span>: <span class="s2">"Charles de Gaulle — Étoile (Paris)"</span>,
+                <span class="s2">"code"</span>: <span class="s2">"6"</span>,
+                <span class="s2">"color"</span>: <span class="s2">"79BB92"</span>,
+                <span class="s2">"physical_mode"</span>: <span class="s2">"M?tro"</span>,
+                <span class="s2">"headsign"</span>: <span class="s2">"Charles de Gaulle Etoile"</span>,
+                <span class="s2">"commercial_mode"</span>: <span class="s2">"Metro"</span>,
+                <span class="s2">"label"</span>: <span class="s2">"6"</span>,
+                <span class="s2">"text_color"</span>: <span class="s2">"000000"</span>,
+                <span class="s2">"network"</span>: <span class="s2">"RATP"</span><span class="o">}</span>,
+            <span class="s2">"departure_date_time"</span>: <span class="s2">"20160613T135400"</span>,
+            <span class="s2">"arrival_date_time"</span>: <span class="s2">"20160613T141500"</span>,
+            <span class="s2">"base_arrival_date_time"</span>: <span class="s2">"20160613T141500"</span>,
+            <span class="s2">"base_departure_date_time"</span>: <span class="s2">"20160613T135400"</span>,
+            <span class="s2">"duration"</span>: 1260,
+            <span class="s2">"additional_informations"</span>: <span class="o">[</span><span class="s2">"regular"</span><span class="o">]</span>,
+            <span class="s2">"co2_emission"</span>: <span class="o">{</span><span class="s2">"unit"</span>: <span class="s2">"gEC"</span>, <span class="s2">"value"</span>: 24.642<span class="o">}</span>,
+            <span class="s2">"geojson"</span>: <span class="o">{</span>...<span class="o">}</span>,
+            <span class="s2">"stop_date_times"</span>: <span class="o">[</span>
+            <span class="o">{</span>
+                <span class="s2">"stop_point"</span>: <span class="o">{</span>... , <span class="s2">"label"</span>: <span class="s2">"Bercy (Paris)"</span><span class="o">}</span>,
+                <span class="s2">"arrival_date_time"</span>: <span class="s2">"20160613T135400"</span>,
+                <span class="s2">"departure_date_time"</span>: <span class="s2">"20160613T135400"</span>,
+                <span class="s2">"base_arrival_date_time"</span>: <span class="s2">"20160613T135400"</span>,
+                <span class="s2">"base_departure_date_time"</span>: <span class="s2">"20160613T135400"</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>...<span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"from"</span>: <span class="o">{</span>... , <span class="s2">"name"</span>: <span class="s2">"Bir-Hakeim Tour Eiffel (Paris)"</span> <span class="o">}</span>,
+            <span class="s2">"to"</span>: <span class="o">{</span>... , <span class="s2">"name"</span>: <span class="s2">"Allée des Refuzniks"</span><span class="o">}</span>,
+            <span class="s2">"arrival_date_time"</span>: <span class="s2">"20160613T142301"</span>,
+            <span class="s2">"departure_date_time"</span>: <span class="s2">"20160613T141500"</span>,
+            <span class="s2">"duration"</span>: 481,
+            <span class="s2">"type"</span>: <span class="s2">"street_network"</span>,
+            <span class="s2">"mode"</span>: <span class="s2">"walking"</span>,
+            <span class="s2">"geojson"</span>: <span class="o">{</span>...<span class="o">}</span>,
+            <span class="s2">"path"</span>: <span class="o">[</span>...],
+        <span class="o">}]</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>...<span class="o">}</span>,
+    <span class="o">{</span>...<span class="o">}]</span>,
+    <span class="s2">"disruptions"</span>: <span class="o">[]</span>,
+    <span class="s2">"notes"</span>: <span class="o">[]</span>,
+    <span class="s2">"feed_publishers"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+        <span class="s2">"url"</span>: <span class="s2">""</span>,
+        <span class="s2">"id"</span>: <span class="s2">"sandbox"</span>,
+        <span class="s2">"license"</span>: <span class="s2">""</span>,
+        <span class="s2">"name"</span>: <span class="s2">""</span>
+    <span class="o">}]</span>,
+    <span class="s2">"exceptions"</span>: <span class="o">[]</span>
+<span class="o">}</span>
+</code></pre>
 
-<p>There are two ways to access this api.</p>
+<p>Also known as <code class="prettyprint">/journeys</code> service. This api computes journeys or isochrone tables.</p>
 
-<p>The first one is: <a href="https://api.navitia.io/v1/%7Ba_path_to_resource%7D/journeys">https://api.navitia.io/v1/{a_path_to_resource}/journeys</a> it will
-retrieve all the journeys from the resource (in order to make <em><a href="https://en.wikipedia.org/wiki/Isochrone_map">isochrone maps</a></em>).</p>
-
-<p>The other one, the most used, is to access the &lsquo;journey&rsquo; api endpoint:
-<a href="https://api.navitia.io/v1/journeys?from=%7Bresource_id_1%7D&amp;to=%7Bresource_id_2%7D&amp;datetime=%7Bdate_time_to_leave%7D">https://api.navitia.io/v1/journeys?from={resource_id_1}&amp;to={resource_id_2}&amp;datetime={date_time_to_leave}</a> .</p>
-
-<aside class="notice">
-    Navitia.io handle lot&rsquo;s of different data sets (regions). Some of them
-    can overlap. For example opendata data sets can overlap with private
-    data sets.
-    <br>
-    When using the journeys endpoint the data set used to compute the
-    journey is chosen using the possible datasets of the origin and the
-    destination.
-    <br>
-    For the moment it is not yet possible to compute journeys on different
-    data sets, but it will one day be possible (with a cross-data-set
-    system).
-</aside>
-
-<p>In the <a href="#examples">examples</a>, positions are given by coordinates and no network is specified.
-However when no coordinates are provided, you need to provide on what region you want to request as
-<a href="https://api.navitia.io/v1/coverage/us-ca/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682">https://api.navitia.io/v1/coverage/us-ca/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682</a></p>
-
-<p>The list of regions covered by navitia is available through <a href="#coverage">coverage</a>.</p>
-
-<aside class="notice">
-    If you want to use a specific data set, use the journey api within the
-    data set: https://api.navitia.io/v1/coverage/{your_dataset}/journeys
-</aside>
+<p>There are two ways to access to this service : journeys from point to point, or isochrones from a single point to every point.</p>
 
 <aside class="success">
-    Neither the 'from&rsquo; nor the 'to&rsquo; parameter of the journey are required,
+    Neither the &lsquo;from&rsquo; nor the 'to&rsquo; parameter of the journey are required,
     but obviously one of them has to be provided.
     <br>
     If only one is defined an isochrone is computed with every possible
     journeys from or to the point.
 </aside>
-
-<p><a
-    href="http://jsfiddle.net/gh/get/jquery/2.2.2/CanalTP/navitia/tree/documentation/slate/source/examples/jsFiddle/journeys/"
-    target="_blank"
-    class="button button-blue">
-    Code it yourself on JSFiddle
-</a></p>
 
 <h3 id="accesses">Accesses</h3>
 
@@ -859,7 +924,67 @@ However when no coordinates are provided, you need to provide on what region you
 <td><code class="prettyprint">/coverage/{region_id}/journeys</code></td>
 <td>List of journeys on a specific coverage</td>
 </tr>
+<tr>
+<td><code class="prettyprint">/coverage/{a_path_to_resource}/journeys</code></td>
+<td>Isochrone from a specific coverage</td>
+</tr>
 </tbody></table>
+
+<aside class="notice">
+    Navitia.io handle lot&rsquo;s of different data sets (regions). Some of them
+    can overlap. For example opendata data sets can overlap with private
+    data sets.
+    <br>
+    When using the journeys endpoint the data set used to compute the
+    journey is chosen using the possible datasets of the origin and the
+    destination.
+    <br>
+    For the moment it is not yet possible to compute journeys on different
+    data sets, but it will one day be possible (with a cross-data-set
+    system).
+</aside>
+
+<h4 id="requesting-a-single-journey">Requesting a single journey</h4>
+
+<p>The most used way to access to this service is to get the <code class="prettyprint">/journeys</code> api endpoint.
+Here is the structure of a standard journey request:</p>
+
+<p><a href="https://api.navitia.io/v1/journeys?from=%7Bresource_id_1%7D&amp;to=%7Bresource_id_2%7D&amp;datetime=%7Bdate_time_to_leave%7D">https://api.navitia.io/v1/journeys?from={resource_id_1}&amp;to={resource_id_2}&amp;datetime={date_time_to_leave}</a> .</p>
+
+<p><a
+    href="http://jsfiddle.net/gh/get/jquery/2.2.2/CanalTP/navitia/tree/documentation/slate/source/examples/jsFiddle/journeys/"
+    target="_blank"
+    class="button button-blue">
+    Code it yourself on JSFiddle
+</a></p>
+
+<p>In the <a href="#examples">examples</a>, positions are given by coordinates and no network is specified.
+However when no coordinates are provided, you need to provide on what region you want to request as
+<a href="https://api.navitia.io/v1/coverage/us-ca/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682">https://api.navitia.io/v1/coverage/us-ca/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682</a></p>
+
+<p>The list of regions covered by navitia is available through <a href="#coverage">coverage</a>.</p>
+
+<aside class="notice">
+    If you want to use a specific data set, use the journey api within the
+    data set: https://api.navitia.io/v1/coverage/{your_dataset}/journeys
+</aside>
+
+<h4 id="requesting-an-isochrone">Requesting an isochrone</h4>
+
+<p>If you want to retreive every possible journey from a single point at a time, you can request as follow:</p>
+
+<p><a href="https://api.navitia.io/v1/%7Ba_path_to_resource%7D/journeys">https://api.navitia.io/v1/{a_path_to_resource}/journeys</a> </p>
+
+<p>It will retrieve all the journeys from the resource (in order to make <em><a href="https://en.wikipedia.org/wiki/Isochrone_map">isochrone tables</a></em>).</p>
+
+<p><a
+    href="http://jsfiddle.net/gh/get/jquery/2.2.2/CanalTP/navitia/tree/documentation/slate/source/examples/jsFiddle/isochron/"
+    target="_blank"
+    class="button button-blue">
+    Code it yourself on JSFiddle
+</a></p>
+
+<p>The <a href="#isochrones">isochrones</a> service exposes another response structure, which is simpler, for the same data.</p>
 
 <h3 id="main-parameters"><a name="journeys-parameters"></a>Main parameters</h3>
 
@@ -876,14 +1001,14 @@ However when no coordinates are provided, you need to provide on what region you
 <td>nop</td>
 <td>from</td>
 <td>id</td>
-<td>The id of the departure of your journey If none are provided an isochrone is computed</td>
+<td>The id of the departure of your journey. If none are provided an isochrone is computed</td>
 <td></td>
 </tr>
 <tr>
 <td>nop</td>
 <td>to</td>
 <td>id</td>
-<td>The id of the arrival of your journey If none are provided an isochrone is computed</td>
+<td>The id of the arrival of your journey. If none are provided an isochrone is computed</td>
 <td></td>
 </tr>
 <tr>
@@ -909,31 +1034,18 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 <tr>
 <td>nop</td>
-<td>forbidden_uris[]</td>
-<td>id</td>
-<td>If you want to avoid lines, modes, networks, etc.</br> Note: the forbidden_uris[] concern only the public transport objects. You can&rsquo;t for example forbid the use of the bike with them, you have to set the fallback modes for this (<code class="prettyprint">first_section_mode[]</code> and <code class="prettyprint">last_section_mode[]</code>)</td>
-<td></td>
-</tr>
-<tr>
-<td>nop</td>
 <td>data_freshness</td>
 <td>enum</td>
 <td>Define the freshness of data to use to compute journeys <ul><li>realtime</li><li>base_schedule</li></ul> <em><strong>when using the following parameter</strong></em> &ldquo;&amp;data_freshness=base_schedule&rdquo; <br> you can get disrupted journeys in the response. You can then display the disruption message to the traveler and make a realtime request to get a new undisrupted solution.</td>
 <td>base_schedule</td>
 </tr>
-</tbody></table>
-
-<h3 id="other-parameters">Other parameters</h3>
-
-<table><thead>
 <tr>
-<th>Required</th>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default value</th>
+<td>nop</td>
+<td>forbidden_uris[]</td>
+<td>id</td>
+<td>If you want to avoid lines, modes, networks, etc.</br> Note: the forbidden_uris[] concern only the public transport objects. You can&rsquo;t for example forbid the use of the bike with them, you have to set the fallback modes for this (<code class="prettyprint">first_section_mode[]</code> and <code class="prettyprint">last_section_mode[]</code>)</td>
+<td></td>
 </tr>
-</thead><tbody>
 <tr>
 <td>nop</td>
 <td>first_section_mode[]</td>
@@ -948,6 +1060,19 @@ However when no coordinates are provided, you need to provide on what region you
 <td>Same as first_section_mode but for the last section</td>
 <td>walking</td>
 </tr>
+</tbody></table>
+
+<h3 id="other-parameters">Other parameters</h3>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
 <tr>
 <td>nop</td>
 <td>max_duration_to_pt</td>
@@ -1352,6 +1477,106 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </tbody></table>
 
+<h2 id="isochrones-currently-in-beta"><a name="isochrones_api"></a>Isochrones (currently in Beta)</h2>
+
+<p>Also known as <code class="prettyprint">/isochrones</code> service.</p>
+
+<aside class="warning">
+    This service is under development. So it is accessible as a <b>&ldquo;Beta&rdquo; service</b>. 
+    <br>
+    Every feed back is welcome on <a href="https://groups.google.com/forum/#!forum/navitia">https://groups.google.com/forum/#!forum/navitia</a> !
+</aside>
+
+<p>This service gives you a multi-polygon response which 
+represent a same time travel zone: https://en.wikipedia.org/wiki/Isochrone_map</p>
+
+<p>As you can find isochrone tables using <code class="prettyprint">/journeys</code>, this service is only another representation 
+of the same data, map oriented.</p>
+
+<p>It is also really usefull to make filters on geocoded objects in order to find which ones are reachable within a specific time.
+You just have to verify that the coordinates of the geocoded object are inside the multi-polygon.</p>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/isochrones</code></td>
+<td>List of multi-polygons representing one isochrone step. Access from wherever land</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/coverage/{region_id}/isochrones</code></td>
+<td>List of multi-polygons representing one isochrone step. Access from on a specific coverage</td>
+</tr>
+</tbody></table>
+
+<h3 id="main-parameters"><a name="isochrones-parameters"></a>Main parameters</h3>
+
+<aside class="success">
+    'from&rsquo; and 'to&rsquo; parameters works as exclusive parameters:
+    <li>When 'from&rsquo; is provided, 'to&rsquo; is ignore and Navitia computes a &ldquo;departure after&rdquo; isochrone.
+    <li>When 'from&rsquo; is not provided, 'to&rsquo; is required and Navitia computes a &ldquo;arrival after&rdquo; isochrone.
+</aside>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nop</td>
+<td>from</td>
+<td>id</td>
+<td>The id of the departure of your journey. Required to compute isochrones &ldquo;departure after&rdquo;</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>to</td>
+<td>id</td>
+<td>The id of the arrival of your journey. Required to compute isochrones &ldquo;arrival before&rdquo;</td>
+<td></td>
+</tr>
+<tr>
+<td>yep</td>
+<td>datetime</td>
+<td><a href="#iso-date-time">iso-date-time</a></td>
+<td>Date and time to go</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>forbidden_uris[]</td>
+<td>id</td>
+<td>If you want to avoid lines, modes, networks, etc.</br> Note: the forbidden_uris[] concern only the public transport objects. You can&rsquo;t for example forbid the use of the bike with them, you have to set the fallback modes for this (<code class="prettyprint">first_section_mode[]</code> and <code class="prettyprint">last_section_mode[]</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>first_section_mode[]</td>
+<td>array of string</td>
+<td>Force the first section mode if the first section is not a public transport one. It takes one the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>.<br><code class="prettyprint">bss</code> stands for bike sharing system.<br>It&rsquo;s an array, you can give multiple modes.<br><br>Note: choosing <code class="prettyprint">bss</code> implicitly allows the <code class="prettyprint">walking</code> mode since you might have to walk to the bss station.<br> Note 2: The parameter is inclusive, not exclusive, so if you want to forbid a mode, you need to add all the other modes.<br> Eg: If you never want to use a <code class="prettyprint">car</code>, you need: <code class="prettyprint">first_section_mode[]=walking&amp;first_section_mode[]=bss&amp;first_section_mode[]=bike&amp;last_section_mode[]=walking&amp;last_section_mode[]=bss&amp;last_section_mode[]=bike</code></td>
+<td>walking</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>last_section_mode[]</td>
+<td>array of string</td>
+<td>Same as first_section_mode but for the last section</td>
+<td>walking</td>
+</tr>
+</tbody></table>
+
+<p>Other parameters to come&hellip;</p>
+
 <h2 id="route-schedules-and-time-tables"><a name="route-schedules"></a>Route Schedules and time tables</h2>
 
 <p>Also known as <code class="prettyprint">/route_schedules</code> service.</p>
@@ -1369,7 +1594,7 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">coverage/{resource_path}/route_schedules</code></td>
+<td><code class="prettyprint">/coverage/{resource_path}/route_schedules</code></td>
 <td>List of the entire route schedules for a given resource</td>
 </tr>
 <tr>
