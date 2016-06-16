@@ -1335,7 +1335,7 @@ filter)</li>
 
 <aside class="warning">
     Until now, you have to specify the right coverage to get `/places`.<br>
-    If you like to play, you can test the &ldquo;beta&rdquo; `/places`, without any coverage: 
+    If you like to play, you can test the &ldquo;beta&rdquo; `/places`, without any coverage:
     it will soon be able to request entire Earth on adresses, POIs, stop areas&hellip; with geographical sort.
 </aside>
 
@@ -1661,7 +1661,7 @@ However when no coordinates are provided, you need to provide on what region you
 
 <p>If you want to retreive every possible journey from a single point at a time, you can request as follow:</p>
 
-<p><a href="https://api.navitia.io/v1/%7Ba_path_to_resource%7D/journeys">https://api.navitia.io/v1/{a_path_to_resource}/journeys</a> </p>
+<p><a href="https://api.navitia.io/v1/%7Ba_path_to_resource%7D/journeys">https://api.navitia.io/v1/{a_path_to_resource}/journeys</a></p>
 
 <p>It will retrieve all the journeys from the resource (in order to make <em><a href="https://en.wikipedia.org/wiki/Isochrone_map">isochrone tables</a></em>).</p>
 
@@ -2170,15 +2170,15 @@ However when no coordinates are provided, you need to provide on what region you
 <p>Also known as <code class="prettyprint">/isochrones</code> service.</p>
 
 <aside class="warning">
-    This service is under development. So it is accessible as a <b>&ldquo;Beta&rdquo; service</b>. 
+    This service is under development. So it is accessible as a <b>&ldquo;Beta&rdquo; service</b>.
     <br>
     Every feed back is welcome on <a href="https://groups.google.com/forum/#!forum/navitia">https://groups.google.com/forum/#!forum/navitia</a> !
 </aside>
 
-<p>This service gives you a multi-polygon response which 
+<p>This service gives you a multi-polygon response which
 represent a same time travel zone: https://en.wikipedia.org/wiki/Isochrone_map</p>
 
-<p>As you can find isochrone tables using <code class="prettyprint">/journeys</code>, this service is only another representation 
+<p>As you can find isochrone tables using <code class="prettyprint">/journeys</code>, this service is only another representation
 of the same data, map oriented.</p>
 
 <p>It is also really usefull to make filters on geocoded objects in order to find which ones are reachable within a specific time.
@@ -2553,6 +2553,81 @@ HTTP/1.1 200 OK
 </tbody></table>
 
 <h2 id="stop-schedules-and-other-kind-of-time-tables"><a name="stop-schedules"></a>Stop Schedules and other kind of time tables</h2>
+<pre class="highlight shell"><code><span class="c">#request</span>
+<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/stop_schedules'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+<span class="c">#response</span>
+HTTP/1.1 200 OK
+<span class="o">{</span>
+    stop_schedules: <span class="o">[</span>
+        <span class="o">{</span>
+            stop_point: <span class="o">{</span>...<span class="o">}</span>,
+            links: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="nb">type</span>: <span class="s2">"line"</span>,
+                    id: <span class="s2">"line:RAT:M1"</span>
+                <span class="o">}</span>, <span class="o">{</span>
+                    <span class="nb">type</span>: <span class="s2">"route"</span>,
+                    id: <span class="s2">"route:RAT:M1_R"</span>
+                <span class="o">}</span>, <span class="o">{</span>
+                    <span class="nb">type</span>: <span class="s2">"commercial_mode"</span>,
+                    id: <span class="s2">"commercial_mode:Metro"</span>
+                <span class="o">}</span>, <span class="o">{</span>
+                    <span class="nb">type</span>: <span class="s2">"network"</span>,
+                    id: <span class="s2">"network:RAT:1"</span>
+                <span class="o">}</span>
+            <span class="o">]</span>,
+            date_times: <span class="o">[</span>
+                <span class="o">{</span>
+                    date_time: <span class="s2">"20160615T115300"</span>,
+                    additional_informations: <span class="o">[]</span>,
+                    links: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="nb">type</span>: <span class="s2">"vehicle_journey"</span>,
+                            value: <span class="s2">"vehicle_journey:RAT:RATRM1REGA9869-1_dst_2"</span>,
+                            rel: <span class="s2">"vehicle_journeys"</span>,
+                            id: <span class="s2">"vehicle_journey:RAT:RATRM1REGA9869-1_dst_2"</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    data_freshness: <span class="s2">"base_schedule"</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    date_time: <span class="s2">"20160616T115000"</span>,
+                    additional_informations: <span class="o">[]</span>,
+                    links: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="nb">type</span>: <span class="s2">"vehicle_journey"</span>,
+                            value: <span class="s2">"vehicle_journey:RAT:RATRM1REGA9868-1_dst_2"</span>,
+                            rel: <span class="s2">"vehicle_journeys"</span>,
+                            id: <span class="s2">"vehicle_journey:RAT:RATRM1REGA9868-1_dst_2"</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    data_freshness: <span class="s2">"base_schedule"</span>
+                <span class="o">}</span>,
+                ...
+            <span class="o">]</span>,
+            route: <span class="o">{</span>...<span class="o">}</span>,
+            additional_informations: null,
+            display_informations: <span class="o">{</span>
+                direction: <span class="s2">"Château de Vincennes (Saint-Mandé)"</span>,
+                code: <span class="s2">"1"</span>,
+                network: <span class="s2">"RATP"</span>,
+                links: <span class="o">[]</span>,
+                color: <span class="s2">"F2C931"</span>,
+                commercial_mode: <span class="s2">"Metro"</span>,
+                text_color: <span class="s2">"000000"</span>,
+                label: <span class="s2">"1"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">]</span>,
+    pagination: <span class="o">{</span>...<span class="o">}</span>,
+    links: <span class="o">[</span>...],
+    disruptions: <span class="o">[]</span>,
+    notes: <span class="o">[]</span>,
+    feed_publishers: <span class="o">[</span>...],
+    exceptions: <span class="o">[]</span>
+<span class="o">}</span>
+</code></pre>
 
 <p>Also known as <code class="prettyprint">/stop_schedules</code> service.</p>
 
