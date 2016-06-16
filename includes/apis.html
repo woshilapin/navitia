@@ -1951,6 +1951,44 @@ Departures are ordered chronologically in ascending order as:
 </tbody></table>
 
 <h2 id="arrivals"><a name="arrivals"></a>Arrivals</h2>
+<pre class="highlight shell"><code>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/stop_areas/stop_area:RAT:SA:GDLYO/arrivals'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"arrivals"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"display_informations"</span>:<span class="o">{</span>
+                <span class="s2">"direction"</span>:<span class="s2">"Saint-Lazare (Paris)"</span>,
+                <span class="s2">"code"</span>:<span class="s2">"14"</span>,
+                <span class="s2">"color"</span>:<span class="s2">"67328E"</span>,
+                <span class="s2">"physical_mode"</span>:<span class="s2">"Métro"</span>,
+                <span class="s2">"headsign"</span>:<span class="s2">"Olympiades"</span>,
+                <span class="s2">"commercial_mode"</span>:<span class="s2">"Metro"</span>,
+                <span class="s2">"network"</span>:<span class="s2">"RATP"</span>
+            <span class="o">}</span>,
+            <span class="s2">"stop_date_time"</span>:<span class="o">{</span>
+                <span class="s2">"arrival_date_time"</span>:<span class="s2">"20160615T115400"</span>,
+                <span class="s2">"departure_date_time"</span>:<span class="s2">"20160615T115400"</span>,
+                <span class="s2">"base_arrival_date_time"</span>:<span class="s2">"20160615T115400"</span>,
+                <span class="s2">"base_departure_date_time"</span>:<span class="s2">"20160615T115400"</span>,
+                <span class="s2">"data_freshness"</span>:<span class="s2">"base_schedule"</span>
+            <span class="o">}</span>,
+            <span class="s2">"stop_point"</span>:<span class="o">{</span>
+                <span class="s2">"id"</span>:<span class="s2">"stop_point:RAT:SP:GDLYO4"</span>,
+                <span class="s2">"name"</span>:<span class="s2">"Gare de Lyon"</span>,
+                <span class="s2">"label"</span>:<span class="s2">"Gare de Lyon (Paris)"</span>
+            <span class="o">}</span>,
+            <span class="s2">"route"</span>:<span class="o">{</span>
+                <span class="s2">"id"</span>:<span class="s2">"route:RAT:M14_R"</span>,
+                <span class="s2">"name"</span>:<span class="s2">"Olympiades - Gare Saint-Lazare"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="o">{</span><span class="s2">"..."</span>: <span class="s2">"..."</span><span class="o">}</span>,
+        <span class="o">{</span><span class="s2">"..."</span>: <span class="s2">"..."</span><span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
 
 <p>Also known as <code class="prettyprint">/arrivals</code> service.</p>
 
