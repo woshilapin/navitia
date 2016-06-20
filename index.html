@@ -892,6 +892,44 @@ paginate results.</p>
 </ul>
 
 <h3 id="parameters">Parameters</h3>
+<pre class="highlight shell"><code>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"pt_objects"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"id"</span>:<span class="s2">"line:RAT:M1"</span>,
+            <span class="s2">"name"</span>:<span class="s2">"RATP Metro 1 (Château de Vincennes - La Défense)"</span>,
+            <span class="s2">"embedded_type"</span>:<span class="s2">"line"</span>,
+            <span class="s2">"line"</span>:<span class="o">{</span>
+                <span class="s2">"id"</span>:<span class="s2">"line:RAT:M1"</span>,
+                <span class="s2">"name"</span>:<span class="s2">"Château de Vincennes - La Défense"</span>,
+                <span class="s2">"code"</span>:<span class="s2">"1"</span>,
+                <span class="s2">"..."</span>: <span class="s2">"..."</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"id"</span>:<span class="s2">"line:RAT:M11"</span>,
+            <span class="s2">"name"</span>:<span class="s2">"RATP Metro 11 (Mairie des Lilas - Châtelet)"</span>
+            <span class="s2">"embedded_type"</span>:<span class="s2">"line"</span>,
+            <span class="s2">"line"</span>:<span class="o">{</span>
+                <span class="s2">"..."</span>: <span class="s2">"..."</span>
+            <span class="o">}</span>,
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"id"</span>:<span class="s2">"line:RAT:M12"</span>,
+            <span class="s2">"name"</span>:<span class="s2">"RATP Metro 12 (Mairie d'Issy - Front Populaire)"</span>,
+            <span class="s2">"embedded_type"</span>:<span class="s2">"line"</span>,
+            <span class="s2">"line"</span>:<span class="o">{</span>
+                <span class="s2">"..."</span>: <span class="s2">"..."</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="o">{</span><span class="s2">"..."</span>: <span class="s2">"..."</span><span class="o">}</span>,
+        <span class="o">{</span><span class="s2">"..."</span>: <span class="s2">"..."</span><span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
 
 <h4 id="depth"><a name="depth"></a>depth</h4>
 
@@ -902,30 +940,30 @@ Here is some examples around &ldquo;metro line 1&rdquo; from the Parisian networ
 <li>Get &ldquo;line 1&rdquo; id
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro%201">https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro%201</a></li>
-<li>The id is &ldquo;line:OIF:100110001:1OIF439&rdquo;</li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201">https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201</a></li>
+<li>The id is &ldquo;line:RAT:M1&rdquo;</li>
 </ul></li>
 <li>Get routes for this line
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes</a></li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes</a></li>
 </ul></li>
 <li>Want to get a tiny response? Just add &ldquo;depth=0&rdquo;
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=0">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=0</a></li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=0">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=0</a></li>
 <li>The response is lighter (parent lines disappear for example)</li>
 </ul></li>
 <li>Want more informations, just add &ldquo;depth=2&rdquo;
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=2">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=2</a></li>
-<li>The response is a little more verbose (with some geojson appear in response)</li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=2">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=2</a></li>
+<li>The response is a little more verbose (some geojson can appear in response when using your open data token)</li>
 </ul></li>
 <li>Wanna fat more informations, let&rsquo;s try &ldquo;depth=3&rdquo;
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=3">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=3</a></li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=3">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=3</a></li>
 <li>Big response: all stop_points are shown</li>
 </ul></li>
 <li>Wanna spam the internet bandwidth? Try &ldquo;depth=42&rdquo;
@@ -1148,22 +1186,24 @@ HTTP/1.1 200 OK
 chapter</p>
 
 <h2 id="autocomplete-on-public-transport-objects"><a name="pt-objects"></a>Autocomplete on Public Transport objects</h2>
-<pre class="highlight shell"><code><span class="c">#request</span>
+<pre class="highlight shell"><code><span class="c"># Search objects of type 'line' or 'route' containing 'metro 4'</span>
+
+<span class="c">#request</span>
 <span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%204&amp;type\[\]=line&amp;type\[\]=route'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
 
 <span class="c">#response</span>
 HTTP/1.1 200 OK
 
 <span class="o">{</span>
-<span class="s2">"pt_objects"</span>: <span class="o">[</span>
+    <span class="s2">"pt_objects"</span>: <span class="o">[</span>
         <span class="o">{</span>
             <span class="s2">"embedded_type"</span>: <span class="s2">"line"</span>,
             <span class="s2">"line"</span>: <span class="o">{</span>...<span class="o">}</span>,
             <span class="s2">"id"</span>: <span class="s2">"line:RAT:M4"</span>,
             <span class="s2">"name"</span>: <span class="s2">"RATP Metro 4 (Porte de Clignancourt - Mairie de Montrouge)"</span>
         <span class="o">}</span>,
-     <span class="o">]</span>,
-<span class="s2">"links"</span> : <span class="o">[</span>...],
+    <span class="o">]</span>,
+    <span class="s2">"links"</span> : <span class="o">[</span>...],
 <span class="o">}</span>
 </code></pre>
 
@@ -1227,6 +1267,25 @@ For example, he could key without any filters:</p>
 </div>
 
 <h3 id="access">Access</h3>
+<pre class="highlight shell"><code><span class="c"># Search objects of type 'network' containing 'RAT'</span>
+curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=RAT&amp;type\[\]=network'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"pt_objects"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"id"</span>:<span class="s2">"network:RAT:1"</span>,
+            <span class="s2">"name"</span>:<span class="s2">"RATP"</span>,
+            <span class="s2">"embedded_type"</span>:<span class="s2">"network"</span>,
+            <span class="s2">"network"</span>:<span class="o">{</span>
+                <span class="s2">"id"</span>:<span class="s2">"network:RAT:1"</span>,
+                <span class="s2">"name"</span>:<span class="s2">"RATP"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
 
 <table><thead>
 <tr>
@@ -2166,6 +2225,43 @@ However when no coordinates are provided, you need to provide on what region you
 </tbody></table>
 
 <h2 id="isochrones-currently-in-beta"><a name="isochrones_api"></a>Isochrones (currently in Beta)</h2>
+<pre class="highlight shell"><code><span class="c"># Request</span>
+curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/isochrones?from=stop_area:RAT:SA:GDLYO&amp;max_duration=3600'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+<span class="c"># Response</span>
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"isochrones"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"geojson"</span>:<span class="o">{</span>
+                <span class="s2">"type"</span>:<span class="s2">"MultiPolygon"</span>,
+                <span class="s2">"coordinates"</span>:[
+                    <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="o">[</span>
+                                2.3186837324,
+                                48.9324437042
+                            <span class="o">]</span>,
+                            <span class="o">[</span>
+                                2.3187241561,
+                                48.9324771012
+                            <span class="o">]</span>,
+                            <span class="o">[</span>
+                                2.3190737256,
+                                48.9327557777
+                            <span class="o">]</span>,
+                            <span class="o">[</span><span class="s2">"..."</span><span class="o">]</span>,
+                            <span class="o">[</span><span class="s2">"..."</span><span class="o">]</span>,
+                            <span class="o">[</span><span class="s2">"..."</span><span class="o">]</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">]</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
 
 <p>Also known as <code class="prettyprint">/isochrones</code> service.</p>
 
@@ -3248,6 +3344,11 @@ many times.</p>
 <h2 id="public-transport-objects">Public transport objects</h2>
 
 <h3 id="network">Network</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"network:RAT:1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"RATP"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <p>Networks are fed by agencies in GTFS format.</p>
 
@@ -3271,6 +3372,28 @@ many times.</p>
 </tbody></table>
 
 <h3 id="line">Line</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"line:RAT:M6"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Nation - Charles de Gaule Etoile"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"code"</span><span class="p">:</span><span class="s2">"6"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"color"</span><span class="p">:</span><span class="s2">"79BB92"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"opening_time"</span><span class="p">:</span><span class="s2">"053000"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"closing_time"</span><span class="p">:</span><span class="s2">"013600"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"routes"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"commercial_mode"</span><span class="p">:{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"commercial_mode:Metro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Metro"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"physical_modes"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Métro"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"physical_mode:Metro"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3300,6 +3423,16 @@ many times.</p>
 <td>Color of the line</td>
 </tr>
 <tr>
+<td>opening_time</td>
+<td>string</td>
+<td>Opening hour at format HHMMSS</td>
+</tr>
+<tr>
+<td>closing_time</td>
+<td>string</td>
+<td>Closing hour at format HHMMSS</td>
+</tr>
+<tr>
 <td>routes</td>
 <td>array of <a href="#route">route</a></td>
 <td>Routes of the line</td>
@@ -3309,9 +3442,30 @@ many times.</p>
 <td><a href="#commercial-mode">commercial_mode</a></td>
 <td>Commercial mode of the line</td>
 </tr>
+<tr>
+<td>physical_mode</td>
+<td>array of <a href="#physical-mode">physical_mode</a></td>
+<td>Physical modes of the line</td>
+</tr>
 </tbody></table>
 
 <h3 id="route">Route</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"route:RAT:M6"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Nation - Charles de Gaule Etoile"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"is_frequence"</span><span class="p">:</span><span class="s2">"False"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"line"</span><span class="p">:{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"line:RAT:M6"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Nation - Charles de Gaule Etoile"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"direction"</span><span class="p">:{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"stop_area:RAT:SA:GAUET"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Charles de Gaulle - Etoile (Paris)"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3350,6 +3504,19 @@ many times.</p>
 <p>As &ldquo;direction&rdquo; is a <a href="#place">place</a> , it can be a poi in some data.</p>
 
 <h3 id="stop-point"><a name="stop-point"></a>Stop Point</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"stop_point:RAT:SP:GARIB2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Garibaldi"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"label"</span><span class="p">:</span><span class="s2">"Garibaldi (Saint-Ouen)"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"coord"</span><span class="p">:{</span><span class="w">
+        </span><span class="nt">"lat"</span><span class="p">:</span><span class="s2">"48.906032"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lon"</span><span class="p">:</span><span class="s2">"2.331733"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"administrative_regions"</span><span class="p">:[{</span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">}],</span><span class="w">
+    </span><span class="nt">"equipments"</span><span class="p">:[{</span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">}],</span><span class="w">
+    </span><span class="nt">"stop_area"</span><span class="p">:{</span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3391,6 +3558,19 @@ many times.</p>
 </tbody></table>
 
 <h3 id="stop-area"><a name="stop-area"></a>Stop Area</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"stop_area:RAT:SA:GAUET"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Charles de Gaulle - Etoile"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"label"</span><span class="p">:</span><span class="s2">"Charles de Gaulle - Etoile (Paris)"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"coord"</span><span class="p">:{</span><span class="w">
+        </span><span class="nt">"lat"</span><span class="p">:</span><span class="s2">"48.874408"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lon"</span><span class="p">:</span><span class="s2">"2.295763"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"administrative_regions"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3427,6 +3607,11 @@ many times.</p>
 </tbody></table>
 
 <h3 id="commercial-mode"><a name="commercial-mode"></a>Commercial Mode</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"commercial_mode:Metro"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Metro"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3453,6 +3638,11 @@ many times.</p>
 </tbody></table>
 
 <h3 id="physical-mode"><a name="physical-mode"></a>Physical Mode</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"physical_mode:Tramway"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Tramway"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3506,6 +3696,11 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <a href="#journeys-parameters">journeys parameters</a> for exemple.</p>
 
 <h3 id="company"><a name="company"></a>Company</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"company:RAT:1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RATP"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3530,6 +3725,16 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 
 <p>A container containing either a <a href="#admin">admin</a>, <a href="#poi">poi</a>, <a href="#address">address</a>, <a href="#stop-area">stop_area</a>,
 <a href="#stop-point">stop_point</a></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin:2191338"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Quartier des Épinettes (75017)"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"quality"</span><span class="p">:</span><span class="w"> </span><span class="mi">70</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"administrative_region"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"administrative_region"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3539,14 +3744,19 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </thead><tbody>
 <tr>
+<td>id</td>
+<td>string</td>
+<td>The id of the embedded object</td>
+</tr>
+<tr>
 <td>name</td>
 <td>string</td>
 <td>The name of the embedded object</td>
 </tr>
 <tr>
-<td>id</td>
-<td>string</td>
-<td>The id of the embedded object</td>
+<td>quality</td>
+<td><em>optional</em> integer</td>
+<td>The quality of the place</td>
 </tr>
 <tr>
 <td>embedded_type</td>
@@ -3580,10 +3790,16 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h3 id="pt_object"><a name="pt-object"></a>Pt_object</h3>
+<h3 id="trip">Trip</h3>
 
-<p>A container containing either a <a href="#network">network</a>, <a href="#commercial-mode">commercial_mode</a>, <a href="#line">line</a>, <a href="#route">route</a>,
-<a href="#stop_point">stop_area</a>, <a href="#stop_point">stop_area</a></p>
+<p>A trip corresponds to a scheduled vehicle circulation (and all its linked real-time and disrupted routes).</p>
+
+<p>An example : a train, routing a Paris to Lyon itinerary every day at 06h29, is the &ldquo;Trip&rdquo; named &ldquo;6641&rdquo;.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OIF:67308746-10-1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67308746"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3593,14 +3809,58 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </thead><tbody>
 <tr>
+<td>id</td>
+<td>string</td>
+<td>The id of the trip</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the trip</td>
+</tr>
+</tbody></table>
+
+<p>It also encapsulates many instances of vehicle_journey, accessible with the url:</p>
+
+<p><code class="prettyprint">https://api.navitia.io/v1/coverage/sandbox/trips/{trip.id}/vehicle_journeys</code>.</p>
+
+<h3 id="pt_object"><a name="pt-object"></a>Pt_object</h3>
+
+<p>A container containing either a <a href="#network">network</a>, <a href="#commercial-mode">commercial_mode</a>, <a href="#line">line</a>, <a href="#route">route</a>,
+<a href="#stop_point">stop_area</a>, <a href="#stop_point">stop_area</a>, <a href="#trip">trip</a></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OCE:SN009862F01013"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OCE:SN009862F01013"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"quality"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trip"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"trip"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OCE:SN009862F01013"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9862"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>The id of the embedded object</td>
+</tr>
+<tr>
 <td>name</td>
 <td>string</td>
 <td>The name of the embedded object</td>
 </tr>
 <tr>
-<td>id</td>
-<td>string</td>
-<td>The id of the embedded object</td>
+<td>quality</td>
+<td><em>optional</em> integer</td>
+<td>The quality of the object</td>
 </tr>
 <tr>
 <td>embedded_type</td>
@@ -3642,11 +3902,41 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <td><em>optional</em> <a href="#route">route</a></td>
 <td>Embedded route</td>
 </tr>
+<tr>
+<td>trip</td>
+<td><em>optional</em> <a href="#trip">trip</a></td>
+<td>Embedded trip</td>
+</tr>
 </tbody></table>
 
 <h2 id="real-time-and-disruption-objects">Real time and disruption objects</h2>
 
 <h3 id="disruption">Disruption</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ce7e265d-5762-45b6-ab4d-a1df643dd48d"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"disruption_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ce7e265d-5762-45b6-ab4d-a1df643dd48d"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"impact_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ce7e265d-5762-45b6-ab4d-a1df643dd48d"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trip delayed"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SIGNIFICANT_DELAYS"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"application_periods"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"begin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20160608T215400"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20160608T230959"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Strike"</span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20160617T132624"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"impacted_objects"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"cause"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cause..."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3656,19 +3946,24 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </thead><tbody>
 <tr>
-<td>status</td>
-<td>between: &ldquo;past&rdquo;, &ldquo;active&rdquo; or &ldquo;future&rdquo;</td>
-<td>state of the disruption</td>
-</tr>
-<tr>
 <td>id</td>
 <td>string</td>
 <td>Id of the disruption</td>
 </tr>
 <tr>
+<td>status</td>
+<td>between: &ldquo;past&rdquo;, &ldquo;active&rdquo; or &ldquo;future&rdquo;</td>
+<td>state of the disruption</td>
+</tr>
+<tr>
 <td>disruption_id</td>
 <td>string</td>
 <td>for traceability: Id of original input disruption</td>
+</tr>
+<tr>
+<td>impact_id</td>
+<td>string</td>
+<td>for traceability: Id of original input impact</td>
 </tr>
 <tr>
 <td>severity</td>
@@ -3703,6 +3998,13 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tbody></table>
 
 <h3 id="message">Message</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Strike"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3726,6 +4028,13 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <h3 id="severity">Severity</h3>
 
 <p>Severity object can be used to make visual grouping.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FF0000"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trip delayed"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SIGNIFICANT_DELAYS"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3757,6 +4066,16 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tbody></table>
 
 <h3 id="channel">Channel</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rt"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text/html"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rt"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"web"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"mobile"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -3783,6 +4102,11 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tbody></table>
 
 <h3 id="period">Period</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"begin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20160608T215400"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20160608T230959"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <table><thead>
 <tr>
@@ -4033,40 +4357,44 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </thead><tbody>
 <tr>
-<td>administrative_region</td>
+<td><a href="#administrative-region">administrative_region</a></td>
 <td>a city, a district, a neighborhood</td>
 </tr>
 <tr>
-<td>network</td>
+<td><a href="#network">network</a></td>
 <td>a public transport network</td>
 </tr>
 <tr>
-<td>commercial_mode</td>
+<td><a href="#commercial-mode">commercial_mode</a></td>
 <td>a public transport branded mode</td>
 </tr>
 <tr>
-<td>line</td>
+<td><a href="#line">line</a></td>
 <td>a public transport line</td>
 </tr>
 <tr>
-<td>route</td>
+<td><a href="#route">route</a></td>
 <td>a public transport route</td>
 </tr>
 <tr>
-<td>stop_area</td>
+<td><a href="#stop-area">stop_area</a></td>
 <td>a nameable zone, where there are some stop points</td>
 </tr>
 <tr>
-<td>stop_point</td>
+<td><a href="#stop-point">stop_point</a></td>
 <td>a location where vehicles can pickup or drop off passengers</td>
 </tr>
 <tr>
-<td>address</td>
+<td><a href="#address">address</a></td>
 <td>a point located in a street</td>
 </tr>
 <tr>
-<td>poi</td>
+<td><a href="#poi">poi</a></td>
 <td>a point of interest</td>
+</tr>
+<tr>
+<td><a href="#trip">trip</a></td>
+<td>a trip</td>
 </tr>
 </tbody></table>
 

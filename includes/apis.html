@@ -204,6 +204,44 @@ paginate results.</p>
 </ul>
 
 <h3 id="parameters">Parameters</h3>
+<pre class="highlight shell"><code>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"pt_objects"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"id"</span>:<span class="s2">"line:RAT:M1"</span>,
+            <span class="s2">"name"</span>:<span class="s2">"RATP Metro 1 (Château de Vincennes - La Défense)"</span>,
+            <span class="s2">"embedded_type"</span>:<span class="s2">"line"</span>,
+            <span class="s2">"line"</span>:<span class="o">{</span>
+                <span class="s2">"id"</span>:<span class="s2">"line:RAT:M1"</span>,
+                <span class="s2">"name"</span>:<span class="s2">"Château de Vincennes - La Défense"</span>,
+                <span class="s2">"code"</span>:<span class="s2">"1"</span>,
+                <span class="s2">"..."</span>: <span class="s2">"..."</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"id"</span>:<span class="s2">"line:RAT:M11"</span>,
+            <span class="s2">"name"</span>:<span class="s2">"RATP Metro 11 (Mairie des Lilas - Châtelet)"</span>
+            <span class="s2">"embedded_type"</span>:<span class="s2">"line"</span>,
+            <span class="s2">"line"</span>:<span class="o">{</span>
+                <span class="s2">"..."</span>: <span class="s2">"..."</span>
+            <span class="o">}</span>,
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"id"</span>:<span class="s2">"line:RAT:M12"</span>,
+            <span class="s2">"name"</span>:<span class="s2">"RATP Metro 12 (Mairie d'Issy - Front Populaire)"</span>,
+            <span class="s2">"embedded_type"</span>:<span class="s2">"line"</span>,
+            <span class="s2">"line"</span>:<span class="o">{</span>
+                <span class="s2">"..."</span>: <span class="s2">"..."</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="o">{</span><span class="s2">"..."</span>: <span class="s2">"..."</span><span class="o">}</span>,
+        <span class="o">{</span><span class="s2">"..."</span>: <span class="s2">"..."</span><span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
 
 <h4 id="depth"><a name="depth"></a>depth</h4>
 
@@ -214,30 +252,30 @@ Here is some examples around &ldquo;metro line 1&rdquo; from the Parisian networ
 <li>Get &ldquo;line 1&rdquo; id
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro%201">https://api.navitia.io/v1/coverage/fr-idf/pt_objects?q=metro%201</a></li>
-<li>The id is &ldquo;line:OIF:100110001:1OIF439&rdquo;</li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201">https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201</a></li>
+<li>The id is &ldquo;line:RAT:M1&rdquo;</li>
 </ul></li>
 <li>Get routes for this line
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes</a></li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes</a></li>
 </ul></li>
 <li>Want to get a tiny response? Just add &ldquo;depth=0&rdquo;
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=0">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=0</a></li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=0">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=0</a></li>
 <li>The response is lighter (parent lines disappear for example)</li>
 </ul></li>
 <li>Want more informations, just add &ldquo;depth=2&rdquo;
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=2">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=2</a></li>
-<li>The response is a little more verbose (with some geojson appear in response)</li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=2">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=2</a></li>
+<li>The response is a little more verbose (some geojson can appear in response when using your open data token)</li>
 </ul></li>
 <li>Wanna fat more informations, let&rsquo;s try &ldquo;depth=3&rdquo;
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=3">https://api.navitia.io/v1/coverage/fr-idf/lines/line:OIF:100110001:1OIF439/routes?depth=3</a></li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=3">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=3</a></li>
 <li>Big response: all stop_points are shown</li>
 </ul></li>
 <li>Wanna spam the internet bandwidth? Try &ldquo;depth=42&rdquo;
@@ -460,22 +498,24 @@ HTTP/1.1 200 OK
 chapter</p>
 
 <h2 id="autocomplete-on-public-transport-objects"><a name="pt-objects"></a>Autocomplete on Public Transport objects</h2>
-<pre class="highlight shell"><code><span class="c">#request</span>
+<pre class="highlight shell"><code><span class="c"># Search objects of type 'line' or 'route' containing 'metro 4'</span>
+
+<span class="c">#request</span>
 <span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%204&amp;type\[\]=line&amp;type\[\]=route'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
 
 <span class="c">#response</span>
 HTTP/1.1 200 OK
 
 <span class="o">{</span>
-<span class="s2">"pt_objects"</span>: <span class="o">[</span>
+    <span class="s2">"pt_objects"</span>: <span class="o">[</span>
         <span class="o">{</span>
             <span class="s2">"embedded_type"</span>: <span class="s2">"line"</span>,
             <span class="s2">"line"</span>: <span class="o">{</span>...<span class="o">}</span>,
             <span class="s2">"id"</span>: <span class="s2">"line:RAT:M4"</span>,
             <span class="s2">"name"</span>: <span class="s2">"RATP Metro 4 (Porte de Clignancourt - Mairie de Montrouge)"</span>
         <span class="o">}</span>,
-     <span class="o">]</span>,
-<span class="s2">"links"</span> : <span class="o">[</span>...],
+    <span class="o">]</span>,
+    <span class="s2">"links"</span> : <span class="o">[</span>...],
 <span class="o">}</span>
 </code></pre>
 
@@ -539,6 +579,25 @@ For example, he could key without any filters:</p>
 </div>
 
 <h3 id="access">Access</h3>
+<pre class="highlight shell"><code><span class="c"># Search objects of type 'network' containing 'RAT'</span>
+curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=RAT&amp;type\[\]=network'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"pt_objects"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"id"</span>:<span class="s2">"network:RAT:1"</span>,
+            <span class="s2">"name"</span>:<span class="s2">"RATP"</span>,
+            <span class="s2">"embedded_type"</span>:<span class="s2">"network"</span>,
+            <span class="s2">"network"</span>:<span class="o">{</span>
+                <span class="s2">"id"</span>:<span class="s2">"network:RAT:1"</span>,
+                <span class="s2">"name"</span>:<span class="s2">"RATP"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
 
 <table><thead>
 <tr>
@@ -1478,6 +1537,43 @@ However when no coordinates are provided, you need to provide on what region you
 </tbody></table>
 
 <h2 id="isochrones-currently-in-beta"><a name="isochrones_api"></a>Isochrones (currently in Beta)</h2>
+<pre class="highlight shell"><code><span class="c"># Request</span>
+curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/isochrones?from=stop_area:RAT:SA:GDLYO&amp;max_duration=3600'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+<span class="c"># Response</span>
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"isochrones"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"geojson"</span>:<span class="o">{</span>
+                <span class="s2">"type"</span>:<span class="s2">"MultiPolygon"</span>,
+                <span class="s2">"coordinates"</span>:[
+                    <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="o">[</span>
+                                2.3186837324,
+                                48.9324437042
+                            <span class="o">]</span>,
+                            <span class="o">[</span>
+                                2.3187241561,
+                                48.9324771012
+                            <span class="o">]</span>,
+                            <span class="o">[</span>
+                                2.3190737256,
+                                48.9327557777
+                            <span class="o">]</span>,
+                            <span class="o">[</span><span class="s2">"..."</span><span class="o">]</span>,
+                            <span class="o">[</span><span class="s2">"..."</span><span class="o">]</span>,
+                            <span class="o">[</span><span class="s2">"..."</span><span class="o">]</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">]</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
 
 <p>Also known as <code class="prettyprint">/isochrones</code> service.</p>
 
