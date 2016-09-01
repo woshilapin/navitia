@@ -391,6 +391,23 @@ period. Both parameters &ldquo;until&rdquo; and &ldquo;since&rdquo; are optional
     vehicle journey, &ldquo;since&rdquo; is included and &ldquo;until&rdquo; is excluded.
 </aside>
 
+<h4 id="disable_geojson">disable_geojson</h4>
+
+<p>By default geojson part of an object are returned in navitia&rsquo;s responses, this parameter allows you to
+remove them, it&rsquo;s useful when searching lines that you don&rsquo;t want to display on a map.</p>
+
+<aside class="notice">
+    Geojson objects can be very large, 1MB is not unheard of, and they don&rsquo;t compress very well.
+    So this parameter is mostly here for reducing your downloading times and helping your json parser.
+    It&rsquo;s almost mandatory on mobile devices since most cellular networks are still relatively slow.
+</aside>
+
+<p>Examples :</p>
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/lines?disable_geojson=true">https://api.navitia.io/v1/coverage/fr-idf/lines?disable_geojson=true</a></li>
+</ul>
+
 <h3 id="filter"><a name="filter"></a>Filter</h3>
 
 <p>It is possible to apply a filter to the returned collection, using
