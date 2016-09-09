@@ -774,6 +774,12 @@ In order to do that, you will have to </p>
 <p>You can easily navigate through regions covered by navitia.io, with the
 coverage api. The shape of the region is provided in GeoJSON.</p>
 
+<p>In Navitia, a coverage is a combination of multiple <a href="#datasets">datasets</a>
+provided by different <a href="#contributors">contributors</a>
+(typically data provided by a transport authority in GTFS format).
+The combination of datasets used by a coverage is arbitrarily determined
+but we try to use something that makes sense and has a reasonnable amount of data (country).</p>
+
 <p>The only arguments are the ones of <a href="#paging">paging</a>.</p>
 
 <h3 id="accesses">Accesses</h3>
@@ -795,6 +801,66 @@ coverage api. The shape of the region is provided in GeoJSON.</p>
 <tr>
 <td><code class="prettyprint">coverage/{lon;lat}</code></td>
 <td>Information about a specific region</td>
+</tr>
+</tbody></table>
+
+<h2 id="datasets"><a name="datasets"></a>Datasets</h2>
+
+<p>Very simple endpoint providing the sets of data that are used in the given coverage.</p>
+
+<p>Those datasets (typically from transport authority in GTFS format), each provided by a
+unique <a href="#contributors">contributor</a> are forming a <a href="#coverage">coverage</a>.</p>
+
+<p>Contributor providing the dataset is also provided in the response.
+Very usefull to know all the datas that form a coverage.</p>
+
+<p>The only arguments are the ones of <a href="#paging">paging</a>.</p>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>`coverage/{region_id}/datasets</td>
+<td>List of the datasets of a specific region</td>
+</tr>
+<tr>
+<td>`coverage/{region_id}/datasets/{dataset_id}</td>
+<td>Information about a specific dataset</td>
+</tr>
+</tbody></table>
+
+<h2 id="contributors"><a name="contributors"></a>Contributors</h2>
+
+<p>Very simple endpoint providing the contributors of data for the given coverage.</p>
+
+<p>A contributor is a data provider (typically a transport authority), and can provide multiple <a href="#datasets">datasets</a>.
+For example, the contributor Italian Railways will provide a dataset for the national train and some others for the regional trains.
+We will try to put them in the same <a href="#coverage">coverage</a> so that we assemble them in the same journey search, using both.</p>
+
+<p>Very usefull to know which contributors are used in the datasets forming a coverage.</p>
+
+<p>The only arguments are the ones of <a href="#paging">paging</a>.</p>
+
+<h3 id="accesses">Accesses</h3>
+
+<table><thead>
+<tr>
+<th>url</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>`coverage/{region_id}/contributors</td>
+<td>List of the contributors of a specific region</td>
+</tr>
+<tr>
+<td>`coverage/{region_id}/contributors/{dataset_id}</td>
+<td>Information about a specific contributor</td>
 </tr>
 </tbody></table>
 
