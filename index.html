@@ -1588,6 +1588,13 @@ filter)</li>
 <td>If filled, it will filter the search within the given admin uris</td>
 <td></td>
 </tr>
+<tr>
+<td>nop</td>
+<td>disable_geojson</td>
+<td>boolean</td>
+<td>remove geojson from the response</td>
+<td>False</td>
+</tr>
 </tbody></table>
 
 <h2 id="places-nearby"><a name="places-nearby-api"></a>Places Nearby</h2>
@@ -1688,6 +1695,13 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 <td>string</td>
 <td>Use to filter returned objects. for example: places_type.id=theater</td>
 <td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>disable_geojson</td>
+<td>boolean</td>
+<td>remove geojson from the response</td>
+<td>False</td>
 </tr>
 </tbody></table>
 
@@ -2705,6 +2719,13 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 <td>Define the freshness of data to use<br><ul><li>realtime</li><li>base_schedule</li></ul></td>
 <td>base_schedule</td>
 </tr>
+<tr>
+<td>nop</td>
+<td>disable_geojson</td>
+<td>boolean</td>
+<td>remove geojson fields from the response</td>
+<td>False</td>
+</tr>
 </tbody></table>
 
 <h3 id="objects">Objects</h3>
@@ -2939,6 +2960,13 @@ You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_
 <td>Define the freshness of data to use to compute journeys <ul><li>realtime</li><li>base_schedule</li></ul></td>
 <td>base_schedule</td>
 </tr>
+<tr>
+<td>nop</td>
+<td>disable_geojson</td>
+<td>boolean</td>
+<td>remove geojson fields from the response</td>
+<td>False</td>
+</tr>
 </tbody></table>
 
 <h3 id="stop_schedule-object"><a name="stop-schedule"></a>Stop_schedule object</h3>
@@ -3098,6 +3126,13 @@ Departures are ordered chronologically in ascending order as:
 <td>enum</td>
 <td>Define the freshness of data to use to compute journeys <ul><li>realtime</li><li>base_schedule</li></ul></td>
 <td>realtime</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>disable_geojson</td>
+<td>boolean</td>
+<td>remove geojson fields from the response</td>
+<td>False</td>
 </tr>
 </tbody></table>
 
