@@ -2551,7 +2551,7 @@ You just have to verify that the coordinates of the geocoded object are inside t
 
 <p>Other parameters to come&hellip;</p>
 
-<h2 id="route-schedules-and-time-tables"><a name="route-schedules"></a>Route Schedules and time tables</h2>
+<h2 id="route-schedules"><a name="route-schedules"></a>Route Schedules</h2>
 <pre class="highlight shell"><code><span class="c">#request</span>
 <span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/route_schedules'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
 
@@ -2653,7 +2653,7 @@ HTTP/1.1 200 OK
 
 <p>Also known as <code class="prettyprint">/route_schedules</code> service.</p>
 
-<p>This endpoint gives you access to schedules of routes, with a response made
+<p>This endpoint gives you access to schedules of routes (so a kind of time table), with a response made
 of an array of <a href="#route-schedule">route_schedule</a>, and another one of <a href="#note">note</a>. You can
 access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/route_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/route_schedules</a></p>
 
@@ -2821,7 +2821,7 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 </tbody></table>
 
-<h2 id="stop-schedules-and-other-kind-of-time-tables"><a name="stop-schedules"></a>Stop Schedules and other kind of time tables</h2>
+<h2 id="stop-schedules"><a name="stop-schedules"></a>Stop Schedules</h2>
 
 <blockquote>
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fstop_areas%2Fstop_area%253ARAT%253ASA%253AGDLYO%2Fstop_schedules%3Fitems_per_schedule%3D2%26&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0">Try it on Navitia playground (click on &ldquo;EXT&rdquo; buttons to see times)</a></p>
