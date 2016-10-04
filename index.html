@@ -2413,7 +2413,9 @@ However when no coordinates are provided, you need to provide on what region you
 <h2 id="isochrones-currently-in-beta"><a name="isochrones_api"></a>Isochrones (currently in Beta)</h2>
 
 <blockquote>
-<p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fisochrones%3Ffrom%3D2.377097%3B48.846905%26datetime%3D20160505T080000%26max_duration%3D2000%26min_duration%3D1000">Try it on Navitia playground (click on &ldquo;MAP&rdquo; buttons for &ldquo;wow effect&rdquo;)</a></p>
+<p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fisochrones%3Ffrom%3D2.377097%3B48.846905%26max_duration%3D2000%26min_duration%3D1000&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0">Try a simple example on Navitia playground (click on &ldquo;MAP&rdquo; buttons for &ldquo;wow effect&rdquo;)</a></p>
+
+<p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fisochrones%3Ffrom%3D2.377097%253B48.846905%26boundary_duration%255B%255D%3D1000%26boundary_duration%255B%255D%3D2000%26boundary_duration%255B%255D%3D3000%26&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0">Try a multi-color example on Navitia playground (click on &ldquo;MAP&rdquo; buttons for &ldquo;WOW effect&rdquo;)</a></p>
 </blockquote>
 <pre class="highlight shell"><code><span class="c"># Request</span>
 curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/isochrones?from=stop_area:RAT:SA:GDLYO&amp;max_duration=3600'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
@@ -2527,6 +2529,13 @@ You just have to verify that the coordinates of the geocoded object are inside t
 <td></td>
 </tr>
 <tr>
+<td>yep</td>
+<td>boundary_duration[]</td>
+<td>int</td>
+<td>A duration delineating a reachable area (in seconds). Using multiple boundary makes map more readable</td>
+<td></td>
+</tr>
+<tr>
 <td>nop</td>
 <td>forbidden_uris[]</td>
 <td>id</td>
@@ -2549,7 +2558,32 @@ You just have to verify that the coordinates of the geocoded object are inside t
 </tr>
 </tbody></table>
 
-<p>Other parameters to come&hellip;</p>
+<h3 id="other-parameters">Other parameters</h3>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nop</td>
+<td>min_duration</td>
+<td>int</td>
+<td>Minimum duration delineating the reachable area (in seconds)</td>
+<td></td>
+</tr>
+<tr>
+<td>nop</td>
+<td>max_duration</td>
+<td>int</td>
+<td>Maximum duration delineating the reachable area (in seconds)</td>
+<td></td>
+</tr>
+</tbody></table>
 
 <h2 id="route-schedules"><a name="route-schedules"></a>Route Schedules</h2>
 <pre class="highlight shell"><code><span class="c">#request</span>
