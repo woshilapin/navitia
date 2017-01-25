@@ -2412,7 +2412,7 @@ Departures are ordered chronologically in ascending order as:
 <td>from_datetime</td>
 <td><a href="#iso-date-time">iso-date-time</a></td>
 <td>The date_time from which you want the schedules</td>
-<td></td>
+<td>the current datetime</td>
 </tr>
 <tr>
 <td>nop</td>
@@ -2420,6 +2420,13 @@ Departures are ordered chronologically in ascending order as:
 <td>int</td>
 <td>Maximum duration in seconds between from_datetime and the retrieved datetimes.</td>
 <td>86400</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>count</td>
+<td>int</td>
+<td>Maximum number of results.</td>
+<td>10</td>
 </tr>
 <tr>
 <td>nop</td>
@@ -2440,7 +2447,7 @@ Departures are ordered chronologically in ascending order as:
 <td>disable_geojson</td>
 <td>boolean</td>
 <td>remove geojson fields from the response</td>
-<td>False</td>
+<td>false</td>
 </tr>
 </tbody></table>
 
