@@ -443,18 +443,20 @@ as headsign (on vehicle journey itself or at a stop time).</p>
 <li>  Type: <a href="#iso-date-time">iso-date-time</a></li>
 </ul>
 
-<p>To be used only on &ldquo;vehicle_journeys&rdquo; collection, to filter on a
+<p>To be used only on &ldquo;vehicle_journeys&rdquo; and &ldquo;disruptions&rdquo; collection, to filter on a
 period. Both parameters &ldquo;until&rdquo; and &ldquo;since&rdquo; are optional.</p>
 
 <p>Example:</p>
 
 <ul>
 <li>  Getting every active New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20160503T120000&amp;until=20160503T120100">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20160503T120000&amp;until=20160503T120100</a></li>
+<li>  Getting every active disruption on &ldquo;Bretagne&rdquo; for a specific date <a href="http://api.navitia.io/v1/coverage/fr-bre/disruptions?since=20170206000000&amp;until=20170206235959">http://api.navitia.io/v1/coverage/fr-bre/disruptions?since=20170206000000&amp;until=20170206235959</a></li>
 </ul>
 
 <aside class="warning">
-    This filter is applied using only the first stop time of a
-    vehicle journey, &ldquo;since&rdquo; is included and &ldquo;until&rdquo; is excluded.
+    On vehicle_journey this filter is applied using only the first stop time.
+    On disruption this filter must intersect with one application period.
+    &ldquo;since&rdquo; is included and &ldquo;until&rdquo; is excluded.
 </aside>
 
 <h4 id="disable_geojson">disable_geojson</h4>
