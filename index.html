@@ -777,6 +777,29 @@ In order to do that, you will have to </p>
 <li>where you can find the details of your object ( <strong>&ldquo;id&rdquo;: &ldquo;edc46f3a-ad3d-11e4-a5e1-005056a44da2&rdquo;</strong> ).</li>
 </ul>
 
+<h2 id="objects-order">Objects order</h2>
+
+<p>Unless specified, objects lists are not sorted and stability of objects&rsquo; order is not guaranteed.</p>
+
+<p>Examples of sorted objects tables:
+* journeys in a &rsquo;/journeys&rsquo; response
+* &rsquo;/departures&rsquo; and &rsquo;/arrivals&rsquo;
+* &rsquo;/stop_schedules&rsquo;
+* stop_points in &rsquo;/routes/<id_route>/stop_points&rsquo;
+* &rsquo;/places_nearby&rsquo;
+* &rsquo;/places&rsquo;</p>
+
+<p>Examples of unsorted responses:
+* stop_points in &rsquo;/lines/<id_line>/stop_points&rsquo;
+* pretty much everything else&hellip;</p>
+
+<h2 id="lifetime-of-id">Lifetime of id</h2>
+
+<p>The way id (or uri) of an object is generated is not garanteed stable, nor are the data processed.
+So we advise to limit to the minimum storing ids/uris of objects.
+We recommend to use as much as possible a previous call to <strong><a href="#places">Places</a></strong> and <strong><a href="#pt-objects">PT_objects</a></strong>.
+Also, be resilient if one of those ids/uris disappears.</p>
+
           <h1 id="api-catalog">API catalog</h1>
 
 <h2 id="coverage"><a name="coverage"></a>Coverage</h2>
