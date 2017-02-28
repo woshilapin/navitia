@@ -719,7 +719,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>impacted_objects</td>
-<td>array of <a href="#pt_object">pt_object</a></td>
+<td>array of <a href="#impacted_object">impacted_object</a></td>
 <td>The list of public transport objects which are affected by the disruption</td>
 </tr>
 <tr>
@@ -731,6 +731,144 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <td>category</td>
 <td>string (optional)</td>
 <td>The category of the disruption, such as &ldquo;construction works&rdquo; or &ldquo;incident&rdquo;</td>
+</tr>
+</tbody></table>
+
+<h3 id="impacted_object">Impacted_object</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"pt_object"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"id_of_the_line"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name of a lne"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"line"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"line"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"impacted_section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pt_object</td>
+<td><a href="#pt_object">pt_object</a></td>
+<td>The impacted public transport object</td>
+</tr>
+<tr>
+<td>impacted_section</td>
+<td><em>optional</em> <a href="#impacted_section">impacted_section</a></td>
+<td>Only for line section impact, the impacted section</td>
+</tr>
+<tr>
+<td>impacted_stops</td>
+<td><em>optional</em> array of <a href="#impacted_stop">impacted_stop</a></td>
+<td>Only for <a href="#trip">trip</a> delay, the list of delays, stop by stop</td>
+</tr>
+</tbody></table>
+
+<h3 id="impacted_section">Impacted_section</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_area"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"stop_area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_area"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"stop_area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>from</td>
+<td><a href="#pt_object">pt_object</a></td>
+<td>The beginning of the section</td>
+</tr>
+<tr>
+<td>to</td>
+<td><a href="#pt_object">pt_object</a></td>
+<td>The end of the section</td>
+</tr>
+</tbody></table>
+
+<h3 id="impacted_stop">Impacted_stop</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"stop_point"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"amended_arrival_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"073600"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amended_departure_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"073600"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"base_arrival_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"073600"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"base_departure_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"073600"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"cause"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"stop_time_effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delayed"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>stop_point</td>
+<td><a href="#stop-point">stop_point</a></td>
+<td>The impacted stop point of the trip</td>
+</tr>
+<tr>
+<td>amended_departure_time</td>
+<td>string</td>
+<td>New departure hour (format HHMMSS) of the trip on this stop point</td>
+</tr>
+<tr>
+<td>amended_arrival_time</td>
+<td>string</td>
+<td>New arrival hour (format HHMMSS) of the trip on this stop point</td>
+</tr>
+<tr>
+<td>base_departure_time</td>
+<td>string</td>
+<td>Base departure hour (format HHMMSS) of the trip on this stop point</td>
+</tr>
+<tr>
+<td>base_arrival_time</td>
+<td>string</td>
+<td>Base arrival hour (format HHMMSS) of the trip on this stop point</td>
+</tr>
+<tr>
+<td>cause</td>
+<td>string</td>
+<td>Cause of the modification</td>
+</tr>
+<tr>
+<td>stop_time_effect</td>
+<td>Enum</td>
+<td>Can be: &ldquo;added&rdquo;, &ldquo;deleted&rdquo;, or &ldquo;delayed&rdquo;.</td>
 </tr>
 </tbody></table>
 
