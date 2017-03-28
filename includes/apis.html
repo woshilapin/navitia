@@ -1255,6 +1255,13 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 <tr>
 <td>nop</td>
+<td>allowed_id[]</td>
+<td>id</td>
+<td>If you want to use only a small subset of the public transport objects in your solution. The constraint intersects with <code class="prettyprint">forbidden_uris[]</code>. For example, if you ask for <code class="prettyprint">allowed_id[]=line:A&amp;forbidden_uris[]=physical_mode:Bus</code>, only vehicles of the line A that are not buses will be used.</td>
+<td>everything</td>
+</tr>
+<tr>
+<td>nop</td>
 <td>first_section_mode[]</td>
 <td>array of string</td>
 <td>Force the first section mode if the first section is not a public transport one. It takes one the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>.<br><code class="prettyprint">bss</code> stands for bike sharing system.<br>It&rsquo;s an array, you can give multiple modes.<br><br>Note: choosing <code class="prettyprint">bss</code> implicitly allows the <code class="prettyprint">walking</code> mode since you might have to walk to the bss station.<br> Note 2: The parameter is inclusive, not exclusive, so if you want to forbid a mode, you need to add all the other modes.<br> Eg: If you never want to use a <code class="prettyprint">car</code>, you need: <code class="prettyprint">first_section_mode[]=walking&amp;first_section_mode[]=bss&amp;first_section_mode[]=bike&amp;last_section_mode[]=walking&amp;last_section_mode[]=bss&amp;last_section_mode[]=bike</code></td>
@@ -1370,6 +1377,89 @@ However when no coordinates are provided, you need to provide on what region you
 <td>boolean</td>
 <td>Debug mode<br>No journeys are filtered in this mode</td>
 <td>False</td>
+</tr>
+</tbody></table>
+
+<h3 id="precisions-on-forbidden_uris-and-allowed_id">Precisions on <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code></h3>
+
+<p>These parameters are filtering the vehicle journeys and the stop points use to compute the journeys.  The journeys can only use allowed vehicle journeys (as present in the <code class="prettyprint">public_transport</code> or <code class="prettyprint">on_demand_transport</code> sections). They also can only use the allowed stop points (as present in the <code class="prettyprint">street_network</code>, <code class="prettyprint">waiting</code> and <code class="prettyprint">crow_fly</code> sections).</p>
+
+<p>For filtering vehicle journeys, the identifier of a line, route, commercial mode, physical mode or network can be used. </p>
+
+<p>For filtering stop points, the identifier of a stop point or stop area can be used.</p>
+
+<p><code class="prettyprint">forbidden_uris[]</code> removes the corresponding vehicle journeys from the list of allowed vehicle journeys.</p>
+
+<p><code class="prettyprint">allowed_id[]</code> works in 2 parts:
+  * If an id related to a stop point is given, only the corresponding stop points will be allowed. Else, all the stop points are allowed.
+  * If an id related to a vehicle journey is given, only the corresponding vehicle journeys will be allowed. Else, all the vehicle journeys are allowed.</p>
+
+<p>The constraints of <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code> are combined. For example, if you give <code class="prettyprint">allowed_id[]=network:SN&amp;forbidden_uris[]=line:A</code>, only the vehicle journeys of the network SN that are not from the line A can be used to compute the journeys.</p>
+
+<p>Let&rsquo;s illustrate all of that with an example.</p>
+
+<p><img alt="example" src="../images/forbidden_example.png" /></p>
+
+<p>We want to go from SPA to SPB. Lines LA and LB can go from SPA to SPB. There is another stop point SPC connected to SPA with lines LC and LD, and connected to SB with lines LE and LF.</p>
+
+<p>Without any constraint, all these objects can be used to propose a solution. Let&rsquo;s study some examples:</p>
+
+<table><thead>
+<tr>
+<th><code class="prettyprint">forbidden_uris[]</code></th>
+<th><code class="prettyprint">allowed_id[]</code></th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>LA, LB</td>
+<td></td>
+<td>All the journeys will pass from SPC, using either of LC, LD, LE and LF</td>
+</tr>
+<tr>
+<td>SPA</td>
+<td></td>
+<td>No solution, as we can&rsquo;t get in any transport</td>
+</tr>
+<tr>
+<td>SPB</td>
+<td></td>
+<td>No solution, as we can&rsquo;t get out to destination</td>
+</tr>
+<tr>
+<td></td>
+<td>SPC</td>
+<td>No solution, as we can&rsquo;t get in neither get out</td>
+</tr>
+<tr>
+<td>LA, LB</td>
+<td>LC</td>
+<td>No solution, as only LC can be taken</td>
+</tr>
+<tr>
+<td></td>
+<td>LC, LE</td>
+<td>All the journeys will pass from SPC using LC and LE</td>
+</tr>
+<tr>
+<td></td>
+<td>LC, LD, LE</td>
+<td>All the journeys will pass from SPC using (LC or LD) and LE</td>
+</tr>
+<tr>
+<td></td>
+<td>LC, SPC, LE</td>
+<td>No solution, as we can&rsquo;t get in neither get out</td>
+</tr>
+<tr>
+<td></td>
+<td>SPA, SPC, SPB</td>
+<td>As without any constraint, passing via SPC is not needed</td>
+</tr>
+<tr>
+<td>SPA, SPB</td>
+<td>SPA, SPB</td>
+<td>No solution, as no stop point are allowed.</td>
 </tr>
 </tbody></table>
 
