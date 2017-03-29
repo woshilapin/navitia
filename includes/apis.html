@@ -1382,17 +1382,17 @@ However when no coordinates are provided, you need to provide on what region you
 
 <h3 id="precisions-on-forbidden_uris-and-allowed_id">Precisions on <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code></h3>
 
-<p>These parameters are filtering the vehicle journeys and the stop points use to compute the journeys.  The journeys can only use allowed vehicle journeys (as present in the <code class="prettyprint">public_transport</code> or <code class="prettyprint">on_demand_transport</code> sections). They also can only use the allowed stop points (as present in the <code class="prettyprint">street_network</code>, <code class="prettyprint">waiting</code> and <code class="prettyprint">crow_fly</code> sections).</p>
+<p>These parameters are filtering the vehicle journeys and the stop points used to compute the journeys. The journeys can only use allowed vehicle journeys (as present in the <code class="prettyprint">public_transport</code> or <code class="prettyprint">on_demand_transport</code> sections). They also can only use the allowed stop points (as present in the <code class="prettyprint">street_network</code>, <code class="prettyprint">waiting</code> and <code class="prettyprint">crow_fly</code> sections).</p>
 
 <p>For filtering vehicle journeys, the identifier of a line, route, commercial mode, physical mode or network can be used. </p>
 
 <p>For filtering stop points, the identifier of a stop point or stop area can be used.</p>
 
-<p><code class="prettyprint">forbidden_uris[]</code> removes the corresponding vehicle journeys from the list of allowed vehicle journeys.</p>
+<p><code class="prettyprint">forbidden_uris[]</code> removes the corresponding vehicle journeys (or stop points) from the list of allowed vehicle journeys (resp. stop_points).</p>
 
 <p><code class="prettyprint">allowed_id[]</code> works in 2 parts:
-  * If an id related to a stop point is given, only the corresponding stop points will be allowed. Else, all the stop points are allowed.
-  * If an id related to a vehicle journey is given, only the corresponding vehicle journeys will be allowed. Else, all the vehicle journeys are allowed.</p>
+-   If an id related to a stop point is given, only the corresponding stop points will be allowed. Else, all the stop points are allowed.
+-   If an id related to a vehicle journey is given, only the corresponding vehicle journeys will be allowed. Else, all the vehicle journeys are allowed.</p>
 
 <p>The constraints of <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code> are combined. For example, if you give <code class="prettyprint">allowed_id[]=network:SN&amp;forbidden_uris[]=line:A</code>, only the vehicle journeys of the network SN that are not from the line A can be used to compute the journeys.</p>
 
@@ -1414,7 +1414,7 @@ However when no coordinates are provided, you need to provide on what region you
 <tr>
 <td>LA, LB</td>
 <td></td>
-<td>All the journeys will pass from SPC, using either of LC, LD, LE and LF</td>
+<td>All the journeys will pass by SPC, using either of LC, LD, LE and LF</td>
 </tr>
 <tr>
 <td>SPA</td>
@@ -1424,7 +1424,7 @@ However when no coordinates are provided, you need to provide on what region you
 <tr>
 <td>SPB</td>
 <td></td>
-<td>No solution, as we can&rsquo;t get out to destination</td>
+<td>No solution, as we can&rsquo;t get out at destination</td>
 </tr>
 <tr>
 <td></td>
@@ -1439,16 +1439,16 @@ However when no coordinates are provided, you need to provide on what region you
 <tr>
 <td></td>
 <td>LC, LE</td>
-<td>All the journeys will pass from SPC using LC and LE</td>
+<td>All the journeys will pass by SPC using LC and LE</td>
 </tr>
 <tr>
 <td></td>
 <td>LC, LD, LE</td>
-<td>All the journeys will pass from SPC using (LC or LD) and LE</td>
+<td>All the journeys will pass by SPC using (LC or LD) and LE</td>
 </tr>
 <tr>
 <td></td>
-<td>LC, SPC, LE</td>
+<td>LC, LE, SPC</td>
 <td>No solution, as we can&rsquo;t get in neither get out</td>
 </tr>
 <tr>
