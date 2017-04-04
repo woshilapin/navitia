@@ -1390,9 +1390,12 @@ However when no coordinates are provided, you need to provide on what region you
 
 <p><code class="prettyprint">forbidden_uris[]</code> removes the corresponding vehicle journeys (or stop points) from the list of allowed vehicle journeys (resp. stop_points).</p>
 
-<p><code class="prettyprint">allowed_id[]</code> works in 2 parts:
--   If an id related to a stop point is given, only the corresponding stop points will be allowed. Else, all the stop points are allowed.
--   If an id related to a vehicle journey is given, only the corresponding vehicle journeys will be allowed. Else, all the vehicle journeys are allowed.</p>
+<p><code class="prettyprint">allowed_id[]</code> works in 2 parts:</p>
+
+<ul>
+<li>  If an id related to a stop point is given, only the corresponding stop points will be allowed. Else, all the stop points are allowed.</li>
+<li>  If an id related to a vehicle journey is given, only the corresponding vehicle journeys will be allowed. Else, all the vehicle journeys are allowed.</li>
+</ul>
 
 <p>The constraints of <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code> are combined. For example, if you give <code class="prettyprint">allowed_id[]=network:SN&amp;forbidden_uris[]=line:A</code>, only the vehicle journeys of the network SN that are not from the line A can be used to compute the journeys.</p>
 
