@@ -394,11 +394,11 @@ a journey can be faster than an other but requires more changes or more walking.
 
 <ul>
 <li><p>The dates are given in the basic form of the ISO 8601 datetime format: <code class="prettyprint">YYYYMMDDTHHMM</code>.
-For example, if you want to compute a journey on friday, April 22 <code class="prettyprint">datetime=20160422T0800</code>
-<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T0800</a></p></li>
+For example, if you want to compute a journey on friday, April 07 <code class="prettyprint">datetime=20170407T120000</code>
+<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20170407T120000">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20170407T120000</a></p></li>
 <li><p>Latest departure
 To get the latest departure, you can query for some journeys arriving before the end of the service
-<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20160422T2359&amp;datetime_represents=arrival</a></p></li>
+<a href="https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20170407T120000&amp;datetime_represents=arrival">https://api.navitia.io/v1/journeys?from=-122.47787733594924;37.71696489300146&amp;to=-122.41539259473815;37.78564348914185&amp;datetime=20170407T120000&amp;datetime_represents=arrival</a></p></li>
 <li><p>You can also change the <a href="#traveler-type">traveler profile</a> (to adapt the walking/biking/driving parts and comfort of journeys):
 <a href="https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker">https://api.navitia.io/v1/journeys?from=-122.4752;37.80826&amp;to=-122.402770;37.794682&amp;traveler_type=slow_walker</a></p></li>
 <li><p>Forbid certain lines, routes or modes
@@ -845,6 +845,59 @@ but we try to use something that makes sense and has a reasonnable amount of dat
 </tr>
 </tbody></table>
 
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Identifier of the coverage</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the coverage</td>
+</tr>
+<tr>
+<td>shape</td>
+<td>string</td>
+<td>GeoJSON of the shape of the coverage</td>
+</tr>
+<tr>
+<td>dataset_created_at</td>
+<td><a href="#iso-date-time">iso-date-time</a></td>
+<td>Creation date of the dataset</td>
+</tr>
+<tr>
+<td>start_production_date</td>
+<td><a href="#iso-date">iso-date</a></td>
+<td>Beginning of the production period. We only have data on this production period</td>
+</tr>
+<tr>
+<td>end_production_date</td>
+<td><a href="#iso-date">iso-date</a></td>
+<td>End of the production period. We only have data on this production period</td>
+</tr>
+</tbody></table>
+
+<h4 id="production-period">Production period</h4>
+
+<p>The production period is the validity period of the coverage&rsquo;s data.</p>
+
+<p>There is no data outside this production period.</p>
+
+<p>This production period cannot exceed one year.</p>
+
+<aside class="notice">
+Navitia need transportation data to work and those are very date dependant. To check that a coverage has some data for a given date, you need to check the production period of the coverage.
+</aside>
+
 <h2 id="datasets"><a name="datasets"></a>Datasets</h2>
 
 <p>Very simple endpoint providing the sets of data that are used in the given coverage.</p>
@@ -1175,7 +1228,7 @@ whatever its type</li>
 
 <p><a href="https://api.navitia.io/v1/coverage/fr-nw/networks/network:lila/lines">https://api.navitia.io/v1/coverage/fr-nw/networks/network:lila/lines</a></p>
 
-<p><a href="https://api.navitia.io/v1/coverage/fr-nw/networks/network:Lignes18/lines?odt_level=scheduled">https://api.navitia.io/v1/coverage/fr-nw/networks/network:Lignes18/lines?odt_level=scheduled</a></p>
+<p><a href="https://api.navitia.io/v1/coverage/fr-nw/networks/network:irigo/lines?odt_level=scheduled">https://api.navitia.io/v1/coverage/fr-nw/networks/network:irigo/lines?odt_level=scheduled</a></p>
 
 <h4 id="distance">distance</h4>
 
@@ -1201,14 +1254,14 @@ as headsign (on vehicle journey itself or at a stop time).</p>
 <p>Examples:</p>
 
 <ul>
-<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/vehicle_journeys?headsign=CANE">https://api.navitia.io/v1/coverage/fr-idf/vehicle_journeys?headsign=CANE</a></li>
-<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/stop_areas?headsign=CANE">https://api.navitia.io/v1/coverage/fr-idf/stop_areas?headsign=CANE</a></li>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/vehicle_journeys?headsign=PADO">https://api.navitia.io/v1/coverage/fr-idf/vehicle_journeys?headsign=PADO</a></li>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/stop_areas?headsign=PADO">https://api.navitia.io/v1/coverage/fr-idf/stop_areas?headsign=PADO</a></li>
 </ul>
 
 <aside class="warning">
     This last request gives the stop areas used by the vehicle
-    journeys containing the headsign CANE, <b>not</b> the stop areas where it
-    exists a stop time with the headsign CANE.
+    journeys containing the headsign PADO, <b>not</b> the stop areas where it
+    exists a stop time with the headsign PADO.
 </aside>
 
 <h4 id="since-until">since / until</h4>
@@ -1223,7 +1276,7 @@ period. Both parameters &ldquo;until&rdquo; and &ldquo;since&rdquo; are optional
 <p>Example:</p>
 
 <ul>
-<li>  Getting every active New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20160503T120000&amp;until=20160503T120100">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20160503T120000&amp;until=20160503T120100</a></li>
+<li>  Getting every active New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100</a></li>
 <li>  Getting every active disruption on &ldquo;Bretagne&rdquo; for a specific date <a href="http://api.navitia.io/v1/coverage/fr-bre/disruptions?since=20170206000000&amp;until=20170206235959">http://api.navitia.io/v1/coverage/fr-bre/disruptions?since=20170206000000&amp;until=20170206235959</a></li>
 </ul>
 
@@ -1306,8 +1359,8 @@ Be careful, these codes may not be unique. The navitia id is the only unique id.
 
 <ul>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/stop_points?filter=stop_point.has_code(source,5852)">https://api.navitia.io/v1/coverage/fr-sw/stop_points?filter=stop_point.has_code(source,5852)</a></li>
-<li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/stop_areas?filter=stop_area.has_code(gtfs_stop_code,1)">https://api.navitia.io/v1/coverage/fr-sw/stop_areas?filter=stop_area.has_code(gtfs_stop_code,1)</a></li>
-<li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891615)">https://api.navitia.io/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891615)</a></li>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/stop_areas?filter=stop_area.has_code(gtfs_stop_code,1303)">https://api.navitia.io/v1/coverage/fr-sw/stop_areas?filter=stop_area.has_code(gtfs_stop_code,1303)</a></li>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891619)">https://api.navitia.io/v1/coverage/fr-sw/lines?filter=line.has_code(source,11821949021891619)</a></li>
 </ul>
 
 <aside class="warning">
@@ -1996,7 +2049,7 @@ However when no coordinates are provided, you need to provide on what region you
 <td>nop</td>
 <td>datetime</td>
 <td><a href="#iso-date-time">iso-date-time</a></td>
-<td>Date and time to go</td>
+<td>Date and time to go.<br>Note: the datetime must be in the <a href="#coverage">coverage&rsquo;s publication period</a></td>
 <td>now</td>
 </tr>
 <tr>
@@ -3709,6 +3762,10 @@ many times.</p>
 <p>For example: <a href="https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=20140425T1337">https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=20140425T1337</a></p>
 
 <p>There are lots of ISO 8601 libraries in every kind of language that you should use before breaking down <a href="https://youtu.be/-5wpm-gesOY">https://youtu.be/-5wpm-gesOY</a></p>
+
+<h3 id="iso-date">Iso-date</h3>
+
+<p>The date are represented in ISO 8601 &ldquo;YYYYMMDD&rdquo; string.</p>
 
 <h2 id="public-transport-objects">Public transport objects</h2>
 
