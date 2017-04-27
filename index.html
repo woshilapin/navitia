@@ -5221,6 +5221,173 @@ or &ldquo;zonal&rdquo; (where agency can pick you up you anywhere, like a cab).<
 </ul></li>
 </ul>
 
+<h1 id="disruptions">Disruptions</h1>
+
+<p>In this paragraph, we will explain how the disruptions are displayed in the different APIs.</p>
+
+<h1 id="context">Context</h1>
+
+<h2 id="periods">periods</h2>
+
+<h3 id="publication-period-of-a-disruption">publication period of a disruption</h3>
+
+<p>The publication period of a disruption is the period on which we want to display the disruption in navitia.</p>
+
+<p>The creator of the disruption might not want the traveller to know of a disruption before a certain date (because it&rsquo;s too uncertain, secret, &hellip;)
+The publication period is the way to control this.</p>
+
+<h3 id="application-periods-of-a-disruption">application periods of a disruption</h3>
+
+<p>The application periods are the list of periods on which the disruption is active.
+For example it&rsquo;s the actual period when railworks are done and train circulation is cut.</p>
+
+<h2 id="request-date">Request date</h2>
+
+<p>The request date represents datetime for Journeys API, from_datetime for  Schedules API or now for the others APIs.
+The default value is now.</p>
+
+<h1 id="summary">Summary</h1>
+
+<p>To sum up we display an impact if &lsquo;now&rsquo; is in the publication period.</p>
+
+<p>The status of the impact depends only of &#39;now&rsquo; and is:</p>
+
+<ul>
+<li>&#39;active&rsquo; if &#39;now&rsquo; is inside an application period</li>
+<li>&#39;future&rsquo; if &#39;now&rsquo; is not inside an application period and there is an application period after &#39;now&rsquo;</li>
+<li>&#39;past&rsquo; otherwise</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th align="center" colspan="2"></th>
+      <th align="center"> </th>
+      <th align="center" colspan="3">Show impacts </th>
+      <th align="center"> </th>
+    </tr>
+    <tr>
+      <th align="center">publication period </th>
+      <th>Application period </th>
+      <th align="center">Request date</th>
+      <th align="center">disruptions API</th>
+      <th align="center">traffic_reports & PtRef API</th>
+      <th align="center">Journeys & Schedules API</th>
+      <th align="center">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center"> </td>
+      <td> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+    </tr>
+    <tr>
+      <td align="center"> </td>
+      <td> </td>
+      <td align="center">date1 </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center">- </td>
+      <td align="center">- </td>
+      <td align="center">future </td>
+    </tr>
+    <tr>
+      <td align="center">* </td>
+      <td> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+    </tr>
+    <tr>
+      <td align="center">| </td>
+      <td> </td>
+      <td align="center">date2 </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center"> </td>
+      <td align="center">future </td>
+    </tr>
+    <tr>
+      <td align="center">| </td>
+      <td>* </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+    </tr>
+    <tr>
+      <td align="center">| </td>
+      <td>| </td>
+      <td align="center">date3 </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center">active </td>
+    </tr>
+    <tr>
+      <td align="center">| </td>
+      <td>| </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+    </tr>
+    <tr>
+      <td align="center">| </td>
+      <td>* </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+    </tr>
+    <tr>
+      <td align="center">| </td>
+      <td> </td>
+      <td align="center">date4 </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center"> </td>
+      <td align="center">passed </td>
+    </tr>
+    <tr>
+      <td align="center">| </td>
+      <td> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+    </tr>
+    <tr>
+      <td align="center">* </td>
+      <td> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+      <td align="center"> </td>
+    </tr>
+    <tr>
+      <td align="center"> </td>
+      <td> </td>
+      <td align="center">date5 </td>
+      <td align="center"><strong>Yes</strong> </td>
+      <td align="center">- </td>
+      <td align="center">- </td>
+      <td align="center">passed </td>
+    </tr>
+  </tbody>
+</table>
+
           <h1 id="lexicon">Lexicon</h1>
 
 <h2 id="introduction">Introduction</h2>
