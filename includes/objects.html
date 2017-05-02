@@ -828,12 +828,13 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
     </span><span class="nt">"stop_point"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"amended_arrival_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"073600"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"amended_departure_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"073600"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"base_arrival_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"073600"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"base_departure_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"073600"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"cause"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"stop_time_effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delayed"</span><span class="w">
+    </span><span class="nt">"stop_time_effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delayed"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"departure_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delayed"</span><span class="w">
+    </span><span class="s2">"arrival_status"</span><span class="err">:</span><span class="w"> </span><span class="s2">"deleted"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -851,22 +852,22 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>amended_departure_time</td>
-<td>string</td>
+<td><em>optional</em> string</td>
 <td>New departure hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>amended_arrival_time</td>
-<td>string</td>
+<td><em>optional</em> string</td>
 <td>New arrival hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>base_departure_time</td>
-<td>string</td>
+<td><em>optional</em> string</td>
 <td>Base departure hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>base_arrival_time</td>
-<td>string</td>
+<td><em>optional</em> string</td>
 <td>Base arrival hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
@@ -877,7 +878,17 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <tr>
 <td>stop_time_effect</td>
 <td>Enum</td>
-<td>Can be: &ldquo;added&rdquo;, &ldquo;deleted&rdquo;, or &ldquo;delayed&rdquo;.</td>
+<td>Can be: &ldquo;added&rdquo;, &ldquo;deleted&rdquo;, &ldquo;delayed&rdquo; or &ldquo;unchanged&rdquo;. Deprecated, consider the more accurate departure_status and arrival_status</td>
+</tr>
+<tr>
+<td>arrival_status</td>
+<td>Enum</td>
+<td>Can be: &ldquo;added&rdquo;, &ldquo;deleted&rdquo;, &ldquo;delayed&rdquo; or &ldquo;unchanged&rdquo;.</td>
+</tr>
+<tr>
+<td>departure_status</td>
+<td>Enum</td>
+<td>Can be: &ldquo;added&rdquo;, &ldquo;deleted&rdquo;, &ldquo;delayed&rdquo; or &ldquo;unchanged&rdquo;.</td>
 </tr>
 </tbody></table>
 
