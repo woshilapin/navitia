@@ -2179,6 +2179,13 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 <tr>
 <td>nop</td>
+<td>min_nb_transfers</td>
+<td>int</td>
+<td>Minimum number of transfers in each journey</td>
+<td>0</td>
+</tr>
+<tr>
+<td>nop</td>
 <td>max_duration</td>
 <td>int</td>
 <td>Maximum duration of journeys in secondes. Really useful when computing an isochrone</td>
@@ -2197,6 +2204,13 @@ However when no coordinates are provided, you need to provide on what region you
 <td>boolean</td>
 <td>If true the traveler is considered to be using a wheelchair, thus only accessible public transport are used<br>be warned: many data are currently too faint to provide acceptable answers with this parameter on</td>
 <td>False</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>direct_path</td>
+<td>enum</td>
+<td>Specify if direct paths should be suggested.<br>possible values: <ul><li>indifferent</li><li>none</li><li>only</li></ul></td>
+<td>indifferent</td>
 </tr>
 <tr>
 <td>nop</td>
