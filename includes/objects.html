@@ -61,14 +61,22 @@
 
 <h3 id="iso-date-time">Iso-date-time</h3>
 
-<p>Navitia manages every date or time as a UTC date-time. The web-service </p>
+<p>Navitia</p>
 
 <ul>
-<li>  exposes every date times as local times via an ISO 8601 &ldquo;YYYYMMDDThhmmss&rdquo; string</li>
-<li>  can be request using local times via an ISO 8601 &ldquo;YYYYMMDDThhmmss&rdquo; string</li>
+<li>  exposes every date times as local times of the coverage via an ISO 8601 &ldquo;YYYYMMDDThhmmss&rdquo; string</li>
+<li>  can be requested using local times of the coverage via ISO 8601 as &ldquo;YYYYMMDDThhmmss&rdquo; or &ldquo;YYYY-MM-DDThh:mm:ss&rdquo;</li>
+<li>  can be requested using UTC relative times via ISO 8601 as &ldquo;YYYYMMDDThhmmss+HHMM&rdquo; or &ldquo;YYYY-MM-DDThh:mm:ss+HH:MM&rdquo;</li>
+<li>  can be requested using UTC times via ISO 8601 as &ldquo;YYYYMMDDThhmmssZ&rdquo; or &ldquo;YYYY-MM-DDThh:mm:ssZ&rdquo;</li>
 </ul>
 
-<p>For example: <a href="https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=20140425T1337">https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=20140425T1337</a></p>
+<p>For example:</p>
+
+<ul>
+<li><a href="https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=20140425T1337">https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=20140425T1337</a></li>
+<li><a href="https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=2014-04-25T13:37+02:00">https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=2014-04-25T13:37+02:00</a></li>
+<li><a href="https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=2014-04-25T13:37:42Z">https://api.navitia.io/v1/journeys?from=bob&amp;to=bobette&amp;datetime=2014-04-25T13:37:42Z</a></li>
+</ul>
 
 <p>There are lots of ISO 8601 libraries in every kind of language that you should use before breaking down <a href="https://youtu.be/-5wpm-gesOY">https://youtu.be/-5wpm-gesOY</a></p>
 
