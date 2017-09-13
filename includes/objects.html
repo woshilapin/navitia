@@ -385,6 +385,12 @@
 </tr>
 </tbody></table>
 
+<p>Commercial modes are close from physical modes, but not normalized and can refer to a brand,
+something that can be specific to a network, and known to the traveler.
+Examples: RER in Paris, Busway in Nantes, and also of course Bus, Métro, etc.</p>
+
+<p>Integrators should mainly use that value for text output to the traveler.</p>
+
 <h3 id="physical-mode"><a name="physical-mode"></a>Physical Mode</h3>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"physical_mode:Tramway"</span><span class="p">,</span><span class="w">
@@ -416,8 +422,13 @@
 </tr>
 </tbody></table>
 
-<p>Physical modes are fastened and normalized. If you want to propose modes
-filter in your application, you should use <a href="#physical-mode">physical_mode</a> rather than
+<p>Physical modes are fastened and normalized (though the list can -rarely- be extended).
+So it&rsquo;s easier for integrators to map it to a pictogram, but prefer <a href="#commercial-mode">commercial_mode</a> for a text output.</p>
+
+<p>The idea is to use physical modes when building a request to Navitia,
+and commercial modes when building an output to the traveler.</p>
+
+<p>Example: If you want to propose modes filter in your application, you should use <a href="#physical-mode">physical_mode</a> rather than
 <a href="#commercial-mode">commercial_mode</a>.</p>
 
 <p>Here is the valid id list:</p>
@@ -433,6 +444,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <li>  physical_mode:LocalTrain</li>
 <li>  physical_mode:LongDistanceTrain</li>
 <li>  physical_mode:Metro</li>
+<li>  physical_mode:RailShuttle</li>
 <li>  physical_mode:RapidTransit</li>
 <li>  physical_mode:Shuttle</li>
 <li>  physical_mode:Taxi</li>
@@ -503,37 +515,37 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>quality</td>
-<td><em>optional</em> integer</td>
+<td>integer</td>
 <td>The quality of the place</td>
 </tr>
 <tr>
 <td>embedded_type</td>
-<td><a href="#embedded-type">embedded_type</a></td>
+<td><a href="#place-embedded-type">place embedded_type</a></td>
 <td>The type of the embedded object</td>
 </tr>
 <tr>
 <td>administrative_region</td>
-<td><em>optional</em> <a href="#admin">admin</a></td>
+<td><a href="#admin">admin</a></td>
 <td>Embedded administrative region</td>
 </tr>
 <tr>
 <td>stop_area</td>
-<td><em>optional</em> <a href="#stop-area">stop_area</a></td>
+<td><a href="#stop-area">stop_area</a></td>
 <td>Embedded Stop area</td>
 </tr>
 <tr>
 <td>poi</td>
-<td><em>optional</em> <a href="#poi">poi</a></td>
+<td><a href="#poi">poi</a></td>
 <td>Embedded poi</td>
 </tr>
 <tr>
 <td>address</td>
-<td><em>optional</em> <a href="#address">address</a></td>
+<td><a href="#address">address</a></td>
 <td>Embedded address</td>
 </tr>
 <tr>
 <td>stop_point</td>
-<td><em>optional</em> <a href="#stop-point">stop_point</a></td>
+<td><a href="#stop-point">stop_point</a></td>
 <td>Embedded Stop point</td>
 </tr>
 </tbody></table>
@@ -607,52 +619,52 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>quality</td>
-<td><em>optional</em> integer</td>
+<td>integer</td>
 <td>The quality of the object</td>
 </tr>
 <tr>
 <td>embedded_type</td>
-<td><a href="#embedded-type">embedded_type</a></td>
+<td><a href="#pt-object-embedded-type">pt-object embedded_type</a></td>
 <td>The type of the embedded object</td>
 </tr>
 <tr>
 <td>stop_area</td>
-<td><em>optional</em> <a href="#stop-area">stop_area</a></td>
+<td><a href="#stop-area">stop_area</a></td>
 <td>Embedded Stop area</td>
 </tr>
 <tr>
 <td>stop_point</td>
-<td><em>optional</em> <a href="#stop-point">stop_point</a></td>
+<td><a href="#stop-point">stop_point</a></td>
 <td>Embedded Stop point</td>
 </tr>
 <tr>
 <td>network</td>
-<td><em>optional</em> <a href="#network">network</a></td>
+<td><a href="#network">network</a></td>
 <td>Embedded network</td>
 </tr>
 <tr>
 <td>commercial_mode</td>
-<td><em>optional</em> <a href="#commercial-mode">commercial_mode</a></td>
+<td><a href="#commercial-mode">commercial_mode</a></td>
 <td>Embedded commercial_mode</td>
 </tr>
 <tr>
 <td>stop_area</td>
-<td><em>optional</em> <a href="#stop-area">stop_area</a></td>
+<td><a href="#stop-area">stop_area</a></td>
 <td>Embedded Stop area</td>
 </tr>
 <tr>
 <td>line</td>
-<td><em>optional</em> <a href="#line">line</a></td>
+<td><a href="#line">line</a></td>
 <td>Embedded line</td>
 </tr>
 <tr>
 <td>route</td>
-<td><em>optional</em> <a href="#route">route</a></td>
+<td><a href="#route">route</a></td>
 <td>Embedded route</td>
 </tr>
 <tr>
 <td>trip</td>
-<td><em>optional</em> <a href="#trip">trip</a></td>
+<td><a href="#trip">trip</a></td>
 <td>Embedded trip</td>
 </tr>
 </tbody></table>
@@ -746,7 +758,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>category</td>
-<td>string (optional)</td>
+<td>string</td>
 <td>The category of the disruption, such as &ldquo;construction works&rdquo; or &ldquo;incident&rdquo;</td>
 </tr>
 </tbody></table>
@@ -781,12 +793,12 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>impacted_section</td>
-<td><em>optional</em> <a href="#impacted_section">impacted_section</a></td>
+<td><a href="#impacted_section">impacted_section</a></td>
 <td>Only for line section impact, the impacted section</td>
 </tr>
 <tr>
 <td>impacted_stops</td>
-<td><em>optional</em> array of <a href="#impacted_stop">impacted_stop</a></td>
+<td>array of <a href="#impacted_stop">impacted_stop</a></td>
 <td>Only for <a href="#trip">trip</a> delay, the list of delays, stop by stop</td>
 </tr>
 </tbody></table>
@@ -860,22 +872,22 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>amended_departure_time</td>
-<td><em>optional</em> string</td>
+<td>string</td>
 <td>New departure hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>amended_arrival_time</td>
-<td><em>optional</em> string</td>
+<td>string</td>
 <td>New arrival hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>base_departure_time</td>
-<td><em>optional</em> string</td>
+<td>string</td>
 <td>Base departure hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>base_arrival_time</td>
-<td><em>optional</em> string</td>
+<td>string</td>
 <td>Base arrival hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
@@ -1264,9 +1276,10 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h3 id="embedded-type"><a name="embedded-type"></a>Embedded type</h3>
+<h3 id="place-embedded-type"><a name="place-embedded-type"></a>Place embedded type</h3>
 
-<p>Enum used to identify what kind of objects <em><a href="#places">/places</a></em>, <em><a href="#pt-objects">/pt_objects</a></em> or <em><a href="#disruption">/disruptions</a></em> services are managing.</p>
+<p>Enum used to identify what kind of objects <em><a href="#places">/places</a></em> and <em><a href="#places-nearby-api">/places_nearby</a></em> services are managing.
+It&rsquo;s also used inside different responses (journeys, &hellip;).</p>
 
 <table><thead>
 <tr>
@@ -1278,6 +1291,35 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <td><a href="#administrative-region">administrative_region</a></td>
 <td>a city, a district, a neighborhood</td>
 </tr>
+<tr>
+<td><a href="#stop-area">stop_area</a></td>
+<td>a nameable zone, where there are some stop points</td>
+</tr>
+<tr>
+<td><a href="#stop-point">stop_point</a></td>
+<td>a location where vehicles can pickup or drop off passengers</td>
+</tr>
+<tr>
+<td><a href="#address">address</a></td>
+<td>a point located in a street</td>
+</tr>
+<tr>
+<td><a href="#poi">poi</a></td>
+<td>a point of interest</td>
+</tr>
+</tbody></table>
+
+<h3 id="pt-object-embedded-type"><a name="pt-object-embedded-type"></a>PT-object embedded type</h3>
+
+<p>Enum used to identify what kind of objects <em><a href="#pt-objects">/pt_objects</a></em> service is managing.
+It&rsquo;s also used inside different responses (disruptions, &hellip;).</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
 <tr>
 <td><a href="#network">network</a></td>
 <td>a public transport network</td>
@@ -1303,27 +1345,10 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <td>a location where vehicles can pickup or drop off passengers</td>
 </tr>
 <tr>
-<td><a href="#address">address</a></td>
-<td>a point located in a street</td>
-</tr>
-<tr>
-<td><a href="#poi">poi</a></td>
-<td>a point of interest</td>
-</tr>
-<tr>
 <td><a href="#trip">trip</a></td>
 <td>a trip</td>
 </tr>
 </tbody></table>
-
-<aside class="notice">
-    This enum is used by 3 services :<br>
-    <ul>
-    <li>Using <b>places</b> service, navitia would returned objects among administrative_region, stop_area, poi, address and stop_point types<br>
-    <li>Using <b>pt_objects</b> service, navitia would returned objects among network, commercial_mode, stop_area, line and route types<br>
-    <li>Using <b>disruptions</b> service, navitia would returned objects among network, commercial_mode, stop_area, line, route and trips types<br>
-    </ul>
-</aside>
 
 <h3 id="equipment">equipment</h3>
 

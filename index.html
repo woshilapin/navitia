@@ -832,16 +832,16 @@ but we try to use something that makes sense and has a reasonnable amount of dat
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">coverage</code></td>
+<td><code class="prettyprint">/coverage</code></td>
 <td>List of the areas covered by navitia</td>
 </tr>
 <tr>
-<td><code class="prettyprint">coverage/{region_id}</code></td>
+<td><code class="prettyprint">/coverage/{region_id}</code></td>
 <td>Information about a specific region</td>
 </tr>
 <tr>
-<td><code class="prettyprint">coverage/{lon;lat}</code></td>
-<td>Information about a specific region</td>
+<td><code class="prettyprint">/coverage/{lon;lat}</code></td>
+<td>Information about a specific region, navitia guesses the region from coordinates</td>
 </tr>
 </tbody></table>
 
@@ -1129,15 +1129,15 @@ paginate results.</p>
 </tr>
 <tr>
 <td><code class="prettyprint">/coverage/{region_id}/{collection_name}/{object_id}</code></td>
-<td>Information about a specific region</td>
+<td>Information about a specific object</td>
 </tr>
 <tr>
 <td><code class="prettyprint">/coverage/{lon;lat}/{collection_name}</code></td>
-<td>Collection of objects of a region</td>
+<td>Collection of objects of a region, navitia guesses the region from coordinates</td>
 </tr>
 <tr>
 <td><code class="prettyprint">/coverage/{lon;lat}/{collection_name}/{object_id}</code></td>
-<td>Information about a specific region</td>
+<td>Information about a specific object, navitia guesses the region from coordinates</td>
 </tr>
 </tbody></table>
 
@@ -1743,12 +1743,12 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">/coord/{lon;lat}/places_nearby</code></td>
-<td>List of objects near the resource without any region id</td>
+<td><code class="prettyprint">/coverage/{lon;lat}/coords/{lon;lat}/places_nearby</code></td>
+<td>List of objects near the resource, navitia guesses the region from coordinates</td>
 </tr>
 <tr>
-<td><code class="prettyprint">/coverage/{lon;lat}/coords/{lon;lat}/places_nearby</code></td>
-<td>List of objects near the resource without any region id</td>
+<td><code class="prettyprint">/coord/{lon;lat}/places_nearby</code></td>
+<td>List of objects near the resource without any region id (same result as above)</td>
 </tr>
 <tr>
 <td><code class="prettyprint">/coverage/{region_id}/coords/{lon;lat}/places_nearby</code></td>
@@ -2237,28 +2237,45 @@ However when no coordinates are provided, you need to provide on what region you
 
 <h3 id="precisions-on-forbidden_uris-and-allowed_id">Precisions on <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code></h3>
 
-<p>These parameters are filtering the vehicle journeys and the stop points used to compute the journeys. The journeys can only use allowed vehicle journeys (as present in the <code class="prettyprint">public_transport</code> or <code class="prettyprint">on_demand_transport</code> sections). They also can only use the allowed stop points (as present in the <code class="prettyprint">street_network</code>, <code class="prettyprint">waiting</code> and <code class="prettyprint">crow_fly</code> sections).</p>
+<p>These parameters are filtering the vehicle journeys and the stop points used to compute the journeys.
+<code class="prettyprint">allowed_id[]</code> is used to allow <em>only</em> certain route options by <em>excluding</em> all others.
+<code class="prettyprint">forbidden_uris[]</code> is used to <em>exclude</em> specific route options.</p>
+
+<p>Examples:</p>
+
+<ul>
+<li>A user doesn&rsquo;t like line A metro in hers city. She adds the parameter <code class="prettyprint">forbidden_uris[]=line:A</code> when calling the API.</li>
+<li>A user would only like to use Buses and Tramways. She adds the parameter <code class="prettyprint">allowed_id[]=physical_mode:Bus&amp;allowed_id[]=physical_mode:Tramway</code>.</li>
+</ul>
+
+<h4 id="technically">Technically</h4>
+
+<p>The journeys can only use allowed vehicle journeys (as present in the <code class="prettyprint">public_transport</code> or <code class="prettyprint">on_demand_transport</code> sections).
+They also can only use the allowed stop points for getting in or out of a vehicle (as present in the <code class="prettyprint">street_network</code>, <code class="prettyprint">transfer</code> and <code class="prettyprint">crow_fly</code> sections).</p>
 
 <p>For filtering vehicle journeys, the identifier of a line, route, commercial mode, physical mode or network can be used. </p>
 
 <p>For filtering stop points, the identifier of a stop point or stop area can be used.</p>
 
-<p><code class="prettyprint">forbidden_uris[]</code> removes the corresponding vehicle journeys (or stop points) from the list of allowed vehicle journeys (resp. stop_points).</p>
-
-<p><code class="prettyprint">allowed_id[]</code> works in 2 parts:</p>
+<p>The principle is to create a blacklist using those 2 parameters:</p>
 
 <ul>
-<li>  If an id related to a stop point is given, only the corresponding stop points will be allowed. Else, all the stop points are allowed.</li>
-<li>  If an id related to a vehicle journey is given, only the corresponding vehicle journeys will be allowed. Else, all the vehicle journeys are allowed.</li>
+<li><p><code class="prettyprint">forbidden_uris[]</code> adds the corresponding vehicle journeys (or stop points) to the blacklist of vehicle journeys (resp. stop_points).</p></li>
+<li><p><code class="prettyprint">allowed_id[]</code> works in 2 parts:</p>
+
+<ul>
+<li>If an id related to a stop point is given, only the corresponding stop points are allowed (practically, all other are blacklisted). Else, all the stop points are allowed.</li>
+<li>If an id related to a vehicle journey is given, only the corresponding vehicle journeys are allowed (practically, all other are blacklisted). Else, all the vehicle journeys are allowed.</li>
+</ul></li>
 </ul>
 
-<p>The constraints of <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code> are combined. For example, if you give <code class="prettyprint">allowed_id[]=network:SN&amp;forbidden_uris[]=line:A</code>, only the vehicle journeys of the network SN that are not from the line A can be used to compute the journeys.</p>
+<p>The blacklisting constraints of <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code> are combined. For example, if you give <code class="prettyprint">allowed_id[]=network:SN&amp;forbidden_uris[]=line:A</code>, only the vehicle journeys of the network SN that are not from the line A can be used to compute the journeys.</p>
 
 <p>Let&rsquo;s illustrate all of that with an example.</p>
 
 <p><img alt="example" src="images/forbidden_example.png" /></p>
 
-<p>We want to go from SPA to SPB. Lines LA and LB can go from SPA to SPB. There is another stop point SPC connected to SPA with lines LC and LD, and connected to SB with lines LE and LF.</p>
+<p>We want to go from stop A to stop B. Lines 1 and 2 can go from stop A to B. There is another stop C connected to A with lines 3 and 4, and connected to B with lines 5 and 6.</p>
 
 <p>Without any constraint, all these objects can be used to propose a solution. Let&rsquo;s study some examples:</p>
 
@@ -2270,53 +2287,53 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 </thead><tbody>
 <tr>
-<td>LA, LB</td>
+<td>line 1, line 2</td>
 <td></td>
-<td>All the journeys will pass by SPC, using either of LC, LD, LE and LF</td>
+<td>All the journeys will pass by stop C, using either of line 3, 4, 5 and 6</td>
 </tr>
 <tr>
-<td>SPA</td>
+<td>stop A</td>
 <td></td>
 <td>No solution, as we can&rsquo;t get in any transport</td>
 </tr>
 <tr>
-<td>SPB</td>
+<td>stop B</td>
 <td></td>
 <td>No solution, as we can&rsquo;t get out at destination</td>
 </tr>
 <tr>
 <td></td>
-<td>SPC</td>
+<td>stop C</td>
 <td>No solution, as we can&rsquo;t get in neither get out</td>
 </tr>
 <tr>
-<td>LA, LB</td>
-<td>LC</td>
-<td>No solution, as only LC can be taken</td>
+<td>line 1, line 2</td>
+<td>line 3</td>
+<td>No solution, as only line 3 can be taken</td>
 </tr>
 <tr>
 <td></td>
-<td>LC, LE</td>
-<td>All the journeys will pass by SPC using LC and LE</td>
+<td>line 3, line 5</td>
+<td>All the journeys will pass by stop C using line 3 and 5</td>
 </tr>
 <tr>
 <td></td>
-<td>LC, LD, LE</td>
-<td>All the journeys will pass by SPC using (LC or LD) and LE</td>
+<td>line 3, line 4, line5</td>
+<td>All the journeys will pass by stop C using (line 3 or 4) and line 5</td>
 </tr>
 <tr>
 <td></td>
-<td>LC, LE, SPC</td>
+<td>line 3, line 5, stop C</td>
 <td>No solution, as we can&rsquo;t get in neither get out</td>
 </tr>
 <tr>
 <td></td>
-<td>SPA, SPC, SPB</td>
-<td>As without any constraint, passing via SPC is not needed</td>
+<td>stop A, stop C, stop B</td>
+<td>As without any constraint, passing via stop C is not needed</td>
 </tr>
 <tr>
-<td>SPA, SPB</td>
-<td>SPA, SPB</td>
+<td>stop A, stop B</td>
+<td>stop A, stop B</td>
 <td>No solution, as no stop point are allowed.</td>
 </tr>
 </tbody></table>
@@ -2927,7 +2944,7 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 <tr>
 <td><code class="prettyprint">/coverage/{lon;lat}/coords/{lon;lat}/route_schedules</code></td>
-<td>List of the entire route schedules for coordinates</td>
+<td>List of the entire route schedules for coordinates, navitia guesses the region from coordinates</td>
 </tr>
 </tbody></table>
 
@@ -3168,7 +3185,7 @@ You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_
 </tr>
 <tr>
 <td><code class="prettyprint">/coverage/{lon;lat}/coords/{lon;lat}/stop_schedules</code></td>
-<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for coordinates</td>
+<td>List of the stop schedules grouped by <code class="prettyprint">stop_point/route</code> for coordinates, navitia guesses the region from coordinates</td>
 </tr>
 </tbody></table>
 
@@ -3342,7 +3359,7 @@ Departures are ordered chronologically in ascending order as:
 </tr>
 <tr>
 <td><code class="prettyprint">/coverage/{lon;lat}/coords/{lon;lat}/departures</code></td>
-<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+<td>List of the next departures, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here), navitia guesses the region from coordinates</td>
 </tr>
 </tbody></table>
 
@@ -3490,7 +3507,7 @@ object. Arrivals are ordered chronologically in ascending order.</p>
 </tr>
 <tr>
 <td><code class="prettyprint">/coverage/{lon;lat}/coords/{lon;lat}/arrivals</code></td>
-<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here)</td>
+<td>List of the arrivals, multi-route oriented, only time sorted (no grouped by <code class="prettyprint">stop_point/route</code> here), navitia guesses the region from coordinates</td>
 </tr>
 </tbody></table>
 
@@ -4104,6 +4121,12 @@ many times.</p>
 </tr>
 </tbody></table>
 
+<p>Commercial modes are close from physical modes, but not normalized and can refer to a brand,
+something that can be specific to a network, and known to the traveler.
+Examples: RER in Paris, Busway in Nantes, and also of course Bus, Métro, etc.</p>
+
+<p>Integrators should mainly use that value for text output to the traveler.</p>
+
 <h3 id="physical-mode"><a name="physical-mode"></a>Physical Mode</h3>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"physical_mode:Tramway"</span><span class="p">,</span><span class="w">
@@ -4135,8 +4158,13 @@ many times.</p>
 </tr>
 </tbody></table>
 
-<p>Physical modes are fastened and normalized. If you want to propose modes
-filter in your application, you should use <a href="#physical-mode">physical_mode</a> rather than
+<p>Physical modes are fastened and normalized (though the list can -rarely- be extended).
+So it&rsquo;s easier for integrators to map it to a pictogram, but prefer <a href="#commercial-mode">commercial_mode</a> for a text output.</p>
+
+<p>The idea is to use physical modes when building a request to Navitia,
+and commercial modes when building an output to the traveler.</p>
+
+<p>Example: If you want to propose modes filter in your application, you should use <a href="#physical-mode">physical_mode</a> rather than
 <a href="#commercial-mode">commercial_mode</a>.</p>
 
 <p>Here is the valid id list:</p>
@@ -4152,6 +4180,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <li>  physical_mode:LocalTrain</li>
 <li>  physical_mode:LongDistanceTrain</li>
 <li>  physical_mode:Metro</li>
+<li>  physical_mode:RailShuttle</li>
 <li>  physical_mode:RapidTransit</li>
 <li>  physical_mode:Shuttle</li>
 <li>  physical_mode:Taxi</li>
@@ -4222,37 +4251,37 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>quality</td>
-<td><em>optional</em> integer</td>
+<td>integer</td>
 <td>The quality of the place</td>
 </tr>
 <tr>
 <td>embedded_type</td>
-<td><a href="#embedded-type">embedded_type</a></td>
+<td><a href="#place-embedded-type">place embedded_type</a></td>
 <td>The type of the embedded object</td>
 </tr>
 <tr>
 <td>administrative_region</td>
-<td><em>optional</em> <a href="#admin">admin</a></td>
+<td><a href="#admin">admin</a></td>
 <td>Embedded administrative region</td>
 </tr>
 <tr>
 <td>stop_area</td>
-<td><em>optional</em> <a href="#stop-area">stop_area</a></td>
+<td><a href="#stop-area">stop_area</a></td>
 <td>Embedded Stop area</td>
 </tr>
 <tr>
 <td>poi</td>
-<td><em>optional</em> <a href="#poi">poi</a></td>
+<td><a href="#poi">poi</a></td>
 <td>Embedded poi</td>
 </tr>
 <tr>
 <td>address</td>
-<td><em>optional</em> <a href="#address">address</a></td>
+<td><a href="#address">address</a></td>
 <td>Embedded address</td>
 </tr>
 <tr>
 <td>stop_point</td>
-<td><em>optional</em> <a href="#stop-point">stop_point</a></td>
+<td><a href="#stop-point">stop_point</a></td>
 <td>Embedded Stop point</td>
 </tr>
 </tbody></table>
@@ -4326,52 +4355,52 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>quality</td>
-<td><em>optional</em> integer</td>
+<td>integer</td>
 <td>The quality of the object</td>
 </tr>
 <tr>
 <td>embedded_type</td>
-<td><a href="#embedded-type">embedded_type</a></td>
+<td><a href="#pt-object-embedded-type">pt-object embedded_type</a></td>
 <td>The type of the embedded object</td>
 </tr>
 <tr>
 <td>stop_area</td>
-<td><em>optional</em> <a href="#stop-area">stop_area</a></td>
+<td><a href="#stop-area">stop_area</a></td>
 <td>Embedded Stop area</td>
 </tr>
 <tr>
 <td>stop_point</td>
-<td><em>optional</em> <a href="#stop-point">stop_point</a></td>
+<td><a href="#stop-point">stop_point</a></td>
 <td>Embedded Stop point</td>
 </tr>
 <tr>
 <td>network</td>
-<td><em>optional</em> <a href="#network">network</a></td>
+<td><a href="#network">network</a></td>
 <td>Embedded network</td>
 </tr>
 <tr>
 <td>commercial_mode</td>
-<td><em>optional</em> <a href="#commercial-mode">commercial_mode</a></td>
+<td><a href="#commercial-mode">commercial_mode</a></td>
 <td>Embedded commercial_mode</td>
 </tr>
 <tr>
 <td>stop_area</td>
-<td><em>optional</em> <a href="#stop-area">stop_area</a></td>
+<td><a href="#stop-area">stop_area</a></td>
 <td>Embedded Stop area</td>
 </tr>
 <tr>
 <td>line</td>
-<td><em>optional</em> <a href="#line">line</a></td>
+<td><a href="#line">line</a></td>
 <td>Embedded line</td>
 </tr>
 <tr>
 <td>route</td>
-<td><em>optional</em> <a href="#route">route</a></td>
+<td><a href="#route">route</a></td>
 <td>Embedded route</td>
 </tr>
 <tr>
 <td>trip</td>
-<td><em>optional</em> <a href="#trip">trip</a></td>
+<td><a href="#trip">trip</a></td>
 <td>Embedded trip</td>
 </tr>
 </tbody></table>
@@ -4465,7 +4494,7 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>category</td>
-<td>string (optional)</td>
+<td>string</td>
 <td>The category of the disruption, such as &ldquo;construction works&rdquo; or &ldquo;incident&rdquo;</td>
 </tr>
 </tbody></table>
@@ -4500,12 +4529,12 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>impacted_section</td>
-<td><em>optional</em> <a href="#impacted_section">impacted_section</a></td>
+<td><a href="#impacted_section">impacted_section</a></td>
 <td>Only for line section impact, the impacted section</td>
 </tr>
 <tr>
 <td>impacted_stops</td>
-<td><em>optional</em> array of <a href="#impacted_stop">impacted_stop</a></td>
+<td>array of <a href="#impacted_stop">impacted_stop</a></td>
 <td>Only for <a href="#trip">trip</a> delay, the list of delays, stop by stop</td>
 </tr>
 </tbody></table>
@@ -4579,22 +4608,22 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 <tr>
 <td>amended_departure_time</td>
-<td><em>optional</em> string</td>
+<td>string</td>
 <td>New departure hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>amended_arrival_time</td>
-<td><em>optional</em> string</td>
+<td>string</td>
 <td>New arrival hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>base_departure_time</td>
-<td><em>optional</em> string</td>
+<td>string</td>
 <td>Base departure hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
 <td>base_arrival_time</td>
-<td><em>optional</em> string</td>
+<td>string</td>
 <td>Base arrival hour (format HHMMSS) of the trip on this stop point</td>
 </tr>
 <tr>
@@ -4983,9 +5012,10 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 </tr>
 </tbody></table>
 
-<h3 id="embedded-type"><a name="embedded-type"></a>Embedded type</h3>
+<h3 id="place-embedded-type"><a name="place-embedded-type"></a>Place embedded type</h3>
 
-<p>Enum used to identify what kind of objects <em><a href="#places">/places</a></em>, <em><a href="#pt-objects">/pt_objects</a></em> or <em><a href="#disruption">/disruptions</a></em> services are managing.</p>
+<p>Enum used to identify what kind of objects <em><a href="#places">/places</a></em> and <em><a href="#places-nearby-api">/places_nearby</a></em> services are managing.
+It&rsquo;s also used inside different responses (journeys, &hellip;).</p>
 
 <table><thead>
 <tr>
@@ -4997,6 +5027,35 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <td><a href="#administrative-region">administrative_region</a></td>
 <td>a city, a district, a neighborhood</td>
 </tr>
+<tr>
+<td><a href="#stop-area">stop_area</a></td>
+<td>a nameable zone, where there are some stop points</td>
+</tr>
+<tr>
+<td><a href="#stop-point">stop_point</a></td>
+<td>a location where vehicles can pickup or drop off passengers</td>
+</tr>
+<tr>
+<td><a href="#address">address</a></td>
+<td>a point located in a street</td>
+</tr>
+<tr>
+<td><a href="#poi">poi</a></td>
+<td>a point of interest</td>
+</tr>
+</tbody></table>
+
+<h3 id="pt-object-embedded-type"><a name="pt-object-embedded-type"></a>PT-object embedded type</h3>
+
+<p>Enum used to identify what kind of objects <em><a href="#pt-objects">/pt_objects</a></em> service is managing.
+It&rsquo;s also used inside different responses (disruptions, &hellip;).</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
 <tr>
 <td><a href="#network">network</a></td>
 <td>a public transport network</td>
@@ -5022,27 +5081,10 @@ filter in your application, you should use <a href="#physical-mode">physical_mod
 <td>a location where vehicles can pickup or drop off passengers</td>
 </tr>
 <tr>
-<td><a href="#address">address</a></td>
-<td>a point located in a street</td>
-</tr>
-<tr>
-<td><a href="#poi">poi</a></td>
-<td>a point of interest</td>
-</tr>
-<tr>
 <td><a href="#trip">trip</a></td>
 <td>a trip</td>
 </tr>
 </tbody></table>
-
-<aside class="notice">
-    This enum is used by 3 services :<br>
-    <ul>
-    <li>Using <b>places</b> service, navitia would returned objects among administrative_region, stop_area, poi, address and stop_point types<br>
-    <li>Using <b>pt_objects</b> service, navitia would returned objects among network, commercial_mode, stop_area, line and route types<br>
-    <li>Using <b>disruptions</b> service, navitia would returned objects among network, commercial_mode, stop_area, line, route and trips types<br>
-    </ul>
-</aside>
 
 <h3 id="equipment">equipment</h3>
 
