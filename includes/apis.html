@@ -956,10 +956,6 @@ HTTP/1.1 200 OK
 <p>This endpoint allowe you to search for public transport objects that are near another object, or nearby
 coordinates, returning a <a href="#place">places</a> collection.</p>
 
-<aside class="warning">
-    There is no pagination for this api.
-</aside>
-
 <h3 id="accesses">Accesses</h3>
 
 <table><thead>
@@ -1029,8 +1025,22 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 <td>nop</td>
 <td>disable_geojson</td>
 <td>boolean</td>
-<td>remove geojson from the response</td>
+<td>Remove geojson from the response</td>
 <td>False</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>count</td>
+<td>int</td>
+<td>Elements per page</td>
+<td>10</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>start_page</td>
+<td>int</td>
+<td>The page number (cf the <a href="#paging">paging section</a>)</td>
+<td>0</td>
 </tr>
 <tr>
 <td>nop</td>
@@ -1060,9 +1070,12 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 <li>  &ldquo;distance=10000&rdquo; Paris is not so big</li>
 <li>  &ldquo;type[]=poi&rdquo; to take pois only</li>
 <li>  &ldquo;filter=poi_type.id=poi_type:amenity:parking&rdquo; to get parking</li>
+<li>  &ldquo;count=100&rdquo; for classic pagination (to get the 100 nearest ones)</li>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/places/admin:7444/places_nearby?distance=10000&amp;count=100&amp;type%5B%5D=poi&amp;filter=poi_type.id=poi_type:amenity:parking">https://api.navitia.io/v1/coverage/fr-idf/places/admin:7444/places_nearby?distance=10000&amp;count=100&amp;type[]=poi&amp;filter=poi_type.id=poi_type:amenity:parking</a></li>
 </ul></li>
 </ul>
+
+<p>The results are sorted by distance.</p>
 
 <h2 id="journeys"><a name="journeys"></a>Journeys</h2>
 
