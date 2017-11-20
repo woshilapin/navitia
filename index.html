@@ -1038,16 +1038,28 @@ local mobility services</li>
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">coords/{lon;lat}</code></td>
+<td><code class="prettyprint">places/{lon;lat}</code></td>
 <td>Detailed address point</td>
 </tr>
 <tr>
-<td><code class="prettyprint">coverage/{lon;lat}/coords/{lon;lat}</code></td>
+<td><code class="prettyprint">/places/{id}</code></td>
+<td>Information about places</td>
+</tr>
+<tr>
+<td><code class="prettyprint">coverage/{lon;lat}/places/{lon;lat}</code></td>
 <td>Detailed address point, navitia guesses the region from coordinates</td>
 </tr>
 <tr>
-<td><code class="prettyprint">coverage/{region_id}/coords/{lon;lat}</code></td>
+<td><code class="prettyprint">coverage/{lon;lat}/places/{id}</code></td>
+<td>Information about places, navitia guesses the region from coordinates</td>
+</tr>
+<tr>
+<td><code class="prettyprint">coverage/{region_id}/places/{lon;lat}</code></td>
 <td>Detailed address point</td>
+</tr>
+<tr>
+<td><code class="prettyprint">coverage/{region_id}/places/{id}</code></td>
+<td>Information about places</td>
 </tr>
 </tbody></table>
 
