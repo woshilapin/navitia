@@ -49,6 +49,12 @@ but we try to use something that makes sense and has a reasonnable amount of dat
 
 <p>The only arguments are the ones of <a href="#paging">paging</a>.</p>
 
+<aside class="notice">
+    Most of the time you can avoid providing a region and let Navitia guess the right one for you.
+    This can be done by providing coordinates in place of the region name:
+    `/coverage/{lon;lat}/endpoint?parameter=value`
+</aside>
+
 <h3 id="accesses">Accesses</h3>
 
 <table><thead>
@@ -398,47 +404,55 @@ paginate results.</p>
 <li>  <a href="#disruption">disruptions</a></li>
 </ul>
 
-<h3 id="parameters">Parameters</h3>
+<h3 id="shared-parameters">Shared parameters</h3>
 
 <h4 id="depth"><a name="depth"></a>depth</h4>
 
-<p>This tiny parameter can expand Navitia power by making it more wordy.
-Here is some examples around &ldquo;metro line 1&rdquo; from the Parisian network:</p>
+<p>You are looking for something, but Navitia doesn&rsquo;t output it in your favorite endpoint?<br>
+You want to request more from navitia feed?<br>
+You are receiving feeds that are too important and too slow with low bandwidth?<br>
+You would like Navitia to serve GraphQL but it is still not planned?</p>
+
+<p>Feeds from endpoint might miss informations, but this tiny <code class="prettyprint">depth=</code> parameter can
+expand Navitia power by making it more wordy. Or lighter if you want it.</p>
+
+<p>Here is some examples around &ldquo;metro line 1&rdquo; from the Parisian network:</p>
 
 <ul>
 <li>Get &ldquo;line 1&rdquo; id
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201">https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201</a></li>
-<li>The id is &ldquo;line:RAT:M1&rdquo;</li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201">https://api.navitia.io/v1/coverage/sandbox/pt_objects?q=metro%201</a><br>
+The id is &ldquo;line:RAT:M1&rdquo;</li>
 </ul></li>
 <li>Get routes for this line
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes</a></li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes</a><br>
+Default depth is <code class="prettyprint">depth=1</code></li>
 </ul></li>
-<li>Want to get a tiny response? Just add &ldquo;depth=0&rdquo;
+<li>Want to get a tiny response? Just add <code class="prettyprint">depth=0</code>
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=0">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=0</a></li>
-<li>The response is lighter (parent lines disappear for example)</li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=0">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=0</a><br>
+The response is lighter (parent lines disappear for example)</li>
 </ul></li>
-<li>Want more informations, just add &ldquo;depth=2&rdquo;
+<li>Want more informations, just add <code class="prettyprint">depth=2</code>
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=2">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=2</a></li>
-<li>The response is a little more verbose (some geojson can appear in response when using your open data token)</li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=2">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=2</a><br>
+The response is a little more verbose (some geojson can appear in response when using your open data token)</li>
 </ul></li>
-<li>Wanna fat more informations, let&rsquo;s try &ldquo;depth=3&rdquo;
+<li>Wanna fat more informations, let&rsquo;s try <code class="prettyprint">depth=3</code>
 
 <ul>
-<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=3">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=3</a></li>
-<li>Big response: all stop_points are shown</li>
+<li><a href="https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=3">https://api.navitia.io/v1/coverage/sandbox/lines/line:RAT:M1/routes?depth=3</a><br>
+Big response: all stop_points are shown</li>
 </ul></li>
-<li>Wanna spam the internet bandwidth? Try &ldquo;depth=42&rdquo;
+<li>Wanna spam the internet bandwidth? Try <code class="prettyprint">depth=42</code>
 
 <ul>
-<li>No. There is a technical limit with &ldquo;depth=3&rdquo;</li>
+<li>No. There is a technical limit with <code class="prettyprint">depth=3</code></li>
 </ul></li>
 </ul>
 
@@ -447,7 +461,7 @@ Here is some examples around &ldquo;metro line 1&rdquo; from the Parisian networ
 <ul>
 <li>  Type: String</li>
 <li>  Default value: all</li>
-<li>  Warning: works ONLY with <em>/<a href="#line">line</a>s</em> collection&hellip;</li>
+<li>  Warning: works ONLY with <em>/<a href="#line">lines</a></em> collection&hellip;</li>
 </ul>
 
 <p>It allows you to request navitia for specific pickup lines. It refers to
@@ -862,12 +876,16 @@ to understand the user input even if he has mittens.</p>
 <li>  stop_area</li>
 <li>  poi</li>
 <li>  address</li>
-<li>  stop_point (appears only if specified, using &ldquo;&amp;type[]=stop_point&rdquo;
-filter)</li>
+<li>  stop_point (appears only if specified, using <code class="prettyprint">&amp;type[]=stop_point</code> filter)</li>
 </ul>
 
 <aside class="warning">
     There is no pagination for this api.
+</aside>
+
+<aside class="notice">
+    The returned `quality` field is deprecated and only maintained for backward compatibility.
+    Please consider only navitia&rsquo;s output order.
 </aside>
 
 <h3 id="access">Access</h3>
@@ -1060,9 +1078,9 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 </tr>
 <tr>
 <td>nop</td>
-<td>add_poi_infos</td>
+<td>add_poi_infos[]</td>
 <td>boolean</td>
-<td>Activate the output of additional infomations about the poi. For example, parking availability(BSS, car parking etc.) in the bicycle_rental, car parking pois of response. Pass <code class="prettyprint">add_poi_infos[]=&amp;</code> (empty string) to deactivate all.</td>
+<td>Activate the output of additional infomations about the poi. For example, parking availability (BSS, car parking etc.) in the pois of response. Pass <code class="prettyprint">add_poi_infos[]=&amp;</code> (empty string) to deactivate all.</td>
 <td>[<code class="prettyprint">bss_stands</code>, <code class="prettyprint">car_park</code>]</td>
 </tr>
 </tbody></table>
@@ -1476,9 +1494,9 @@ However when no coordinates are provided, you need to provide on what region you
 </tr>
 <tr>
 <td>nop</td>
-<td>add_poi_infos</td>
+<td>add_poi_infos[]</td>
 <td>boolean</td>
-<td>Activate the output of additional infomations about the poi. For example, parking availability(BSS, car parking etc.) in the bicycle_rental, car parking pois of response. Pass <code class="prettyprint">add_poi_infos[]=&amp;</code> (empty string) to deactivate all.</td>
+<td>Activate the output of additional infomations about the poi. For example, parking availability(BSS, car parking etc.) in the pois of response. Possible values are <code class="prettyprint">bss_stands</code>, <code class="prettyprint">car_park</code></td>
 <td>[]</td>
 </tr>
 <tr>
@@ -1958,12 +1976,12 @@ HTTP/1.1 200 OK
 </aside>
 
 <p>This service gives you a multi-polygon response which
-represent a same time travel zone: https://en.wikipedia.org/wiki/Isochrone_map</p>
+represents a same duration travel zone at a given time: https://en.wikipedia.org/wiki/Isochrone_map</p>
 
 <p>As you can find isochrone tables using <code class="prettyprint">/journeys</code>, this service is only another representation
 of the same data, map oriented.</p>
 
-<p>It is also really usefull to make filters on geocoded objects in order to find which ones are reachable within a specific time.
+<p>It is also really usefull to make filters on geocoded objects in order to find which ones are reachable at a given time within a specific duration.
 You just have to verify that the coordinates of the geocoded object are inside the multi-polygon.</p>
 
 <h3 id="accesses">Accesses</h3>
@@ -1988,8 +2006,14 @@ You just have to verify that the coordinates of the geocoded object are inside t
 
 <aside class="success">
     'from&rsquo; and 'to&rsquo; parameters works as exclusive parameters:
-    <li>When 'from&rsquo; is provided, 'to&rsquo; is ignore and Navitia computes a &ldquo;departure after&rdquo; isochrone.
+    <li>When 'from&rsquo; is provided, 'to&rsquo; is ignored and Navitia computes a &ldquo;departure after&rdquo; isochrone.
     <li>When 'from&rsquo; is not provided, 'to&rsquo; is required and Navitia computes a &ldquo;arrival after&rdquo; isochrone.
+</aside>
+
+<aside class="notice">
+    Isochrones are time dependant. The duration boundary is actually an arrival time boundary.
+    'datetime&rsquo; parameter is therefore important: The result is not the same when computing
+    an isochrone at 3am (few transports) or at 6pm (rush hour).
 </aside>
 
 <table><thead>
@@ -2078,6 +2102,36 @@ You just have to verify that the coordinates of the geocoded object are inside t
 <td></td>
 </tr>
 </tbody></table>
+
+<h3 id="tips">Tips</h3>
+
+<h4 id="understand-the-resulting-isochrone">Understand the resulting isochrone</h4>
+
+<p>The principle of isochrones is to work like journeys.
+So if one doesn&rsquo;t understand why a place is inside or outside an isochrone,
+please compute a journey from the &ldquo;center&rdquo; of isochrone to that precise place.</p>
+
+<p>To do that, just 3 changes are needed:</p>
+
+<ul>
+<li>provide a starting <code class="prettyprint">datetime=</code> to compare arrival time evenly</li>
+<li>change endpoint: <code class="prettyprint">/isochrones</code> to <code class="prettyprint">/journeys</code></li>
+<li>provide a destination using <code class="prettyprint">&amp;to=&lt;my_place&gt;</code></li>
+</ul>
+
+<p>Please remember that isochrones use crowfly at the end so they are less precise than journeys.</p>
+
+<h4 id="isochrones-without-public-transport">Isochrones without public transport</h4>
+
+<p>The main goal of Navitia is to handle public transport, so it&rsquo;s not recommended to avoid them.<br>
+However if your are willing to do that, you can use a little trick and
+pass the parameters <code class="prettyprint">&amp;allowed_id=physical_mode:Bus&amp;forbidden_id=physical_mode:Bus</code>.
+You will only get circles.</p>
+
+<h4 id="car-isochrones">Car isochrones</h4>
+
+<p>Using car in Navitia isochrones is not recommended.<br>
+It is only handled for compatibility with <code class="prettyprint">/journeys</code> but tends to squash every other result.</p>
 
 <h2 id="route-schedules"><a name="route-schedules"></a>Route Schedules</h2>
 <pre class="highlight shell"><code><span class="c">#request</span>
@@ -2799,10 +2853,10 @@ HTTP/1.1 200 OK
 
 <p>Also known as <code class="prettyprint">/traffic_reports</code> service.</p>
 
-<p>This service provides the state of public transport traffic. It can be
-called for an overall coverage or for a specific object.</p>
+<p>This service provides the state of public transport traffic, grouped by network.
+It can be called for an overall coverage or for a specific object.</p>
 
-<p><img alt="Traffic reports" src="../images/traffic_reports.png" /></p>
+<p><img src="./images/traffic_reports.png" alt="Traffic reports" width="300"/></p>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -2965,33 +3019,10 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
 <p>One traffic_report object is a complex object, made of a network, an array
 of lines and an array of stop_areas.</p>
 
-<p>A typical traffic_report object will contain:</p>
+<h4 id=" what-a-complete-response-means"> What a <strong>complete</strong> response <strong>means</strong></h4>
 
 <ul>
-<li>  1 network which is the grouping object
-
-<ul>
-<li>  it can contain links to its disruptions. These disruptions are globals and might not be applied on lines or stop_areas.</li>
-</ul></li>
-<li>  0..n lines
-
-<ul>
-<li>  each line contains at least a link to its disruptions</li>
-</ul></li>
-<li>  0..n stop_areas
-
-<ul>
-<li>  each stop_area contains at least a link to its disruptions</li>
-</ul></li>
-</ul>
-
-<p>It means that if a stop_area is used by many networks, it will appear
-many times.</p>
-
-<p>This typical response means:</p>
-
-<ul>
-<li>  traffic_reports
+<li>  multiple traffic_reports
 
 <ul>
 <li>  network &ldquo;bob&rdquo;
@@ -3009,7 +3040,7 @@ many times.</p>
 <li>  stop_area &ldquo;bobito&rdquo; &gt; internal link to disruption &ldquo;red&rdquo;</li>
 </ul></li>
 </ul></li>
-<li>  disruptions (disruption target links)
+<li>  multiple disruptions (disruption target links)
 
 <ul>
 <li>  disruption &ldquo;green&rdquo;</li>
@@ -3022,6 +3053,28 @@ many times.</p>
 </ul>
 
 <p>Details for disruption objects : <a href="#disruptions">disruptions</a></p>
+
+<h4 id="what-a-traffic_report-object-contains">What a traffic_report object <strong>contains</strong></h4>
+
+<ul>
+<li>  1 network which is the grouping object
+
+<ul>
+<li>  it can contain links to its disruptions.<br>
+These disruptions are globals and might not be applied on lines or stop_areas.</li>
+</ul></li>
+<li>  0..n lines
+
+<ul>
+<li>  each line contains at least a link to its disruptions</li>
+</ul></li>
+<li>  0..n stop_areas
+
+<ul>
+<li>  each stop_area contains at least a link to its disruptions<br>
+If a stop_area is used by multiple networks, it will appear each time.</li>
+</ul></li>
+</ul>
 
       </div>
       <div class="dark-box">

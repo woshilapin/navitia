@@ -39,7 +39,7 @@
 </blockquote>
 
 <p>Whether using a specific set of coordinates or a general location, you can find places within
-your reach and their corresponding travel times, using a variety of transportation options.
+your reach at a given time and their corresponding travel times, using a variety of transportation options.
 You can even specify the maximum amount of time you want to spare on travel and find
 the quickest way to reach your destination.</p>
 
@@ -48,7 +48,7 @@ the quickest way to reach your destination.</p>
 <p>Isochrone computing exposes information under two formats:</p>
 
 <ul>
-<li>  either <a href="#journeys">Journeys</a> service which provides a list with all the reachable stops from a potential destination
+<li>  either <a href="#journeys">Journeys</a> service which provides a list with all the reachable stops at a given time from a potential destination
 with their respective arrival times, travel times and number of matches. Here is a fiddle example:</li>
 </ul>
 
@@ -74,12 +74,10 @@ or to filter geocoded objects inside the polygon. Here is a fiddle example:</li>
 <p>You can use these APIs (click on them for details):</p>
 
 <ul>
-<li>  some <strong><a href="#places">Places</a></strong> requests: autocomplete on geographical data from an input text to find the isochrone starting point.
-either</li>
-<li>  <strong><a href="#journeys">Journeys</a></strong> : Compute all journeys from a departure point to every reachable point, 
-and returns a list of all reachable points, ordered by time to reach.
-or</li>
-<li>  <strong><a href="#isochrones_api">isochrones</a></strong> : Compute all journeys from a departure point to every reachable point, 
+<li>  some <strong><a href="#places">Places</a></strong> requests: autocomplete on geographical data from an input text to find the isochrone starting point.</li>
+<li>  <strong><a href="#journeys">Journeys</a></strong> : Compute all journeys from a departure point at a given time to every reachable point,
+and returns a list of all reachable points, ordered by time to reach.</li>
+<li>  <strong><a href="#isochrones_api">isochrones</a></strong> : Compute all journeys from a departure point at a given time to every reachable point,
 and returns multiple geoJson ready to be displayed on map. This service is currently in beta.</li>
 </ul>
 
