@@ -1265,6 +1265,8 @@ Here is the structure of a standard journey request:</p>
 
 <p><a href="https://api.navitia.io/v1/journeys?from=%7Bresource_id_1%7D&amp;to=%7Bresource_id_2%7D&amp;datetime=%7Bdate_time_to_leave%7D">https://api.navitia.io/v1/journeys?from={resource_id_1}&amp;to={resource_id_2}&amp;datetime={date_time_to_leave}</a> .</p>
 
+<p><a href="#context">Context</a> object provides the <code class="prettyprint">current_datetime</code>, useful to compute waiting time when requesting Navitia without a <code class="prettyprint">datetime</code>.</p>
+
 <p><a
     href="https://jsfiddle.net/kisiodigital/0oj74vnz/"
     target="_blank"
@@ -2478,6 +2480,7 @@ point as:
 
 <p>The response is made of an array of <a href="#stop-schedule">stop_schedule</a>, and another
 one of <a href="#note">note</a>.
+<a href="#context">Context</a> object provides the <code class="prettyprint">current_datetime</code>, useful to compute waiting time when requesting Navitia without a <code class="prettyprint">from_datetime</code>.
 You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
 
 <h3 id="accesses">Accesses</h3>
@@ -2651,6 +2654,7 @@ HTTP/1.1 200 OK
 
 <p>This endpoint retrieves a list of departures from a specific datetime of a selected
 object.
+<a href="#context">Context</a> object provides the <code class="prettyprint">current_datetime</code>, useful to compute waiting time when requesting Navitia without a <code class="prettyprint">from_datetime</code>.
 Departures are ordered chronologically in ascending order as:
 <img alt="departures" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Display_at_bus_stop_sign_in_Karlovo_n%C3%A1m%C4%9Bst%C3%AD%2C_T%C5%99eb%C3%AD%C4%8D%2C_T%C5%99eb%C3%AD%C4%8D_District.JPG/640px-Display_at_bus_stop_sign_in_Karlovo_n%C3%A1m%C4%9Bst%C3%AD%2C_T%C5%99eb%C3%AD%C4%8D%2C_T%C5%99eb%C3%AD%C4%8D_District.JPG" /></p>
 
@@ -2892,11 +2896,12 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
 <pre class="highlight shell"><code><span class="c">#links between objects in a traffic_reports response</span>
 <span class="o">{</span>
 <span class="s2">"traffic_reports"</span>: <span class="o">[</span>
+    <span class="o">{</span>
     <span class="s2">"network"</span>: <span class="o">{</span><span class="s2">"name"</span>: <span class="s2">"bob"</span>, <span class="s2">"links"</span>: <span class="o">[]</span>, <span class="s2">"id"</span>: <span class="s2">"network:bob"</span><span class="o">}</span>,
     <span class="s2">"lines"</span>: <span class="o">[</span>
         <span class="o">{</span>
         <span class="s2">"code"</span>: <span class="s2">"1"</span>,
-         ... ,
+        ... ,
         <span class="s2">"links"</span>: <span class="o">[</span> <span class="o">{</span>
             <span class="s2">"internal"</span>: <span class="nb">true</span>,
             <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
@@ -2907,7 +2912,7 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
         <span class="o">}</span>,
         <span class="o">{</span>
         <span class="s2">"code"</span>: <span class="s2">"12"</span>,
-         ... ,
+        ... ,
         <span class="s2">"links"</span>: <span class="o">[</span> <span class="o">{</span>
             <span class="s2">"internal"</span>: <span class="nb">true</span>,
             <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
@@ -2920,7 +2925,7 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
     <span class="s2">"stop_areas"</span>: <span class="o">[</span>
         <span class="o">{</span>
         <span class="s2">"name"</span>: <span class="s2">"bobito"</span>,
-         ... ,
+        ... ,
         <span class="s2">"links"</span>: <span class="o">[</span> <span class="o">{</span>
             <span class="s2">"internal"</span>: <span class="nb">true</span>,
             <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
@@ -2928,10 +2933,9 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
             <span class="s2">"rel"</span>: <span class="s2">"disruptions"</span>,
             <span class="s2">"templated"</span>: <span class="nb">false</span>
             <span class="o">}]</span>
-        <span class="o">}</span>,
-    <span class="o">]</span>,
- <span class="o">]</span>,
- <span class="o">[</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+    <span class="o">}</span>,<span class="o">{</span>
     <span class="s2">"network"</span>: <span class="o">{</span>
         <span class="s2">"name"</span>: <span class="s2">"bobette"</span>,
         <span class="s2">"id"</span>: <span class="s2">"network:bobette"</span>,
@@ -2942,11 +2946,11 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
             <span class="s2">"rel"</span>: <span class="s2">"disruptions"</span>,
             <span class="s2">"templated"</span>: <span class="nb">false</span>
             <span class="o">}]</span>
-        <span class="o">}</span>,
+    <span class="o">}</span>,
     <span class="s2">"lines"</span>: <span class="o">[</span>
         <span class="o">{</span>
         <span class="s2">"code"</span>: <span class="s2">"A"</span>,
-         ... ,
+        ... ,
         <span class="s2">"links"</span>: <span class="o">[</span> <span class="o">{</span>
             <span class="s2">"internal"</span>: <span class="nb">true</span>,
             <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
@@ -2957,7 +2961,7 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
         <span class="o">}</span>,
         <span class="o">{</span>
         <span class="s2">"code"</span>: <span class="s2">"C"</span>,
-         ... ,
+        ... ,
         <span class="s2">"links"</span>: <span class="o">[</span> <span class="o">{</span>
             <span class="s2">"internal"</span>: <span class="nb">true</span>,
             <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
@@ -2965,11 +2969,12 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
             <span class="s2">"rel"</span>: <span class="s2">"disruptions"</span>,
             <span class="s2">"templated"</span>: <span class="nb">false</span>
             <span class="o">}]</span>
-        <span class="o">}</span>,
+        <span class="o">}</span>
+    <span class="o">]</span>,
     <span class="s2">"stop_areas"</span>: <span class="o">[</span>
         <span class="o">{</span>
         <span class="s2">"name"</span>: <span class="s2">"bobito"</span>,
-         ... ,
+        ... ,
         <span class="s2">"links"</span>: <span class="o">[</span> <span class="o">{</span>
             <span class="s2">"internal"</span>: <span class="nb">true</span>,
             <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
@@ -2977,9 +2982,9 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
             <span class="s2">"rel"</span>: <span class="s2">"disruptions"</span>,
             <span class="s2">"templated"</span>: <span class="nb">false</span>
             <span class="o">}]</span>
-        <span class="o">}</span>,
-    <span class="o">]</span>,
-
+        <span class="o">}</span>
+    <span class="o">]</span>
+    <span class="o">}</span>
 <span class="o">]</span>,
 <span class="s2">"disruptions"</span>: <span class="o">[</span>
     <span class="o">{</span>
