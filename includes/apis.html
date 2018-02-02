@@ -1267,6 +1267,14 @@ Here is the structure of a standard journey request:</p>
 
 <p><a href="#context">Context</a> object provides the <code class="prettyprint">current_datetime</code>, useful to compute waiting time when requesting Navitia without a <code class="prettyprint">datetime</code>.</p>
 
+<aside class="success">
+    By default journeys are computed considering a traveler that walks at the beginning and the end.
+    <br>
+    This can be modified using parameters &ldquo;first_section_mode&rdquo; and &ldquo;last_section_mode&rdquo; that are arrays.
+    <br>
+    Example allowing bike or walk at the beginning: <a href="https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&to=2.3643739;48.854&first_section_mode[]=walking&first_section_mode[]=bike">https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&to=2.3643739;48.854&first_section_mode[]=walking&first_section_mode[]=bike</a>
+</aside>
+
 <p><a
     href="https://jsfiddle.net/kisiodigital/0oj74vnz/"
     target="_blank"
@@ -1373,7 +1381,7 @@ However when no coordinates are provided, you need to provide on what region you
 <td>nop</td>
 <td>first_section_mode[]</td>
 <td>array of string</td>
-<td>Force the first section mode if the first section is not a public transport one. It takes one the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>.<br><code class="prettyprint">bss</code> stands for bike sharing system.<br>It&rsquo;s an array, you can give multiple modes.<br><br>Note: choosing <code class="prettyprint">bss</code> implicitly allows the <code class="prettyprint">walking</code> mode since you might have to walk to the bss station.<br> Note 2: The parameter is inclusive, not exclusive, so if you want to forbid a mode, you need to add all the other modes.<br> Eg: If you never want to use a <code class="prettyprint">car</code>, you need: <code class="prettyprint">first_section_mode[]=walking&amp;first_section_mode[]=bss&amp;first_section_mode[]=bike&amp;last_section_mode[]=walking&amp;last_section_mode[]=bss&amp;last_section_mode[]=bike</code></td>
+<td>Force the first section mode if the first section is not a public transport one. It takes the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>, <code class="prettyprint">ridesharing</code>.<br>It&rsquo;s an array, you can give multiple modes.<br><br>See <a href="#ridesharing-stuff">Ridesharing</a> section for more details on that mode.<br><code class="prettyprint">bss</code> stands for bike sharing system.<br>Note: choosing <code class="prettyprint">bss</code> implicitly allows the <code class="prettyprint">walking</code> mode since you might have to walk to the bss station.<br> Note 2: The parameter is inclusive, not exclusive, so if you want to forbid a mode, you need to add all the other modes.<br> Eg: If you never want to use a <code class="prettyprint">car</code>, you need: <code class="prettyprint">first_section_mode[]=walking&amp;first_section_mode[]=bss&amp;first_section_mode[]=bike&amp;last_section_mode[]=walking&amp;last_section_mode[]=bss&amp;last_section_mode[]=bike</code></td>
 <td>walking</td>
 </tr>
 <tr>

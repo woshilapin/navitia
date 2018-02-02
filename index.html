@@ -2048,6 +2048,14 @@ Here is the structure of a standard journey request:</p>
 
 <p><a href="#context">Context</a> object provides the <code class="prettyprint">current_datetime</code>, useful to compute waiting time when requesting Navitia without a <code class="prettyprint">datetime</code>.</p>
 
+<aside class="success">
+    By default journeys are computed considering a traveler that walks at the beginning and the end.
+    <br>
+    This can be modified using parameters &ldquo;first_section_mode&rdquo; and &ldquo;last_section_mode&rdquo; that are arrays.
+    <br>
+    Example allowing bike or walk at the beginning: <a href="https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&to=2.3643739;48.854&first_section_mode[]=walking&first_section_mode[]=bike">https://api.navitia.io/v1/journeys?from=2.3865494;48.8499182&to=2.3643739;48.854&first_section_mode[]=walking&first_section_mode[]=bike</a>
+</aside>
+
 <p><a
     href="https://jsfiddle.net/kisiodigital/0oj74vnz/"
     target="_blank"
@@ -2154,7 +2162,7 @@ However when no coordinates are provided, you need to provide on what region you
 <td>nop</td>
 <td>first_section_mode[]</td>
 <td>array of string</td>
-<td>Force the first section mode if the first section is not a public transport one. It takes one the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>.<br><code class="prettyprint">bss</code> stands for bike sharing system.<br>It&rsquo;s an array, you can give multiple modes.<br><br>Note: choosing <code class="prettyprint">bss</code> implicitly allows the <code class="prettyprint">walking</code> mode since you might have to walk to the bss station.<br> Note 2: The parameter is inclusive, not exclusive, so if you want to forbid a mode, you need to add all the other modes.<br> Eg: If you never want to use a <code class="prettyprint">car</code>, you need: <code class="prettyprint">first_section_mode[]=walking&amp;first_section_mode[]=bss&amp;first_section_mode[]=bike&amp;last_section_mode[]=walking&amp;last_section_mode[]=bss&amp;last_section_mode[]=bike</code></td>
+<td>Force the first section mode if the first section is not a public transport one. It takes the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>, <code class="prettyprint">ridesharing</code>.<br>It&rsquo;s an array, you can give multiple modes.<br><br>See <a href="#ridesharing-stuff">Ridesharing</a> section for more details on that mode.<br><code class="prettyprint">bss</code> stands for bike sharing system.<br>Note: choosing <code class="prettyprint">bss</code> implicitly allows the <code class="prettyprint">walking</code> mode since you might have to walk to the bss station.<br> Note 2: The parameter is inclusive, not exclusive, so if you want to forbid a mode, you need to add all the other modes.<br> Eg: If you never want to use a <code class="prettyprint">car</code>, you need: <code class="prettyprint">first_section_mode[]=walking&amp;first_section_mode[]=bss&amp;first_section_mode[]=bike&amp;last_section_mode[]=walking&amp;last_section_mode[]=bss&amp;last_section_mode[]=bike</code></td>
 <td>walking</td>
 </tr>
 <tr>
@@ -5312,7 +5320,9 @@ algorithm used in Navitia is a multi-objective algorithm. Thus it might
 return multiple journeys if it cannot know that one is better than the
 other. For example it cannot decide that a one hour journey with no
 connection is better than a 45 minutes journey with one connection
-(it is called the <a href="http://en.wikipedia.org/wiki/Pareto_efficiency">pareto front</a>).</p>
+(it is called the <a href="http://en.wikipedia.org/wiki/Pareto_efficiency">pareto front</a>).
+The 3 objectives Navitia uses are roughly the arrival datetime, the number of transfers
+and the duration of &ldquo;walking&rdquo; (transfers and fallback).</p>
 
 <p>If the user asks for more journeys than the number of journeys given by
 RAPTOR (with the parameter <code class="prettyprint">min_nb_journeys</code> or <code class="prettyprint">count</code>), Navitia will
@@ -5390,6 +5400,86 @@ Here are some tagging rules:
 <td>A journey without public transport, only bike sharing</td>
 </tr>
 </tbody></table>
+
+<h2 id="ridesharing"><a name="ridesharing-stuff"></a>Ridesharing</h2>
+<pre class="highlight shell"><code>simplified output
+
+<span class="o">{</span>
+    <span class="s2">"journeys"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"requested_date_time"</span>: <span class="s2">"20180101T070000"</span>,
+            <span class="s2">"sections"</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">"type"</span>: <span class="s2">"street_network"</span>,
+                    <span class="s2">"mode"</span>: <span class="s2">"ridesharing"</span>,
+                    <span class="s2">"from"</span>: <span class="s2">"A"</span>,
+                    <span class="s2">"to"</span>: <span class="s2">"B"</span>,
+                    <span class="s2">"departure_date_time"</span>: <span class="s2">"20180101T070000"</span>,
+                    <span class="s2">"arrival_date_time"</span>: <span class="s2">"20180101T090000"</span>,
+                    <span class="s2">"ridesharing_journeys"</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">"sections"</span>:[
+                                <span class="o">{</span>
+                                    <span class="s2">"from"</span>: <span class="s2">"A"</span>,
+                                    <span class="s2">"to"</span>: <span class="s2">"A1"</span>,
+                                    <span class="s2">"departure_date_time"</span>: <span class="s2">"20180101T063000"</span>,
+                                    <span class="s2">"arrival_date_time"</span>: <span class="s2">"20180101T063000"</span>,
+                                    <span class="s2">"type"</span>: <span class="s2">"crow_fly"</span>,
+                                    <span class="s2">"mode"</span>: <span class="s2">"walking"</span>
+                                <span class="o">}</span>,
+                                <span class="o">{</span>
+                                    <span class="s2">"from"</span>: <span class="s2">"A1"</span>,
+                                    <span class="s2">"to"</span>: <span class="s2">"A2"</span>,
+                                    <span class="s2">"departure_date_time"</span>: <span class="s2">"20180101T063000"</span>,
+                                    <span class="s2">"arrival_date_time"</span>: <span class="s2">"20180101T093000"</span>,
+                                    <span class="s2">"type"</span>: <span class="s2">"ridesharing"</span>
+                                <span class="o">}</span>,
+                                <span class="o">{</span>
+                                    <span class="s2">"from"</span>: <span class="s2">"A2"</span>,
+                                    <span class="s2">"to"</span>: <span class="s2">"B"</span>,
+                                    <span class="s2">"departure_date_time"</span>: <span class="s2">"20180101T093000"</span>,
+                                    <span class="s2">"arrival_date_time"</span>: <span class="s2">"20180101T093000"</span>,
+                                    <span class="s2">"type"</span>: <span class="s2">"crow_fly"</span>,
+                                    <span class="s2">"mode"</span>: <span class="s2">"walking"</span>
+                                <span class="o">}</span>
+                            <span class="o">]</span>
+                        <span class="o">}</span>,
+                        <span class="o">{</span>
+                            ...
+                        <span class="o">}</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">"from"</span>: <span class="s2">"B"</span>,
+                    <span class="s2">"to"</span>: <span class="s2">"C"</span>,
+                    <span class="s2">"departure_date_time"</span>: <span class="s2">"20180101T090000"</span>,
+                    <span class="s2">"arrival_date_time"</span>: <span class="s2">"20180101T100000"</span>,
+                    <span class="s2">"type"</span>: <span class="s2">"public_transport"</span>
+                <span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            ...
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
+
+<p>When requesting a journey, it is possible to request for a ridesharing fallback,
+using <code class="prettyprint">first_section_mode</code> or <code class="prettyprint">last_section_mode</code>.
+This may also be used to obtain a direct ridesharing journey (using <code class="prettyprint">max_ridesharing_duration_to_pt=0</code>).</p>
+
+<p>This returns a journey only when one or multiple ridesharing ads are found, matching the request.</p>
+
+<aside class="warning">
+    This feature requires a specific configuration and an agreement from a ridesharing service provider.
+    Therefore this service is available only for a few clients.
+</aside>
+
+<p>The journey from Navitia will then contain a section using the ridesharing mode.
+Inside this section an attribute ridesharing_journeys contains one or multiple journeys
+depicting specifically the ridesharing ads that could match the above section
+and that could be proposed to the user.</p>
 
 <h2 id="on-demand-transportation">On demand transportation</h2>
 
