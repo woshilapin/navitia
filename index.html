@@ -2338,6 +2338,20 @@ However when no coordinates are provided, you need to provide on what region you
 <td>Debug mode<br>No journeys are filtered in this mode</td>
 <td>False</td>
 </tr>
+<tr>
+<td>nop</td>
+<td>free_radius_from</td>
+<td>int</td>
+<td>Radius length (in meters) around the coordinates of departure in which the stop points are considered free to go (crowfly=0)</td>
+<td>0</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>free_radius_to</td>
+<td>int</td>
+<td>Radius length (in meters) around the coordinates of arrival in which the stop points are considered free to go (crowfly=0)</td>
+<td>0</td>
+</tr>
 </tbody></table>
 
 <h3 id="precisions-on-forbidden_uris-and-allowed_id">Precisions on <code class="prettyprint">forbidden_uris[]</code> and <code class="prettyprint">allowed_id[]</code></h3>
@@ -2352,6 +2366,17 @@ However when no coordinates are provided, you need to provide on what region you
 <li>A user doesn&rsquo;t like line A metro in hers city. She adds the parameter <code class="prettyprint">forbidden_uris[]=line:A</code> when calling the API.</li>
 <li>A user would only like to use Buses and Tramways. She adds the parameter <code class="prettyprint">allowed_id[]=physical_mode:Bus&amp;allowed_id[]=physical_mode:Tramway</code>.</li>
 </ul>
+
+<h3 id="precisions-on-free_radius_from-free_radius_to">Precisions on <code class="prettyprint">free_radius_from/free_radius_to</code></h3>
+
+<p>These parameters find the nearest stop point (within free_radius distance) to the given coordinates.
+Then, it allows skipping walking sections between the point of departure/arrival and those nearest stop points.</p>
+
+<p>Example:</p>
+
+<p><img alt="image" src="images/free_radius.png" /></p>
+
+<p>In this example, the stop points within the circle (SP1, SP2 et SP3) can be reached via a crowfly of 0 second. The other stop points, outside the circle, will be reached by walking.</p>
 
 <h4 id="technically">Technically</h4>
 
