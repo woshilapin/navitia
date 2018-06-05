@@ -827,7 +827,8 @@ In order to do that, you will have to </p>
 
 <h2 id="objects-order">Objects order</h2>
 
-<p>Unless specified, objects lists are not sorted and stability of objects&rsquo; order is not guaranteed.</p>
+<p>Unless specified, objects lists are not sorted and stability of objects&rsquo; order is not guaranteed.<br>
+This is also true for the ordering of the attributes of objects.</p>
 
 <p>Examples of sorted objects tables:</p>
 
@@ -846,6 +847,13 @@ In order to do that, you will have to </p>
 <li>stop_points in &rsquo;/lines/<id_line>/stop_points&rsquo;</li>
 <li>pretty much everything else&hellip;</li>
 </ul>
+
+<h2 id="objects-attributes">Objects attributes</h2>
+
+<p>Like almost any API, objects are subject to adaptations.<br>
+Please be warned that we allow Navitia to add new attributes to objects, and it will never be considered a breaking change.</p>
+
+<p>We also allow Navitia to add values to enum, so be prepared to that. For example <a href="#section">section&rsquo;s</a> type of journeys are regularly evolving.</p>
 
 <h2 id="lifetime-of-id">Lifetime of id</h2>
 
@@ -2587,7 +2595,7 @@ They also can only use the allowed stop points for getting in or out of a vehicl
 <tr>
 <td>type</td>
 <td><em>enum</em> string</td>
-<td><div data-collapse><p>Type of the section.</p><ul><li><code class="prettyprint">public_transport</code>: public transport section</li><li><code class="prettyprint">street_network</code>: street section</li><li><code class="prettyprint">waiting</code>: waiting section between transport</li><li><p><code class="prettyprint">stay_in</code>: this “stay in the vehicle” section occurs when the traveller has to stay in the vehicle when the bus change its routing. Here is an exemple for a journey from A to B: (lollipop line)</p><p><img alt="image" src="images/stay_in.png" /></p></li><li><code class="prettyprint">transfer</code>: transfert section</li><li><p><code class="prettyprint">crow_fly</code>: teleportation section. Used when starting or arriving to a city or a stoparea (“potato shaped” objects) Useful to make navitia idempotent. Be careful: no “path” nor “geojson” items in this case</p><p><img alt="image" src="images/crow_fly.png" /></p></li><li><code class="prettyprint">on_demand_transport</code>: vehicle may not drive along: traveler will have to call agency to confirm journey</li><li><code class="prettyprint">bss_rent</code>: taking a bike from a bike sharing system (bss)</li><li><code class="prettyprint">bss_put_back</code>: putting back a bike from a bike sharing system (bss)</li><li><code class="prettyprint">boarding</code>: boarding on plane</li><li><code class="prettyprint">landing</code>: landing off the plane</li></ul></div></td>
+<td><div data-collapse><p>Type of the section.</p><ul><li><code class="prettyprint">public_transport</code>: public transport section</li><li><code class="prettyprint">street_network</code>: street section</li><li><code class="prettyprint">waiting</code>: waiting section between transport</li><li><p><code class="prettyprint">stay_in</code>: this “stay in the vehicle” section occurs when the traveller has to stay in the vehicle when the bus change its routing. Here is an exemple for a journey from A to B: (lollipop line)</p><p><img alt="image" src="images/stay_in.png" /></p></li><li><code class="prettyprint">transfer</code>: transfert section</li><li><p><code class="prettyprint">crow_fly</code>: teleportation section. Used when starting or arriving to a city or a stoparea (“potato shaped” objects) Useful to make navitia idempotent. Be careful: no “path” nor “geojson” items in this case</p><p><img alt="image" src="images/crow_fly.png" /></p></li><li><code class="prettyprint">on_demand_transport</code>: vehicle may not drive along: traveler will have to call agency to confirm journey</li><li><code class="prettyprint">bss_rent</code>: taking a bike from a bike sharing system (bss)</li><li><code class="prettyprint">bss_put_back</code>: putting back a bike from a bike sharing system (bss)</li><li><code class="prettyprint">boarding</code>: boarding on plane</li><li><code class="prettyprint">landing</code>: landing off the plane</li><li><code class="prettyprint">alighting</code>: getting off a vehicle (boat, on-demand-transport, plane, &hellip;)</li><li><code class="prettyprint">park</code>: parking a car</li><li><code class="prettyprint">ridesharing</code>: car-pooling section</li></ul></div></td>
 </tr>
 <tr>
 <td>id</td>
@@ -4136,7 +4144,7 @@ If a stop_area is used by multiple networks, it will appear each time.</li>
 <tr>
 <td>is_frequence</td>
 <td>enum</td>
-<td>Is the route has frequency or not. Can only be &ldquo;False&rdquo;</td>
+<td>If the route has frequency or not. Can only be &ldquo;False&rdquo;, but may be &ldquo;True&rdquo; in the future</td>
 </tr>
 <tr>
 <td>line</td>
