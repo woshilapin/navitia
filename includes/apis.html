@@ -1310,6 +1310,18 @@ However when no coordinates are provided, you need to provide on what region you
 
 <p>The <a href="#isochrones">isochrones</a> service exposes another response structure, which is simpler, for the same data.</p>
 
+<h3 id="disruptions"><a name="journeys-disruptions"></a> Disruptions</h3>
+
+<p>By default, Navitia only computes journeys that don&rsquo;t have disruptions, disrupted journeys will not be reported into the response.
+If you want to provide journeys without blocking disruptions, you need to use the parameter <code class="prettyprint">data_freshness=realtime</code>.</p>
+
+<p>In a journey&rsquo;s response, different disruptions may have different meanings.
+Each journey has a <code class="prettyprint">status</code> attribute that indicates the most serious disruption effect.
+Disruptions are on the sections, the ones that impact the journey are in the sections&rsquo;s display_informations links  (<code class="prettyprint">sections[].display_informations.links[]</code>).</p>
+
+<p>You might also have others disruptions in the response. They don&rsquo;t directly impact the journey, but might affect them. By example, some intermediate stops of a section can be
+disrupted, it doesn&rsquo;t prevent the journey from beeing executed but modifies it. These disruptions won&rsquo;t be on the <code class="prettyprint">display_informations</code> of the sections or used in the journey&rsquo;s status.</p>
+
 <h3 id="main-parameters"><a name="journeys-parameters"></a>Main parameters</h3>
 
 <table><thead>
