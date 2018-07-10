@@ -3703,6 +3703,246 @@ object. Arrivals are ordered chronologically in ascending order.</p>
 
 <p>they are exactly the same as <a href="#departures">departures</a></p>
 
+<h2 id="line-reports"><a name="line-reports"></a>Line reports</h2>
+<pre class="highlight shell"><code><span class="c">#request</span>
+<span class="gp">$ </span>curl <span class="s1">'http://api.navitia.io/v1/coverage/sandbox/line_reports'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+
+<span class="c">#response, composed by 2 main lists: "line_reports" and "disruptions"</span>
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+<span class="s2">"disruptions"</span>: <span class="o">[</span>
+        <span class="c">#list of linked disruptions</span>
+<span class="o">]</span>,
+<span class="s2">"line_reports"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+        <span class="s2">"line"</span>: <span class="o">{</span>
+            <span class="c">#main object (line) and links within its own disruptions</span>
+        <span class="o">}</span>
+        <span class="s2">"pt_objects"</span>: <span class="o">[</span>
+            <span class="c">#list of all disrupted objects related to the line: stop_area, networks, etc...</span>
+        <span class="o">]</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+        <span class="c">#Another line with its objects</span>
+    <span class="o">}</span>
+<span class="o">]</span>
+<span class="o">}</span>
+
+</code></pre>
+
+<p>This service provides the state of public transport traffic, grouped by lines and all their stops. 
+It can be called for an overall coverage or for a specific object.</p>
+
+<p><img src="./images/traffic_reports.png" alt="Traffic reports" width="300"/></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<p>You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/line_reports">https://api.navitia.io/v1/{a_path_to_a_resource}/line_reports</a></p>
+
+<p>For example:</p>
+
+<ul>
+<li>  overall public transport line report on Ile de France coverage
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/line_reports">https://api.navitia.io/v1/coverage/fr-idf/line_reports</a></li>
+</ul></li>
+<li>  Is there any perturbations on the RER network ?
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/line_reports">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/line_reports</a></li>
+</ul></li>
+<li>  Is there any perturbations on the &ldquo;RER A&rdquo; line ?
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:TRN:DUA810801043/line_reports">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:TRN:DUA810801043/line_reports</a></li>
+</ul></li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>no</td>
+<td>since</td>
+<td><a href="#iso-date-time">iso-date-time</a></td>
+<td>Only display disruptions active after this date</td>
+<td></td>
+</tr>
+<tr>
+<td>no</td>
+<td>until</td>
+<td><a href="#iso-date-time">iso-date-time</a></td>
+<td>Only display disruptions active before this date</td>
+<td></td>
+</tr>
+<tr>
+<td>no</td>
+<td>count</td>
+<td>int</td>
+<td>Maximum number of results.</td>
+<td>10</td>
+</tr>
+<tr>
+<td>no</td>
+<td>forbidden_uris[]</td>
+<td>id</td>
+<td>If you want to avoid lines, modes, networks, etc.</td>
+<td></td>
+</tr>
+<tr>
+<td>no</td>
+<td>disable_geojson</td>
+<td>boolean</td>
+<td>remove geojson fields from the response</td>
+<td>false</td>
+</tr>
+</tbody></table>
+
+<p>The response is made of an array of <a href="#line-reports">line_reports</a>,
+and another one of <a href="#disruption">disruptions</a>.</p>
+
+<p>There are inner links between this 2 arrays:
+see the <a href="#inner-references">inner-reference</a> section to use them.</p>
+
+<h3 id="line-report-object">Line report object</h3>
+<pre class="highlight shell"><code><span class="c">#links between objects in a line_reports response</span>
+<span class="o">{</span>
+  <span class="s2">"disruptions"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"status"</span>: <span class="s2">"active"</span>,
+      <span class="s2">"id"</span>: <span class="s2">"17283fae-7dcf-11e8-898e-005056a47b86"</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">"status"</span>: <span class="s2">"active"</span>,
+      <span class="s2">"id"</span>: <span class="s2">"140a9970-0c9b-11e8-b2b6-005056a44da2"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">"line_reports"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"line"</span>: <span class="o">{</span>
+        <span class="s2">"links"</span>: <span class="o">[]</span>,
+        <span class="s2">"id"</span>: <span class="s2">"line:1"</span>
+      <span class="o">}</span>,
+      <span class="s2">"pt_objects"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+          <span class="s2">"embedded_type"</span>: <span class="s2">"stop_point"</span>,
+          <span class="s2">"stop_point"</span>: <span class="o">{</span>
+            <span class="s2">"name"</span>: <span class="s2">"SP 1"</span>,
+            <span class="s2">"links"</span>: <span class="o">[</span>
+              <span class="o">{</span>
+                <span class="s2">"internal"</span>: <span class="nb">true</span>,
+                <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
+                <span class="s2">"id"</span>: <span class="s2">"140a9970-0c9b-11e8-b2b6-005056a44da2"</span>,
+                <span class="s2">"rel"</span>: <span class="s2">"disruptions"</span>,
+                <span class="s2">"templated"</span>: <span class="nb">false</span>
+              <span class="o">}</span>
+            <span class="o">]</span>,
+          <span class="s2">"id"</span>: <span class="s2">"stop_point:1"</span>
+          <span class="o">}</span>
+        <span class="o">}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+    <span class="s2">"line"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: <span class="s2">"line:CAE:218"</span>,
+        <span class="s2">"links"</span>: <span class="o">[</span>
+              <span class="o">{</span>
+                <span class="s2">"internal"</span>: <span class="nb">true</span>,
+                <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
+                <span class="s2">"id"</span>: <span class="s2">"17283fae-7dcf-11e8-898e-005056a47b86"</span>,
+                <span class="s2">"rel"</span>: <span class="s2">"disruptions"</span>,
+                <span class="s2">"templated"</span>: <span class="nb">false</span>
+              <span class="o">}</span>
+        <span class="o">]</span>
+    <span class="o">}</span>,
+    <span class="s2">"pt_objects"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"embedded_type"</span>: <span class="s2">"line"</span>,
+            <span class="s2">"line"</span>: <span class="o">{</span>
+                <span class="s2">"id"</span>: <span class="s2">"line:CAE:218"</span>,
+                <span class="s2">"links"</span>: <span class="o">[</span>
+                    <span class="o">{</span>
+                        <span class="s2">"internal"</span>: <span class="nb">true</span>,
+                        <span class="s2">"type"</span>: <span class="s2">"disruption"</span>,
+                        <span class="s2">"id"</span>: <span class="s2">"17283fae-7dcf-11e8-898e-005056a47b86"</span>,
+                        <span class="s2">"rel"</span>: <span class="s2">"disruptions"</span>,
+                        <span class="s2">"templated"</span>: <span class="nb">false</span>
+                    <span class="o">}</span>
+                <span class="o">]</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+<span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
+
+<p>Line_reports is an array of some line_report object.</p>
+
+<p>One Line_report object is a complex object, made of a line, and an array
+of <a href="#pt-objects">pt_objects</a> linked (for example stop_areas, stop_point or network). </p>
+
+<h4 id=" what-a-complete-response-means"> What a <strong>complete</strong> response <strong>means</strong></h4>
+
+<ul>
+<li>  multiple line_reports
+
+<ul>
+<li>  line 1
+
+<ul>
+<li>  stop area concorde &gt; internal link to disruption &ldquo;green&rdquo;</li>
+<li>  stop area bastille &gt; internal link to disruption &ldquo;pink&rdquo;</li>
+</ul></li>
+<li>  line 2 &gt; internal link to disruption &ldquo;blue&rdquo;
+
+<ul>
+<li>  network RATP &gt; internal link to disruption &ldquo;green&rdquo;</li>
+<li>  line 2 &gt; internal link to disruption &ldquo;blue&rdquo;</li>
+</ul></li>
+<li>  line 3 &gt; internal link to disruption &ldquo;yellow&rdquo;
+
+<ul>
+<li>  stop point bourse &gt; internal link to disruption &ldquo;yellow&rdquo;</li>
+</ul></li>
+</ul></li>
+<li>  multiple disruptions (disruption target links)
+
+<ul>
+<li>  disruption &ldquo;green&rdquo;</li>
+<li>  disruption &ldquo;pink&rdquo;</li>
+<li>  disruption &ldquo;blue&rdquo;</li>
+<li>  disruption &ldquo;yellow&rdquo;</li>
+<li>  Each disruption contains the messages to show.</li>
+</ul></li>
+</ul>
+
+<p>Details for disruption objects : <a href="#disruptions">disruptions</a></p>
+
+<h4 id="what-a-line_report-object-contains">What a line_report object <strong>contains</strong></h4>
+
+<ul>
+<li>  1 line which is the grouping object
+
+<ul>
+<li>  it can contain links to its disruptions.<br>
+These disruptions are globals and might not be applied on stop_areas and stop_points. </li>
+</ul></li>
+<li>  1..n pt_objects
+
+<ul>
+<li>  each one contains at least a link to its disruptions.</li>
+</ul></li>
+</ul>
+
 <h2 id="traffic-reports"><a name="traffic-reports"></a>Traffic reports</h2>
 <pre class="highlight shell"><code><span class="c">#request</span>
 <span class="gp">$ </span>curl <span class="s1">'http://api.navitia.io/v1/coverage/sandbox/traffic_reports'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
@@ -3730,12 +3970,10 @@ HTTP/1.1 200 OK
 <span class="o">}</span>
 </code></pre>
 
-<p>Also known as <code class="prettyprint">/traffic_reports</code> service.</p>
+<p>Also known as <code class="prettyprint">/traffic_reports</code> service. We recommand to use line_reports in place of traffic_reports.</p>
 
 <p>This service provides the state of public transport traffic, grouped by network.
 It can be called for an overall coverage or for a specific object.</p>
-
-<p><img src="./images/traffic_reports.png" alt="Traffic reports" width="300"/></p>
 
 <h3 id="parameters">Parameters</h3>
 
@@ -3757,7 +3995,7 @@ It can be called for an overall coverage or for a specific object.</p>
 <li>  Is there any perturbations on the &ldquo;RER A&rdquo; line ?
 
 <ul>
-<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:TRN:DUA810801043/traffic_reports">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:TRN:DUA810801043/traffic_reports</a></li>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:OIF:810:AOIF741/line_reports?">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:OIF:810:AOIF741/line_reports?</a></li>
 </ul></li>
 </ul>
 
@@ -4765,7 +5003,12 @@ and commercial modes when building an output to the traveler.</p>
 <tr>
 <td>to</td>
 <td><a href="#pt_object">pt_object</a></td>
-<td>The end of the section</td>
+<td>The end of the section. This can be the same as <code class="prettyprint">from</code> when only one point is impacted</td>
+</tr>
+<tr>
+<td>routes</td>
+<td><a href="#route">route</a></td>
+<td>The list of impacted routes by the impacted_section</td>
 </tr>
 </tbody></table>
 
