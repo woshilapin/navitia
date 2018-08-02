@@ -21,11 +21,11 @@
     <a href="#" id="nav-button">
       <span>
         NAV
-        <img src="../images/navbar.png" />
+        <img src="../images/navbar.png" alt="Navbar" />
       </span>
     </a>
     <div class="tocify-wrapper">
-      <img src="../images/logo.png" />
+      <img src="../images/logo.png" alt="Logo" />
       <div id="toc">
       </div>
     </div>
@@ -1079,7 +1079,7 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 <td>nop</td>
 <td>add_poi_infos[]</td>
 <td>enum</td>
-<td>Activate the output of additional infomations about the poi. For example, parking availability (BSS, car parking etc.) in the pois of response. Pass <code class="prettyprint">none</code> or <code class="prettyprint">add_poi_infos[]=&amp;</code> (empty string) to deactivate all.</td>
+<td>Activate the output of additional infomations about the poi. For example, parking availability (BSS, car parking etc.) in the pois of response. Pass <code class="prettyprint">add_poi_infos[]=none&amp;</code> or <code class="prettyprint">add_poi_infos[]=&amp;</code> (empty string) to deactivate all.</td>
 <td>[<code class="prettyprint">bss_stands</code>, <code class="prettyprint">car_park</code>]</td>
 </tr>
 </tbody></table>
@@ -1776,7 +1776,7 @@ They also can only use the allowed stop points for getting in or out of a vehicl
 <tr>
 <td>type</td>
 <td><em>enum</em> string</td>
-<td><div data-collapse><p>Type of the section.</p><ul><li><code class="prettyprint">public_transport</code>: public transport section</li><li><code class="prettyprint">street_network</code>: street section</li><li><code class="prettyprint">waiting</code>: waiting section between transport</li><li><p><code class="prettyprint">stay_in</code>: this “stay in the vehicle” section occurs when the traveller has to stay in the vehicle when the bus change its routing. Here is an exemple for a journey from A to B: (lollipop line)</p><p><img alt="image" src="../images/stay_in.png" /></p></li><li><code class="prettyprint">transfer</code>: transfert section</li><li><p><code class="prettyprint">crow_fly</code>: teleportation section, most of the time. Useful to make navitia idempotent when starting from or arriving to a city or a stop_area (“potato shaped” objects) in order to route to the nearest stop_point. Be careful: neither “path” nor “geojson” available in a crow_fly section.</p><p> Can also be used when no street_network data are available and not be considered as teleportation. The distance of such a crow_fly section will be a straight line between the point of departure and arrival (hence the name &#39;crow_fly&rsquo;). The duration of the section will be calculated with the Manhattan distance of the section (distance x √2). In this case, “geojson” is available.</p><p><img alt="image" src="../images/crow_fly.png" /></p></li><li><code class="prettyprint">on_demand_transport</code>: vehicle may not drive along: traveler will have to call agency to confirm journey</li><li><code class="prettyprint">bss_rent</code>: taking a bike from a bike sharing system (bss)</li><li><code class="prettyprint">bss_put_back</code>: putting back a bike from a bike sharing system (bss)</li><li><code class="prettyprint">boarding</code>: boarding on plane</li><li><code class="prettyprint">landing</code>: landing off the plane</li><li><code class="prettyprint">alighting</code>: getting off a vehicle (boat, on-demand-transport, plane, &hellip;)</li><li><code class="prettyprint">park</code>: parking a car</li><li><code class="prettyprint">ridesharing</code>: car-pooling section</li></ul></div></td>
+<td>Type of the section.<ul><li><code class="prettyprint">public_transport</code>: public transport section</li><li><code class="prettyprint">street_network</code>: street section</li><li><code class="prettyprint">waiting</code>: waiting section between transport</li><li><p><code class="prettyprint">stay_in</code>: this “stay in the vehicle” section occurs when the traveller has to stay in the vehicle when the bus change its routing. Here is an exemple for a journey from A to B: (lollipop line)</p><p><img alt="image" src="../images/stay_in.png" /></p></li><li><code class="prettyprint">transfer</code>: transfert section</li><li><p><code class="prettyprint">crow_fly</code>: teleportation section, most of the time. Useful to make navitia idempotent when starting from or arriving to a city or a stop_area (“potato shaped” objects) in order to route to the nearest stop_point. Be careful: neither “path” nor “geojson” available in a crow_fly section.</p><p> Can also be used when no street_network data are available and not be considered as teleportation. The distance of such a crow_fly section will be a straight line between the point of departure and arrival (hence the name &#39;crow_fly&rsquo;). The duration of the section will be calculated with the Manhattan distance of the section (distance x √2). In this case, “geojson” is available.</p><p><img alt="image" src="../images/crow_fly.png" /></p></li><li><code class="prettyprint">on_demand_transport</code>: vehicle may not drive along: traveler will have to call agency to confirm journey</li><li><code class="prettyprint">bss_rent</code>: taking a bike from a bike sharing system (bss)</li><li><code class="prettyprint">bss_put_back</code>: putting back a bike from a bike sharing system (bss)</li><li><code class="prettyprint">boarding</code>: boarding on plane</li><li><code class="prettyprint">landing</code>: landing off the plane</li><li><code class="prettyprint">alighting</code>: getting off a vehicle (boat, on-demand-transport, plane, &hellip;)</li><li><code class="prettyprint">park</code>: parking a car</li><li><code class="prettyprint">ridesharing</code>: car-pooling section</li></ul></td>
 </tr>
 <tr>
 <td>id</td>
@@ -3059,7 +3059,7 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
 <p>One Line_report object is a complex object, made of a line, and an array
 of <a href="#pt-objects">pt_objects</a> linked (for example stop_areas, stop_point or network). </p>
 
-<h4 id=" what-a-complete-response-means"> What a <strong>complete</strong> response <strong>means</strong></h4>
+<h4 id="what-a-complete-response-means"> What a <strong>complete</strong> response <strong>means</strong></h4>
 
 <ul>
 <li>  multiple line_reports
@@ -3306,7 +3306,7 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
 <p>One traffic_report object is a complex object, made of a network, an array
 of lines and an array of stop_areas.</p>
 
-<h4 id=" what-a-complete-response-means"> What a <strong>complete</strong> response <strong>means</strong></h4>
+<h4 id="what-a-complete-response-means"> What a <strong>complete</strong> response <strong>means</strong></h4>
 
 <ul>
 <li>  multiple traffic_reports
