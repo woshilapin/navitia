@@ -5238,6 +5238,39 @@ and commercial modes when building an output to the traveler.</p>
 </tr>
 </tbody></table>
 
+<h3 id="stands">Stands</h3>
+
+<p>A description of the number of stands/places and vehicles available at a bike sharing station.</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>available_places</td>
+<td>int</td>
+<td>Number of places where one can park</td>
+</tr>
+<tr>
+<td>available_bikes</td>
+<td>int</td>
+<td>Number of bikes available</td>
+</tr>
+<tr>
+<td>total_stands</td>
+<td>int</td>
+<td>Total number of stands (occupied or not, with or without special equipment)</td>
+</tr>
+<tr>
+<td>status</td>
+<td>enum</td>
+<td>Information about the station itself:<ul><li><code class="prettyprint">unavailable</code>: Navitia is not able to obtain information about the station</li><li><code class="prettyprint">open</code>: The station is open</li><li><code class="prettyprint">closed</code>: The station is closed</li></ul></td>
+</tr>
+</tbody></table>
+
 <h3 id="poi"><a name="poi"></a>Poi</h3>
 <pre class="highlight shell"><code><span class="c">#useless request, with huge response</span>
 <span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/pois'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
@@ -5279,6 +5312,11 @@ and commercial modes when building an output to the traveler.</p>
 <td>poi_type</td>
 <td><a href="#poi-type">poi_type</a></td>
 <td>Type of the poi</td>
+</tr>
+<tr>
+<td>stands</td>
+<td><a href="#stands">stands</a></td>
+<td>Information on the spots available, for BSS stations</td>
 </tr>
 </tbody></table>
 
