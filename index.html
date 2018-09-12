@@ -1389,6 +1389,21 @@ remove them, it&rsquo;s useful when searching lines that you don&rsquo;t want to
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/lines?disable_geojson=true">https://api.navitia.io/v1/coverage/fr-idf/lines?disable_geojson=true</a></li>
 </ul>
 
+<h4 id="disable_disruption">disable_disruption</h4>
+
+<p>By default disruptions are also present in navitia&rsquo;s responses on apis &ldquo;PtRef&rdquo;, &ldquo;pt_objects&rdquo; and &ldquo;places_nearby&rdquo;. This parameter allows you to
+remove them reducing the response size.</p>
+
+<aside class="notice">
+    Disruptions can be large and not necessary while searching objects. This parameter is mostly here to be able to search objects without disruptions in the response.
+</aside>
+
+<p>Examples :</p>
+
+<ul>
+<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/lines?disable_disruption=true">https://api.navitia.io/v1/coverage/fr-idf/lines?disable_disruption=true</a></li>
+</ul>
+
 <h3 id="filter"><a name="filter"></a>Filter</h3>
 
 <p>It is possible to apply a filter to the returned collection, using
@@ -1663,6 +1678,13 @@ HTTP/1.1 200 OK
 <td>Type of objects you want to query It takes one the following values: [<code class="prettyprint">network</code>, <code class="prettyprint">commercial_mode</code>, <code class="prettyprint">line</code>, <code class="prettyprint">route</code>, <code class="prettyprint">stop_area</code>]</td>
 <td>[<code class="prettyprint">network</code>, <code class="prettyprint">commercial_mode</code>, <code class="prettyprint">line</code>, <code class="prettyprint">route</code>, <code class="prettyprint">stop_area</code>]</td>
 </tr>
+<tr>
+<td>nop</td>
+<td>disable_disruption</td>
+<td>boolean</td>
+<td>Remove disruptions from the response</td>
+<td>False</td>
+</tr>
 </tbody></table>
 
 <aside class="warning">
@@ -1889,6 +1911,13 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 <td>disable_geojson</td>
 <td>boolean</td>
 <td>Remove geojson from the response</td>
+<td>False</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>disable_disruption</td>
+<td>boolean</td>
+<td>Remove disruptions from the response</td>
 <td>False</td>
 </tr>
 <tr>
