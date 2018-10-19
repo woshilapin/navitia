@@ -1450,8 +1450,8 @@ These disruptions won&rsquo;t be on the <code class="prettyprint">display_inform
 <td>nop</td>
 <td>max_duration_to_pt</td>
 <td>int</td>
-<td>Maximum allowed duration to reach the public transport.<br>Use this to limit the walking/biking part.<br>Unit is seconds</td>
-<td>15*60 s</td>
+<td>Maximum allowed duration to reach the public transport (same limit used before and after public transport).<br>Use this to limit the walking/biking part.<br>Unit is seconds</td>
+<td>30*60 s</td>
 </tr>
 <tr>
 <td>nop</td>
@@ -1520,7 +1520,7 @@ These disruptions won&rsquo;t be on the <code class="prettyprint">display_inform
 <td>nop</td>
 <td>max_duration</td>
 <td>int</td>
-<td>Maximum duration of journeys in secondes. Really useful when computing an isochrone</td>
+<td>Maximum duration of journeys in seconds (from <code class="prettyprint">datetime</code> parameter).<br>More usefull when computing an isochrone (only <code class="prettyprint">from</code> or <code class="prettyprint">to</code> is provided).<br>On a classic journey (from-to), it will mostly speedup Navitia: You may have journeys a bit longer than that value (you would have to filter them).</td>
 <td>86400</td>
 </tr>
 <tr>
