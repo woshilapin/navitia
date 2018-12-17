@@ -37,8 +37,8 @@
 <h2 id="code-40x">Code 40x</h2>
 
 <blockquote>
-<p>When there&rsquo;s an error you&rsquo;ll receive a response with a error object
-containing a unique error id</p>
+<p>When navitia is unable to give an answer, you&rsquo;ll receive a response with an error object
+containing a unique error id, in a 4XX http code response</p>
 </blockquote>
 <pre class="highlight shell"><code><span class="c">#request</span>
 <span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/stop_areas/wrong-one'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
@@ -54,12 +54,10 @@ HTTP/1.1 404 OK
 <span class="o">}</span>
 </code></pre>
 
-<p>This errors appears when there is an error in the request</p>
-
 <p>The are two possible 40x http codes :</p>
 
 <ul>
-<li>  Code 404:</li>
+<li>  Code 404: unable to find an object</li>
 </ul>
 
 <table><thead>
@@ -91,7 +89,7 @@ HTTP/1.1 404 OK
 </tbody></table>
 
 <ul>
-<li>  Code 400:</li>
+<li>  Code 400: bad request</li>
 </ul>
 
 <table><thead>
