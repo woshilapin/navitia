@@ -2433,7 +2433,7 @@ Then, it allows skipping walking sections between the point of departure/arrival
 <p>The journeys can only use allowed vehicle journeys (as present in the <code class="prettyprint">public_transport</code> or <code class="prettyprint">on_demand_transport</code> sections).
 They also can only use the allowed stop points for getting in or out of a vehicle (as present in the <code class="prettyprint">street_network</code>, <code class="prettyprint">transfer</code> and <code class="prettyprint">crow_fly</code> sections).</p>
 
-<p>For filtering vehicle journeys, the identifier of a line, route, commercial mode, physical mode or network can be used. </p>
+<p>To filter vehicle journeys, the identifier of a line, route, commercial mode, physical mode or network can be used.</p>
 
 <p>For filtering stop points, the identifier of a stop point or stop area can be used.</p>
 
@@ -3761,7 +3761,7 @@ HTTP/1.1 200 OK
 
 </code></pre>
 
-<p>This service provides the state of public transport traffic, grouped by lines and all their stops. 
+<p>This service provides the state of public transport traffic, grouped by lines and all their stops.
 It can be called for an overall coverage or for a specific object.</p>
 
 <p><img src="./images/traffic_reports.png" alt="Traffic reports" width="300"/></p>
@@ -3925,7 +3925,7 @@ see the <a href="#inner-references">inner-reference</a> section to use them.</p>
 <p>Line_reports is an array of some line_report object.</p>
 
 <p>One Line_report object is a complex object, made of a line, and an array
-of <a href="#pt-objects">pt_objects</a> linked (for example stop_areas, stop_point or network). </p>
+of <a href="#pt-objects">pt_objects</a> linked (for example stop_areas, stop_point or network).</p>
 
 <h4 id="what-a-complete-response-means"> What a <strong>complete</strong> response <strong>means</strong></h4>
 
@@ -3971,7 +3971,7 @@ of <a href="#pt-objects">pt_objects</a> linked (for example stop_areas, stop_poi
 
 <ul>
 <li>  it can contain links to its disruptions.<br>
-These disruptions are globals and might not be applied on stop_areas and stop_points. </li>
+These disruptions are globals and might not be applied on stop_areas and stop_points.</li>
 </ul></li>
 <li>  1..n pt_objects
 
@@ -4240,6 +4240,110 @@ These disruptions are globals and might not be applied on lines or stop_areas.</
 If a stop_area is used by multiple networks, it will appear each time.</li>
 </ul></li>
 </ul>
+
+<h2 id="equipment_reports">Equipment_Reports</h2>
+<pre class="highlight shell"><code><span class="c">#request</span>
+<span class="gp">$ </span>curl <span class="s1">'http://api.navitia.io/v1/coverage/sandbox/equipment_reports'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="c"># response, composed by 1 main list: "equipment_reports"</span>
+HTTP/1.1 200 OK
+
+<span class="o">{</span>
+    <span class="s2">"equipment_reports"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"line"</span>: <span class="o">{</span>15 items<span class="o">}</span>,
+            <span class="s2">"stop_area_equipments"</span>: <span class="o">[</span>
+                <span class="o">{</span>  
+                    <span class="s2">"equipment_details"</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">"current_availability"</span>: <span class="o">{</span>
+                                <span class="s2">"cause"</span>: <span class="o">{</span>
+                                    <span class="s2">"label"</span>: <span class="s2">"engineering work in progress"</span>
+                                <span class="o">}</span>,
+                                <span class="s2">"effect"</span>: <span class="o">{</span>
+                                    <span class="s2">"label"</span>: <span class="s2">"platform 3 available via stairs only"</span>
+                                <span class="o">}</span>,
+                                <span class="s2">"periods"</span>: <span class="o">[</span>
+                                    <span class="o">{</span>
+                                        <span class="s2">"begin"</span>: <span class="s2">"20190216T000000"</span>,
+                                        <span class="s2">"end"</span>: <span class="s2">"20190601T220000"</span>
+                                    <span class="o">}</span>
+                                <span class="o">]</span>,
+                                <span class="s2">"status"</span>: <span class="s2">"unavailable"</span>,
+                                <span class="s2">"updated_at"</span>: <span class="s2">"2019-05-17T15:54:53+02:00"</span>
+                            <span class="o">}</span>
+                        <span class="s2">"embedded_type"</span>: <span class="s2">"escalator"</span>,
+                        <span class="s2">"id"</span>: <span class="s2">"2702"</span>,
+                        <span class="s2">"name"</span>: <span class="s2">"du quai direction Vaulx-en-Velin La Soie  jusqu'à la sortie B"</span>,
+                        <span class="o">}</span>,
+                    <span class="o">]</span>
+                    <span class="s2">"stop_area"</span>: <span class="o">{</span>9 items<span class="o">}</span>,
+                <span class="o">}</span>,
+            <span class="o">]</span>
+        <span class="o">}</span>,
+    <span class="o">]</span>,
+<span class="o">}</span>
+</code></pre>
+
+<p>Also known as the <code class="prettyprint">&quot;/equipment_reports&quot;</code> service.</p>
+
+<p>This service provides the state of equipments such as lifts or elevators that are giving you better accessibility to public transport facilities.
+The endpoint will report accessible equipement per stop area and per line. Which means that an equipment detail is reported at the stop area level, with all stop areas gathered on a per line basis.
+Some of the fields (cause, effect, periods etc&hellip;) are only displayed if a realtime equipment provider is setup with available data. Otherwise, only information provided by the NTFS will be reported.
+For more information, refer to <a href="#equipment-reports">equipment-reports</a> API description.</p>
+
+<aside class="warning">
+    This feature requires a specific configuration from a equipment service provider.
+    Therefore this service is not available by default.
+</aside>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>no</td>
+<td>count</td>
+<td>int</td>
+<td>Elements per page</td>
+<td>10</td>
+</tr>
+<tr>
+<td>no</td>
+<td>depth</td>
+<td>int</td>
+<td>Depth</td>
+<td>1</td>
+</tr>
+<tr>
+<td>no</td>
+<td>filter</td>
+<td>string</td>
+<td>A <a href="#filter">filter</a> to refine your request</td>
+<td></td>
+</tr>
+<tr>
+<td>no</td>
+<td>forbidden_uris[]</td>
+<td>id</td>
+<td>If you want to avoid lines, modes, networks, etc.</td>
+<td></td>
+</tr>
+<tr>
+<td>no</td>
+<td>start_page</td>
+<td>int</td>
+<td>The page number (cf the <a href="#paging">paging section</a>)</td>
+<td>0</td>
+</tr>
+</tbody></table>
 
           <h1 id="objects">Objects</h1>
 
@@ -5328,7 +5432,7 @@ and commercial modes when building an output to the traveler.</p>
 <span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/coords/2.377310;48.847002/pois'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
 
 <span class="c">#very smart request</span>
-<span class="c">#combining filters to get some specific POIs, as bicycle rental stations, </span>
+<span class="c">#combining filters to get some specific POIs, as bicycle rental stations,</span>
 <span class="c">#nearby a coordinate</span>
 <span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/poi_types/poi_type:amenity:bicycle_rental/coords/2.377310;48.847002/pois'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
 </code></pre>
@@ -5453,6 +5557,173 @@ and commercial modes when building an output to the traveler.</p>
 
 <p>Cities are mainly on the 8 level, dependant on the country
 (<a href="http://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative">http://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative</a>)</p>
+
+<h3 id="equipment-reports">Equipment-reports</h3>
+<pre class="highlight json"><code><span class="s2">"equipment_reports"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"line"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"stop_area_equipments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">...</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>A list of object that maps each lines with its associated stop area equipments report.</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>line</td>
+<td><a href="#line">line</a></td>
+<td>The line to which equipments are associated</td>
+</tr>
+<tr>
+<td>stop_area_equipments</td>
+<td><a href="#stop-area-equipments">stop-area-equipments</a></td>
+<td>A list of objects that describes equipments for each stop area</td>
+</tr>
+</tbody></table>
+
+<h3 id="stop-area-equipments">Stop-area-equipments</h3>
+<pre class="highlight json"><code><span class="s2">"stop_area_equipments"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"equipment_details"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="nt">"stop_area"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span><span class="w">
+    </span><span class="err">}</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>A list of objects that maps equipments details for each stop area.</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>equipment_details</td>
+<td><a href="#equipment-details">equipment-details</a></td>
+<td>The equipment details associated with the stop area</td>
+</tr>
+<tr>
+<td>stop_area</td>
+<td><a href="#stop-area">stop-area</a></td>
+<td>The stop area to which the <code class="prettyprint">equipments_details</code> is associated</td>
+</tr>
+</tbody></table>
+
+<h3 id="equipment-details">Equipment-details</h3>
+<pre class="highlight json"><code><span class="s2">"equipment_details"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"current_availability"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"embedded_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"escalator"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2702"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Escalator 2702, for platform 3"</span><span class="p">,</span><span class="w">
+    </span><span class="err">}</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Occurrence</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>current_availability</td>
+<td><a href="#current-availability">current-availability</a></td>
+<td>always</td>
+<td>Describes equipments information like: status, name, id etc&hellip;</td>
+</tr>
+<tr>
+<td>embedded_type</td>
+<td>string</td>
+<td>always</td>
+<td>Define the equipment type: <code class="prettyprint">&quot;escalator&quot;</code>, <code class="prettyprint">&quot;elevator&quot;</code></td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>always</td>
+<td>The equipment&rsquo;s unique identifier</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>optional</td>
+<td>the equipment&rsquo;s name/description</td>
+</tr>
+</tbody></table>
+
+<h3 id="current-availability">Current-availability</h3>
+<pre class="highlight json"><code><span class="s2">"current_availability"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"cause"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"engineering work in progress"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"effect"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"platform 3 available via stairs only"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"periods"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"begin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20190216T000000"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20190601T220000"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unavailable"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-05-17T15:54:53+02:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>always</td>
+<td>Equipment status: <ul><li><code class="prettyprint">&quot;unknown&quot;</code>: no realtime information available</li><li><code class="prettyprint">&quot;unavailable&quot;</code>: equipment is known to be unavailable with details provided below </li></ul></td>
+</tr>
+<tr>
+<td>cause</td>
+<td>label</td>
+<td>optional</td>
+<td>If status is <code class="prettyprint">unavailable</code>, gives you the cause in a label</td>
+</tr>
+<tr>
+<td>effect</td>
+<td>label</td>
+<td>optional</td>
+<td>If status is <code class="prettyprint">unavailable</code>, gives you the effect in a label</td>
+</tr>
+<tr>
+<td>periods</td>
+<td>period</td>
+<td>optional</td>
+<td>If status is <code class="prettyprint">unavailable</code>, gives the effected period with a begin &amp; end date</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td><a href="#iso-date-time">iso-date-time</a></td>
+<td>optional</td>
+<td>Last update time of the provided information</td>
+</tr>
+</tbody></table>
 
 <h2 id="other-objects">Other objects</h2>
 
