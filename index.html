@@ -107,7 +107,7 @@ A fake token is used in examples below: be aware that this token is really limit
 
 <p>Go to the API  <a href="https://api.navitia.io">https://api.navitia.io</a></p>
 
-<p>The simpliest way is to use a web browser. 
+<p>The simpliest way is to use a web browser.
 Our humble opinion is that <a href="http://www.getfirefox.com">firefox browser</a> and a json viewer extension like <a href="https://addons.mozilla.org/fr/firefox/addon/json-lite/">JSON Lite</a> is a good setup.</p>
 
 <h2 id="third-step">Third step</h2>
@@ -476,7 +476,7 @@ That&rsquo;s what we call an <code class="prettyprint">isochron</code> (see <a h
 </blockquote>
 <pre class="highlight shell"><code>
 <span class="c">#using "headers"</span>
-<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span> 
+<span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
 
 <span class="c">#using "users": don't forget ":" at the end of line !</span>
 <span class="gp">$ </span>curl https://api.navitia.io/v1/coverage -u 3b036afe-0110-4202-b9ed-99718476c2e0:
@@ -486,10 +486,10 @@ That&rsquo;s what we call an <code class="prettyprint">isochron</code> (see <a h
 
 </code></pre>
 
-<p>Authentication is required to use <strong>navitia.io</strong>. When you register we will give you 
+<p>Authentication is required to use <strong>navitia.io</strong>. When you register we will give you
 an authentication key that must accompany each API call you make.</p>
 
-<p><strong>Navitia.io</strong> uses <a href="http://tools.ietf.org/html/rfc2617#section-2">Basic HTTP authentication</a> 
+<p><strong>Navitia.io</strong> uses <a href="http://tools.ietf.org/html/rfc2617#section-2">Basic HTTP authentication</a>
 for authentication, where the username is the key, and password remains empty.</p>
 
 <p>For example, in a <a href="https://en.wikipedia.org/wiki/CURL">Curl</a> way, you can request either :</p>
@@ -512,9 +512,9 @@ for authentication, where the username is the key, and password remains empty.</
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fjourneys%3Ffrom%3D2.3749036%3B48.8467927%26to%3D2.2922926%3B48.8583736&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0">Try it on Navitia playground</a></p>
 </blockquote>
 
-<p>The multi-modal itinerary feature allows you to compute the best routes from point A to point B 
+<p>The multi-modal itinerary feature allows you to compute the best routes from point A to point B
 using all available means of travel, including: bus, train, subway, bike, public bike, walking, car, etc.
-This function returns a roadmap with specific instructions for a route based on available information, 
+This function returns a roadmap with specific instructions for a route based on available information,
 such as: time of departure and arrival, journey time, possible modes of transport, and walking distance.</p>
 
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fjourneys%3Ffrom%3D2.3749036%253B48.8467927%26to%3D2.2922926%253B48.8583736%26&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0"><img alt="a journey on Navitia playground" src="images/playground_journey.png" /></a></p>
@@ -528,8 +528,8 @@ such as: time of departure and arrival, journey time, possible modes of transpor
 
           <h1 id="next-departures-and-arrivals"><a name="next_departures_and_arrivals"></a><img alt="Departures" src="images/departures.png" />Next departures and arrivals</h1>
 
-<p>The &ldquo;Next Departures&rdquo; feature provides the next scheduled departures or arrivals 
-for a specific mode of public transport (bus, tram, metro, train) at your selected stop, near coordinates, etc. </p>
+<p>The &ldquo;Next Departures&rdquo; feature provides the next scheduled departures or arrivals
+for a specific mode of public transport (bus, tram, metro, train) at your selected stop, near coordinates, etc.</p>
 
 <blockquote>
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fstop_areas%2Fstop_area%253ARAT%253ASA%253AGDLYO%2Fstop_schedules%3Fitems_per_schedule%3D2%26&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0">Try it on Navitia playground (click on &ldquo;EXT&rdquo; buttons to see times)</a></p>
@@ -554,16 +554,16 @@ for a specific mode of public transport (bus, tram, metro, train) at your select
 <ul>
 <li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
 objects of a region</li>
-<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
+<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> :
 Compute time tables for a given resource</li>
 </ul>
 
           <h1 id="timetables"><a name="timetables"></a><img alt="Timetables" src="images/line_schedules.png" />Timetables</h1>
 
-<p>The Timetables features gives you access to line schedules on public transport, 
+<p>The Timetables features gives you access to line schedules on public transport,
 allowing you to find the times public transport is expected at specific stops.</p>
 
-<p>It returns a variety of differents informations, including: stop points in right order, times, 
+<p>It returns a variety of differents informations, including: stop points in right order, times,
 accessibility informations, vehicle informations, etc.</p>
 
 <p>In order to display line schedules, you may have to use these APIs (click on them for details):</p>
@@ -571,7 +571,7 @@ accessibility informations, vehicle informations, etc.</p>
 <ul>
 <li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : List of the public transport
 objects of a region</li>
-<li>  <strong><a href="#route-schedules">Route Schedules</a></strong> and <strong><a href="#stop-schedules">Stop Schedules</a></strong> : 
+<li>  <strong><a href="#route-schedules">Route Schedules</a></strong> and <strong><a href="#stop-schedules">Stop Schedules</a></strong> :
 Compute time tables for a given resource</li>
 </ul>
 
@@ -581,7 +581,7 @@ Compute time tables for a given resource</li>
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fstop_areas%2Fstop_area%3ARAT%3ASA%3ACAMPO%2Fplaces_nearby&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0">Try it on Navitia playground (click on &ldquo;MAP&rdquo; buttons to see places)</a></p>
 </blockquote>
 
-<p>The Places Nearby feature displays the different transport options around a location - a GPS coordinate, 
+<p>The Places Nearby feature displays the different transport options around a location - a GPS coordinate,
 or an address, for example.</p>
 
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fcoord%2F2.32794%253B48.817184%2Fplaces_nearby%3F&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0"><img alt="a map around on Navitia playground" src="images/playground_places_nearby.png" /></a></p>
@@ -594,7 +594,7 @@ or an address, for example.</p>
 <li>  <strong><a href="#coverage">Coverage</a></strong> : List of the region covered by navitia</li>
 <li>  <strong><a href="#pt-ref">Public transportation objects</a></strong> : Seek and search within the public transport objects of a region</li>
 <li>  <strong><a href="#places-nearby-api">Places nearby</a></strong> :  List of objects near an object or using longitude and latitude</li>
-<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> : 
+<li>  <strong><a href="#stop-schedules">Stop Schedules</a></strong>, <strong><a href="#departures">Departures</a></strong> and <strong><a href="#arrivals">Arrivals</a></strong> :
 Compute time tables for a given resource</li>
 </ul>
 
@@ -604,8 +604,8 @@ Compute time tables for a given resource</li>
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Flines&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0">Try it on Navitia playground</a></p>
 </blockquote>
 
-<p>The Explore Transport feature lets you explore places, coordinates, bus stops, subway stations, etc. 
-to navigate all the data available on the API (collection service). </p>
+<p>The Explore Transport feature lets you explore places, coordinates, bus stops, subway stations, etc.
+to navigate all the data available on the API (collection service).</p>
 
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Flines&amp;token=3b036afe-0110-4202-b9ed-99718476c2e0"><img alt="some data request on Navitia playground" src="images/playground_pt_ref.png" /></a></p>
 
@@ -738,7 +738,7 @@ That&rsquo;s lots of links. Links allow you to know all accessible uris and serv
 </tbody></table>
 
 <aside class="notice">
-    The number of objects returned for a request can <b>not be superior than 1000</b>. 
+    The number of objects returned for a request can <b>not be superior than 1000</b>.
     If you request for more, Navitia will return the first 1000, and you will have to paginate to get next 1000.
 </aside>
 
@@ -795,7 +795,7 @@ HTTP/1.1 200 OK
 <p>Under some link sections, you will find a &ldquo;templated&rdquo; property.</p>
 
 <p>If &ldquo;templated&rdquo; is true, then you will have to format the link with your right id as describe in the example.
-In order to do that, you will have to </p>
+In order to do that, you will have to</p>
 
 <ul>
 <li>take the id from the object you want to get the linked service</li>
@@ -819,9 +819,9 @@ In order to do that, you will have to </p>
 <p>That means :</p>
 
 <ul>
-<li>inside the self stream ( <strong>&ldquo;internal&rdquo;: true</strong> ) </li>
-<li>you will find a <strong>disruptions</strong> section ( <strong>&ldquo;rel&rdquo;: &ldquo;disruptions&rdquo;</strong> ) </li>
-<li>containing some <a href="#disruption">disruptions</a> objects ( <strong>&ldquo;type&rdquo;: &ldquo;disruption&rdquo;</strong> ) </li>
+<li>inside the self stream ( <strong>&ldquo;internal&rdquo;: true</strong> )</li>
+<li>you will find a <strong>disruptions</strong> section ( <strong>&ldquo;rel&rdquo;: &ldquo;disruptions&rdquo;</strong> )</li>
+<li>containing some <a href="#disruption">disruptions</a> objects ( <strong>&ldquo;type&rdquo;: &ldquo;disruption&rdquo;</strong> )</li>
 <li>where you can find the details of your object ( <strong>&ldquo;id&rdquo;: &ldquo;edc46f3a-ad3d-11e4-a5e1-005056a44da2&rdquo;</strong> ).</li>
 </ul>
 
@@ -6142,7 +6142,7 @@ Here are some tagging rules:
 -    itineraries with other types are displayed only if they are relevant
 -    and for a specific type, you may find many relevant itinerary</p>
 
-<p>For example, for a specific request, you can find the &ldquo;best&rdquo; itinerary, 2 &ldquo;less_fallback_walk&rdquo; ones 
+<p>For example, for a specific request, you can find the &ldquo;best&rdquo; itinerary, 2 &ldquo;less_fallback_walk&rdquo; ones
 (with less walking, but taking more time) and no &ldquo;comfort&rdquo; (the &ldquo;best&rdquo; one is the same as the &ldquo;comfort&rdquo; one for example).</p>
 
 <p>The different journey types are:</p>
