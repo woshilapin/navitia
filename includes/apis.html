@@ -856,6 +856,13 @@ HTTP/1.1 200 OK
 <td>Remove disruptions from the response</td>
 <td>False</td>
 </tr>
+<tr>
+<td>nop</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
+</tr>
 </tbody></table>
 
 <aside class="warning">
@@ -972,6 +979,13 @@ to understand the user input even if he has mittens.</p>
 <td>boolean</td>
 <td>remove geojson from the response</td>
 <td>False</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
 </tr>
 <tr>
 <td>nop</td>
@@ -1097,6 +1111,13 @@ coordinates, returning a <a href="#place">places</a> collection.</p>
 <td>int</td>
 <td>Elements per page</td>
 <td>10</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
 </tr>
 <tr>
 <td>nop</td>
@@ -1432,6 +1453,13 @@ These disruptions won&rsquo;t be on the <code class="prettyprint">display_inform
 <td>array of string</td>
 <td>Same as first_section_mode but for the last section</td>
 <td>walking</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
 </tr>
 </tbody></table>
 
@@ -2361,6 +2389,13 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 </tr>
 <tr>
 <td>nop</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
+</tr>
+<tr>
+<td>nop</td>
 <td>items_per_schedule</td>
 <td>int</td>
 <td>Maximum number of columns per schedule.</td>
@@ -2603,6 +2638,13 @@ You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_
 </tr>
 <tr>
 <td>nop</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
+</tr>
+<tr>
+<td>nop</td>
 <td>forbidden_uris[]</td>
 <td>id</td>
 <td>If you want to avoid lines, modes, networks, etc.</td>
@@ -2782,6 +2824,13 @@ Departures are ordered chronologically in ascending order as:
 <td>int</td>
 <td>Maximum number of results.</td>
 <td>10</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
 </tr>
 <tr>
 <td>nop</td>
@@ -2973,14 +3022,14 @@ It can be called for an overall coverage or for a specific object.</p>
 <td>no</td>
 <td>since</td>
 <td><a href="#iso-date-time">iso-date-time</a></td>
-<td>Only display disruptions active after this date</td>
+<td>Only display active disruptions after this date</td>
 <td></td>
 </tr>
 <tr>
 <td>no</td>
 <td>until</td>
 <td><a href="#iso-date-time">iso-date-time</a></td>
-<td>Only display disruptions active before this date</td>
+<td>Only display active disruptions before this date</td>
 <td></td>
 </tr>
 <tr>
@@ -2989,6 +3038,13 @@ It can be called for an overall coverage or for a specific object.</p>
 <td>int</td>
 <td>Maximum number of results.</td>
 <td>10</td>
+</tr>
+<tr>
+<td>no</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
 </tr>
 <tr>
 <td>no</td>
@@ -3008,7 +3064,7 @@ It can be called for an overall coverage or for a specific object.</p>
 <td>no</td>
 <td>tags[]</td>
 <td>array of string</td>
-<td>Restrain the search within the given disruption tags</td>
+<td>Filter disruptions with the given tags</td>
 <td></td>
 </tr>
 </tbody></table>
@@ -3215,6 +3271,66 @@ It can be called for an overall coverage or for a specific object.</p>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:OIF:810:AOIF741/line_reports?">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/lines/line:OIF:810:AOIF741/line_reports?</a></li>
 </ul></li>
 </ul>
+
+<table><thead>
+<tr>
+<th>Required</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>no</td>
+<td>since</td>
+<td><a href="#iso-date-time">iso-date-time</a></td>
+<td>Only display active disruptions after this date</td>
+<td></td>
+</tr>
+<tr>
+<td>no</td>
+<td>until</td>
+<td><a href="#iso-date-time">iso-date-time</a></td>
+<td>Only display active disruptions before this date</td>
+<td></td>
+</tr>
+<tr>
+<td>no</td>
+<td>count</td>
+<td>int</td>
+<td>Maximum number of results.</td>
+<td>10</td>
+</tr>
+<tr>
+<td>no</td>
+<td>depth</td>
+<td>int</td>
+<td>Json response <a href="#depth">depth</a></td>
+<td>1</td>
+</tr>
+<tr>
+<td>no</td>
+<td>forbidden_uris[]</td>
+<td>id</td>
+<td>If you want to avoid lines, modes, networks, etc.</td>
+<td></td>
+</tr>
+<tr>
+<td>no</td>
+<td>disable_geojson</td>
+<td>boolean</td>
+<td>remove geojson fields from the response</td>
+<td>false</td>
+</tr>
+<tr>
+<td>no</td>
+<td>tags[]</td>
+<td>array of string</td>
+<td>Filter disruptions with the given tags</td>
+<td></td>
+</tr>
+</tbody></table>
 
 <p>The response is made of an array of <a href="#traffic-reports">traffic_reports</a>,
 and another one of <a href="#disruption">disruptions</a>.</p>
@@ -3489,7 +3605,7 @@ For more information, refer to <a href="#equipment-reports">equipment-reports</a
 <td>no</td>
 <td>depth</td>
 <td>int</td>
-<td>Depth</td>
+<td>Json response <a href="#depth">depth</a></td>
 <td>1</td>
 </tr>
 <tr>
