@@ -6882,8 +6882,9 @@ Either way, a link to this disruption can be found in the section &ldquo;display
 
 <h3 id="departures-amp-stop-schedules">Departures &amp; Stop Schedules</h3>
 
-<p>The departure time of the train with the reduced service simply won&rsquo;t be displayed in the list of departures/stop_schedules if &ldquo;data_freshness&rdquo; is set to &ldquo;realtime&rdquo;.
-If data_freshness&quot; is &ldquo;base_schedule&rdquo;, then the depature time is displayed and a link to the disruption is present at the root level of the response.
+<p>At the deleted stop area, the departure time of the train with a reduced service simply won&rsquo;t be displayed in the list of departures/stop_schedules if &ldquo;data_freshness&rdquo; is set to &ldquo;realtime&rdquo;.</p>
+
+<p>If &ldquo;data_freshness&rdquo; is &ldquo;base_schedule&rdquo;, then the depature time is displayed.<br>
 In that case, a link to this disruption can be found in the section &ldquo;display_informations&rdquo; for departures, in the &ldquo;date_times&rdquo; object itself for stop_schedules.</p>
 
 <h2 id="modified-service"><a name="MODIFIED_SERVICE"></a>Modified service</h2>
@@ -6971,6 +6972,15 @@ http://api.navitia.io/v1/coverage/&lt;coverage&gt;/journeys?from<span class="o">
 
 <p>A list of the disruptions impacting the journey is also present at the root level of the response.<br>
 A link to the concerned disruption can be found in the section &ldquo;display_informations&rdquo;.</p>
+
+<div></div>
+
+<h3 id="departures-amp-stop-schedules">Departures &amp; Stop Schedules</h3>
+
+<p>At the added stop area, the departure time of the train with a modified service is displayed if &ldquo;data_freshness&rdquo; is set to &ldquo;realtime&rdquo;.<br>
+In that case, a link to this disruption can be found in the section &ldquo;display_informations&rdquo; for departures, in the &ldquo;date_times&rdquo; object itself for stop_schedules.</p>
+
+<p>The departure time of the train with a modified service simply won&rsquo;t be displayed in the list of departures/stop_schedules if &ldquo;data_freshness&rdquo; is set to &ldquo;base_schedule&rdquo;.</p>
 
       </div>
       <div class="dark-box">
