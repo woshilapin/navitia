@@ -2590,10 +2590,9 @@ HTTP/1.1 200 OK
 point as:
 <img alt="stop_schedules" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Panneau_SIEL_couleurs_Paris-Op%C3%A9ra.jpg/640px-Panneau_SIEL_couleurs_Paris-Op%C3%A9ra.jpg" /></p>
 
-<p>The response is made of an array of <a href="#stop-schedule">stop_schedule</a>, and another
-one of <a href="#note">note</a>.
-<a href="#context">Context</a> object provides the <code class="prettyprint">current_datetime</code>, useful to compute waiting time when requesting Navitia without a <code class="prettyprint">from_datetime</code>.
-You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
+<p>The response is made of an array of <a href="#stop-schedule">stop_schedule</a>, and another one of <a href="#note">note</a>.<br>
+<a href="#context">Context</a> object provides the <code class="prettyprint">current_datetime</code>, useful to compute waiting time when requesting Navitia without a <code class="prettyprint">from_datetime</code>.<br>
+Can be accessed via: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/stop_schedules">https://api.navitia.io/v1/{a_path_to_a_resource}/stop_schedules</a></p>
 
 <p>See how disruptions affect stop schedules in the <a href="#realtime">real time</a> section.</p>
 
@@ -2986,14 +2985,13 @@ HTTP/1.1 200 OK
 
 </code></pre>
 
-<p>This service provides the state of public transport traffic, grouped by lines and all their stops.
-It can be called for an overall coverage or for a specific object.</p>
+<p>This service provides the state of public transport traffic, grouped by lines and all their stops.<br>
+It can be called for an overall coverage or for a specific object.<br>
+Can be accessed via: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/line_reports">https://api.navitia.io/v1/{a_path_to_a_resource}/line_reports</a></p>
 
 <p><img src="./images/traffic_reports.png" alt="Traffic reports" width="300"/></p>
 
 <h3 id="parameters">Parameters</h3>
-
-<p>You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/line_reports">https://api.navitia.io/v1/{a_path_to_a_resource}/line_reports</a></p>
 
 <p>For example:</p>
 
@@ -3241,12 +3239,11 @@ HTTP/1.1 200 OK
 
 <p>Also known as <code class="prettyprint">/traffic_reports</code> service. We recommand to use line_reports in place of traffic_reports.</p>
 
-<p>This service provides the state of public transport traffic, grouped by network.
-It can be called for an overall coverage or for a specific object.</p>
+<p>This service provides the state of public transport traffic, grouped by network.<br>
+It can be called for an overall coverage or for a specific object.<br>
+Can be accessed via: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/traffic_reports">https://api.navitia.io/v1/{a_path_to_a_resource}/traffic_reports</a></p>
 
 <h3 id="parameters">Parameters</h3>
-
-<p>You can access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/traffic_reports">https://api.navitia.io/v1/{a_path_to_a_resource}/traffic_reports</a></p>
 
 <p>For example:</p>
 
@@ -3535,7 +3532,7 @@ If a stop_area is used by multiple networks, it will appear each time.</li>
 
 <h2 id="equipment_reports">Equipment_Reports</h2>
 <pre class="highlight shell"><code><span class="c">#request</span>
-<span class="gp">$ </span>curl <span class="s1">'http://api.navitia.io/v1/coverage/sandbox/equipment_reports'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
+<span class="gp">$ </span>curl <span class="s1">'http://api.navitia.io/v1/coverage/&lt;my_coverage&gt;/equipment_reports'</span>
 </code></pre>
 <pre class="highlight shell"><code><span class="c"># response, composed by 1 main list: "equipment_reports"</span>
 HTTP/1.1 200 OK
@@ -3579,10 +3576,11 @@ HTTP/1.1 200 OK
 
 <p>Also known as the <code class="prettyprint">&quot;/equipment_reports&quot;</code> service.</p>
 
-<p>This service provides the state of equipments such as lifts or elevators that are giving you better accessibility to public transport facilities.
-The endpoint will report accessible equipement per stop area and per line. Which means that an equipment detail is reported at the stop area level, with all stop areas gathered on a per line basis.
-Some of the fields (cause, effect, periods etc&hellip;) are only displayed if a realtime equipment provider is setup with available data. Otherwise, only information provided by the NTFS will be reported.
-For more information, refer to <a href="#equipment-reports">equipment-reports</a> API description.</p>
+<p>This service provides the state of equipments such as lifts or elevators that are giving you better accessibility to public transport facilities.<br>
+The endpoint will report accessible equipment per stop area and per line. Which means that an equipment detail is reported at the stop area level, with all stop areas gathered per line.<br>
+Some of the fields (cause, effect, periods etc&hellip;) are only displayed if a realtime equipment provider is setup with available data. Otherwise, only information provided by the NTFS will be reported.<br>
+For more information, refer to <a href="#equipment-reports">Equipment reports</a> API description.<br>
+Can be accessed via: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%7D/equipment_reports">https://api.navitia.io/v1/{a_path_to_a_resource}/equipment_reports</a></p>
 
 <aside class="warning">
     This feature requires a specific configuration from a equipment service provider.
@@ -3632,7 +3630,7 @@ For more information, refer to <a href="#equipment-reports">equipment-reports</a
 <td>no</td>
 <td>start_page</td>
 <td>int</td>
-<td>The page number (cf the <a href="#paging">paging section</a>)</td>
+<td>The page number (cf. the <a href="#paging">paging section</a>)</td>
 <td>0</td>
 </tr>
 </tbody></table>

@@ -1260,7 +1260,7 @@ and commercial modes when building an output to the traveler.</p>
 <p>Cities are mainly on the 8 level, dependant on the country
 (<a href="http://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative">http://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative</a>)</p>
 
-<h3 id="equipment-reports">Equipment-reports</h3>
+<h3 id="equipment-reports"><a name="equipment-reports"></a>Equipment reports</h3>
 <pre class="highlight json"><code><span class="s2">"equipment_reports"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
         </span><span class="nt">"line"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span><span class="w">
@@ -1270,7 +1270,7 @@ and commercial modes when building an output to the traveler.</p>
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 
-<p>A list of object that maps each lines with its associated stop area equipments report.</p>
+<p>A list of objects that maps each line with its associated stop area equipments.</p>
 
 <table><thead>
 <tr>
@@ -1286,12 +1286,12 @@ and commercial modes when building an output to the traveler.</p>
 </tr>
 <tr>
 <td>stop_area_equipments</td>
-<td><a href="#stop-area-equipments">stop-area-equipments</a></td>
+<td><a href="#stop-area-equipments">stop area equipments</a></td>
 <td>A list of objects that describes equipments for each stop area</td>
 </tr>
 </tbody></table>
 
-<h3 id="stop-area-equipments">Stop-area-equipments</h3>
+<h3 id="stop-area-equipments"><a name="stop-area-equipments"></a>Stop area equipments</h3>
 <pre class="highlight json"><code><span class="s2">"stop_area_equipments"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
         </span><span class="nt">"equipment_details"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
@@ -1312,17 +1312,17 @@ and commercial modes when building an output to the traveler.</p>
 </thead><tbody>
 <tr>
 <td>equipment_details</td>
-<td><a href="#equipment-details">equipment-details</a></td>
+<td><a href="#equipment-details">Equipment details</a></td>
 <td>The equipment details associated with the stop area</td>
 </tr>
 <tr>
 <td>stop_area</td>
-<td><a href="#stop-area">stop-area</a></td>
-<td>The stop area to which the <code class="prettyprint">equipments_details</code> is associated</td>
+<td><a href="#stop-area">Stop Area</a></td>
+<td>The stop area to which the <code class="prettyprint">equipment_details</code> is associated</td>
 </tr>
 </tbody></table>
 
-<h3 id="equipment-details">Equipment-details</h3>
+<h3 id="equipment-details"><a name="equipment-details"></a>Equipment details</h3>
 <pre class="highlight json"><code><span class="s2">"equipment_details"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
         </span><span class="nt">"current_availability"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span><span class="w">
@@ -1344,7 +1344,7 @@ and commercial modes when building an output to the traveler.</p>
 </thead><tbody>
 <tr>
 <td>current_availability</td>
-<td><a href="#current-availability">current-availability</a></td>
+<td><a href="#equipment-availability">Equipment availability</a></td>
 <td>always</td>
 <td>Describes equipments information like: status, name, id etc&hellip;</td>
 </tr>
@@ -1352,7 +1352,7 @@ and commercial modes when building an output to the traveler.</p>
 <td>embedded_type</td>
 <td>string</td>
 <td>always</td>
-<td>Define the equipment type: <code class="prettyprint">&quot;escalator&quot;</code>, <code class="prettyprint">&quot;elevator&quot;</code></td>
+<td>Define the equipment type: <code class="prettyprint">escalator</code>, <code class="prettyprint">elevator</code></td>
 </tr>
 <tr>
 <td>id</td>
@@ -1368,7 +1368,7 @@ and commercial modes when building an output to the traveler.</p>
 </tr>
 </tbody></table>
 
-<h3 id="current-availability">Current-availability</h3>
+<h3 id="equipment-availability"><a name="equipment-availability"></a>Equipment availability</h3>
 <pre class="highlight json"><code><span class="s2">"current_availability"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"cause"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"engineering work in progress"</span><span class="w">
@@ -1383,8 +1383,7 @@ and commercial modes when building an output to the traveler.</p>
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unavailable"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-05-17T15:54:53+02:00"</span><span class="w">
-</span><span class="p">}</span><span class="w">
+</span><span class="err">}</span><span class="w">
 </span></code></pre>
 
 <table><thead>
@@ -1399,7 +1398,7 @@ and commercial modes when building an output to the traveler.</p>
 <td>status</td>
 <td>string</td>
 <td>always</td>
-<td>Equipment status: <ul><li><code class="prettyprint">&quot;unknown&quot;</code>: no realtime information available</li><li><code class="prettyprint">&quot;unavailable&quot;</code>: equipment is known to be unavailable with details provided below </li></ul></td>
+<td>Equipment status: <ul><li><code class="prettyprint">unknown</code>: no realtime information available</li><li><code class="prettyprint">unavailable</code>: equipment is known to be unavailable with details provided below </li></ul></td>
 </tr>
 <tr>
 <td>cause</td>
@@ -1417,13 +1416,7 @@ and commercial modes when building an output to the traveler.</p>
 <td>periods</td>
 <td>period</td>
 <td>optional</td>
-<td>If status is <code class="prettyprint">unavailable</code>, gives the effected period with a begin &amp; end date</td>
-</tr>
-<tr>
-<td>updated_at</td>
-<td><a href="#iso-date-time">iso-date-time</a></td>
-<td>optional</td>
-<td>Last update time of the provided information</td>
+<td>If status is <code class="prettyprint">unavailable</code>, gives the affected period (with a <code class="prettyprint">begin</code> &amp; <code class="prettyprint">end</code> datetime attributes)</td>
 </tr>
 </tbody></table>
 
@@ -1690,7 +1683,7 @@ It&rsquo;s also used inside different responses (disruptions, &hellip;).</p>
 
 <h3 id="datetime">datetime</h3>
 
-<p>A date time with the format YYYYMMDDThhmmss</p>
+<p>A date time with the format YYYYMMDDThhmmss, considered local to the coverage being used.</p>
 
 <h4 id="depth">depth</h4>
 
