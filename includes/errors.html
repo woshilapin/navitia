@@ -36,10 +36,8 @@
 
 <h2 id="code-40x">Code 40x</h2>
 
-<blockquote>
-<p>When navitia is unable to give an answer, you&rsquo;ll receive a response with an error object
+<p>When Navitia is unable to give an answer, you&rsquo;ll receive a response with an error object
 containing a unique error id, in a 4XX http code response</p>
-</blockquote>
 <pre class="highlight shell"><code><span class="c">#request</span>
 <span class="gp">$ </span>curl <span class="s1">'https://api.navitia.io/v1/coverage/sandbox/stop_areas/wrong-one'</span> -H <span class="s1">'Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0'</span>
 
@@ -106,11 +104,48 @@ HTTP/1.1 404 OK
 <td>unable_to_parse</td>
 <td>When you use a mal-formed custom filter</td>
 </tr>
+<tr>
+<td>unknown_api</td>
+<td>When you request an inexistant endpoint</td>
+</tr>
+<tr>
+<td>bad_format</td>
+<td>When you provide ill-formated parameter (coord for example)</td>
+</tr>
+</tbody></table>
+
+<h2 id="code-200">Code 200</h2>
+
+<p>Even if everything is correct (input parameters, internal processing)
+Navitia can end up finding that the correct answer is empty.</p>
+
+<table><thead>
+<tr>
+<th>Error id</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>no_solution</td>
+<td>From data, there is no solution available given the request</td>
+</tr>
 </tbody></table>
 
 <h2 id="code-50x">Code 50x</h2>
 
 <p>Ouch. Technical issue :/</p>
+
+<table><thead>
+<tr>
+<th>Error id</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>internal_error</td>
+<td>Something bad and unexpected has happened internally</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
