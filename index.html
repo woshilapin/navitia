@@ -2280,7 +2280,7 @@ These disruptions won&rsquo;t be on the <code class="prettyprint">display_inform
 <td>nop</td>
 <td>first_section_mode[]</td>
 <td>array of string</td>
-<td>Force the first section mode if the first section is not a public transport one. It takes the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>, <code class="prettyprint">ridesharing</code>.<br>It&rsquo;s an array, you can give multiple modes.<br><br>See <a href="#ridesharing-stuff">Ridesharing</a> section for more details on that mode.<br><code class="prettyprint">bss</code> stands for bike sharing system.<br>Note: choosing <code class="prettyprint">bss</code> implicitly allows the <code class="prettyprint">walking</code> mode since you might have to walk to the bss station.<br> Note 2: The parameter is inclusive, not exclusive, so if you want to forbid a mode, you need to add all the other modes.<br> Eg: If you never want to use a <code class="prettyprint">car</code>, you need: <code class="prettyprint">first_section_mode[]=walking&amp;first_section_mode[]=bss&amp;first_section_mode[]=bike&amp;last_section_mode[]=walking&amp;last_section_mode[]=bss&amp;last_section_mode[]=bike</code></td>
+<td>Force the first section mode if the first section is not a public transport one. It takes the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>, <code class="prettyprint">ridesharing</code>, <code class="prettyprint">taxi</code>.<br>It&rsquo;s an array, you can give multiple modes.<br><br>See <a href="#ridesharing-stuff">Ridesharing</a> and <a href="#taxi-stuff">Taxi</a> sections for more details on these modes.<br><code class="prettyprint">bss</code> stands for bike sharing system.<br>Note: choosing <code class="prettyprint">bss</code> implicitly allows the <code class="prettyprint">walking</code> mode since you might have to walk to the bss station.<br> Note 2: The parameter is inclusive, not exclusive, so if you want to forbid a mode, you need to add all the other modes.<br> Eg: If you never want to use a <code class="prettyprint">car</code>, you need: <code class="prettyprint">first_section_mode[]=walking&amp;first_section_mode[]=bss&amp;first_section_mode[]=bike&amp;last_section_mode[]=walking&amp;last_section_mode[]=bss&amp;last_section_mode[]=bike</code></td>
 <td>walking</td>
 </tr>
 <tr>
@@ -6298,6 +6298,14 @@ This may also be used to obtain a direct ridesharing journey (using <code class=
 Inside this section an attribute ridesharing_journeys contains one or multiple journeys
 depicting specifically the ridesharing ads that could match the above section
 and that could be proposed to the user.</p>
+
+<h2 id="taxi"><a name="taxi-stuff"></a>Taxi</h2>
+
+<aside class="warning">
+    This feature is not available on all coverages, as it is dependent on other parameters of the coverage (how journeys are computed).
+</aside>
+
+<p>With this mode, your journey may contain taxi sections(fallback or direct path). The journey you will obtain is basically the same as a journey by car. The only difference is that with taxi as fallback mode, a buffer time (section &ldquo;waiting&rdquo;, defaulted to 5 min) will appear into the journey. The buffer time won&rsquo;t appear if the journey is a direct path. Depending on the calculator, the journey may pick up ways that are reserved for taxis on not.</p>
 
 <h2 id="on-demand-transportation">On demand transportation</h2>
 
