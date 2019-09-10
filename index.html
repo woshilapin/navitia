@@ -2410,6 +2410,13 @@ These disruptions won&rsquo;t be on the <code class="prettyprint">display_inform
 </tr>
 <tr>
 <td>nop</td>
+<td>direct_path_mode[]</td>
+<td>array of strings</td>
+<td>Force direct-path modes. If this list is not empty, we only compute direct_path for modes in this list and filter all the direct_paths of modes in first_section_mode[]. It can take the following values: <code class="prettyprint">walking</code>, <code class="prettyprint">car</code>, <code class="prettyprint">bike</code>, <code class="prettyprint">bss</code>, <code class="prettyprint">ridesharing</code>, <code class="prettyprint">taxi</code>. It&rsquo;s an array, you can give multiple modes. If this list is empty, we will compute direct_path for modes of the first_section_modes.</td>
+<td>first_section_modes[]</td>
+</tr>
+<tr>
+<td>nop</td>
 <td>add_poi_infos[]</td>
 <td>boolean</td>
 <td>Activate the output of additional infomations about the poi. For example, parking availability(BSS, car parking etc.) in the pois of response. Possible values are <code class="prettyprint">bss_stands</code>, <code class="prettyprint">car_park</code></td>
