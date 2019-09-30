@@ -2431,6 +2431,13 @@ access it via that kind of url: <a href="https://api.navitia.io/v1/%7Ba_path_to_
 <td>remove geojson fields from the response</td>
 <td>False</td>
 </tr>
+<tr>
+<td>nop</td>
+<td>direction_type</td>
+<td>enum</td>
+<td>Allow to filter the response with the route direction type property <ul><li>all</li><li>forward</li><li>backward</li></ul>Note: forward is equivalent to clockwise and inbound. When you select forward, you filter with: [forward, clockwise, inbound].<br>backward is equivalent to anticlockwise and outbound. when you select backward, you filter with: [backward, anticlockwise, outbound]</td>
+<td>all</td>
+</tr>
 </tbody></table>
 
 <h3 id="objects">Objects</h3>
@@ -2681,6 +2688,13 @@ Can be accessed via: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%
 <td>remove geojson fields from the response</td>
 <td>False</td>
 </tr>
+<tr>
+<td>nop</td>
+<td>direction_type</td>
+<td>enum</td>
+<td>Allow to filter the response with the route direction type property <ul><li>all</li><li>forward</li><li>backward</li></ul>Note: forward is equivalent to clockwise and inbound. When you select forward, you filter with: [forward, clockwise, inbound].<br>backward is equivalent to anticlockwise and outbound. When you select backward, you filter with: [backward, anticlockwise, outbound]</td>
+<td>all</td>
+</tr>
 </tbody></table>
 
 <h3 id="stop_schedule-object"><a name="stop-schedule"></a>Stop_schedule object</h3>
@@ -2864,6 +2878,13 @@ Departures are ordered chronologically in ascending order as:
 <td>boolean</td>
 <td>remove geojson fields from the response</td>
 <td>false</td>
+</tr>
+<tr>
+<td>nop</td>
+<td>direction_type</td>
+<td>enum</td>
+<td>Allow to filter the response with the route direction type property <ul><li>all</li><li>forward</li><li>backward</li></ul>Note: forward is equivalent to clockwise and inbound. When you select forward, you filter with: [forward, clockwise, inbound].<br>backward is equivalent to anticlockwise and outbound. When you select backward, you filter with: [backward, anticlockwise, outbound]</td>
+<td>all</td>
 </tr>
 </tbody></table>
 
