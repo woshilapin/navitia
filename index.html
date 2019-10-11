@@ -3926,13 +3926,6 @@ Can be accessed via: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%
 <td>remove geojson fields from the response</td>
 <td>false</td>
 </tr>
-<tr>
-<td>no</td>
-<td>tags[]</td>
-<td>array of string</td>
-<td>Filter disruptions with the given tags</td>
-<td></td>
-</tr>
 </tbody></table>
 
 <p>The response is made of an array of <a href="#line-reports">line_reports</a>,
@@ -4115,20 +4108,10 @@ Can be accessed via: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%
 <ul>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/traffic_reports">https://api.navitia.io/v1/coverage/fr-idf/traffic_reports</a></li>
 </ul></li>
-<li>  overall public transport traffic report on Ile de France coverage with disruptions having tags passed in parameter values
-
-<ul>
-<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/traffic_reports?tags%5B%5D=incident&amp;tags%5B%5D=alert">https://api.navitia.io/v1/coverage/fr-idf/traffic_reports?tags[]=incident&amp;tags[]=alert</a></li>
-</ul></li>
 <li>  Is there any perturbations on the RER network ?
 
 <ul>
 <li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/traffic_reports">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/traffic_reports</a></li>
-</ul></li>
-<li>  Is there any perturbations on the RER network with disruptions having tags passed in parameter values ?
-
-<ul>
-<li>  <a href="https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/traffic_reports?tags%5B%5D=incident&amp;tags%5B%5D=alert">https://api.navitia.io/v1/coverage/fr-idf/networks/network:RER/traffic_reports?tags[]=incident&amp;tags[]=alert</a></li>
 </ul></li>
 <li>  Is there any perturbations on the &ldquo;RER A&rdquo; line ?
 
@@ -4187,13 +4170,6 @@ Can be accessed via: <a href="https://api.navitia.io/v1/%7Ba_path_to_a_resource%
 <td>boolean</td>
 <td>remove geojson fields from the response</td>
 <td>false</td>
-</tr>
-<tr>
-<td>no</td>
-<td>tags[]</td>
-<td>array of string</td>
-<td>Filter disruptions with the given tags</td>
-<td></td>
 </tr>
 </tbody></table>
 
