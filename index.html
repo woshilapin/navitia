@@ -2389,13 +2389,6 @@ These disruptions won&rsquo;t be on the <code class="prettyprint">display_inform
 </tr>
 <tr>
 <td>nop</td>
-<td>disruption_active</td>
-<td>boolean</td>
-<td>For compatibility use only.<br>If true the algorithm take the disruptions into account, and thus avoid disrupted public transport.<br>Rq: <code class="prettyprint">disruption_active=true</code> = <code class="prettyprint">data_freshness=realtime</code> <br>Use <code class="prettyprint">data_freshness</code> parameter instead</td>
-<td>False</td>
-</tr>
-<tr>
-<td>nop</td>
 <td>wheelchair</td>
 <td>boolean</td>
 <td>If true the traveler is considered to be using a wheelchair, thus only accessible public transport are used<br>be warned: many data are currently too faint to provide acceptable answers with this parameter on</td>
@@ -6697,6 +6690,22 @@ Real time isn&rsquo;t available on every coverage for Navitia. For real time to 
 <aside class="notice">
 A disruption is present in the response of the endpoints described if the request is made during its application period.
 </aside>
+
+<h2 id="public-transport-object-collections"><a name="PT_object_collections_data_freshness"></a>Public transport object collections</h2>
+
+<p>Several public transport objects have separate collections for <code class="prettyprint">base_schedule</code> and <code class="prettyprint">realtime</code>.<br>
+So the data_freshness parameter may affect the number of objects returned depending on the request.</p>
+
+<p>For example when looking for a specific circulation with the collection vehicle_journey using the request:<br>
+<code class="prettyprint">http://api.navitia.io/v1/coverage/&lt;toto&gt;/vehicle_journeys?since=20191008T100000&amp;until=20191008T200000&amp;data_freshness=base_schedule</code>.</p>
+
+<p>A vehicle_journey circulating between since and until that is <strong>fully deleted</strong> by a disruption will
+of course be <strong>visible</strong> if <code class="prettyprint">data_freshness=base_schedule</code>.<br>
+But it <strong>will not appear</strong> with the parameter <code class="prettyprint">data_freshness=realtime</code> as it does not exist in that collection.</p>
+
+<p>On the other hand, a vehicle_journey that is <strong>created</strong> by a realtime feed will only be <strong>visible</strong> if
+<code class="prettyprint">data_freshness=realtime</code> on that same request.<br>
+And it will <strong>not appear</strong> if <code class="prettyprint">data_freshness=base_schedule</code>.</p>
 
 <h2 id="trip-delayed"><a name="SIGNIFICANT_DELAYS"></a>Trip delayed</h2>
 

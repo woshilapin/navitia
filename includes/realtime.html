@@ -55,6 +55,22 @@ Real time isn&rsquo;t available on every coverage for Navitia. For real time to 
 A disruption is present in the response of the endpoints described if the request is made during its application period.
 </aside>
 
+<h2 id="public-transport-object-collections"><a name="PT_object_collections_data_freshness"></a>Public transport object collections</h2>
+
+<p>Several public transport objects have separate collections for <code class="prettyprint">base_schedule</code> and <code class="prettyprint">realtime</code>.<br>
+So the data_freshness parameter may affect the number of objects returned depending on the request.</p>
+
+<p>For example when looking for a specific circulation with the collection vehicle_journey using the request:<br>
+<code class="prettyprint">http://api.navitia.io/v1/coverage/&lt;toto&gt;/vehicle_journeys?since=20191008T100000&amp;until=20191008T200000&amp;data_freshness=base_schedule</code>.</p>
+
+<p>A vehicle_journey circulating between since and until that is <strong>fully deleted</strong> by a disruption will
+of course be <strong>visible</strong> if <code class="prettyprint">data_freshness=base_schedule</code>.<br>
+But it <strong>will not appear</strong> with the parameter <code class="prettyprint">data_freshness=realtime</code> as it does not exist in that collection.</p>
+
+<p>On the other hand, a vehicle_journey that is <strong>created</strong> by a realtime feed will only be <strong>visible</strong> if
+<code class="prettyprint">data_freshness=realtime</code> on that same request.<br>
+And it will <strong>not appear</strong> if <code class="prettyprint">data_freshness=base_schedule</code>.</p>
+
 <h2 id="trip-delayed"><a name="SIGNIFICANT_DELAYS"></a>Trip delayed</h2>
 
 <p><img alt="image" src="../images/delay.png" /></p>
