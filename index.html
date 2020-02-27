@@ -87,7 +87,8 @@ Developments on Navitia are lead by Kisio Digital (previously CanalTP).<br>
 Kisio Digital is a subsidiary of Keolis (itself a subsidiary of SNCF, French national railway company).</p>
 
 <aside class="notice">
-A fake token is used in examples below: be aware that this token is really limited. You should use yours to get better services on real data.
+A fake token is used in examples below: be aware that this token is really limited (&ldquo;sandbox&rdquo; coverage only).</br>
+You have to use yours to get real services on real data (your token has no access to &ldquo;sandbox&rdquo; coverage).
 </aside>
 
 <h2 id="first-step">First step</h2>
@@ -99,6 +100,11 @@ A fake token is used in examples below: be aware that this token is really limit
 </blockquote>
 
 <p>Get a token here <a href="http://navitia.io/register/">http://navitia.io/register/</a>. We need your mail to stay in touch when Navitia changes.</p>
+
+<aside class="notice">
+The token obtained is private, you should avoid sharing it publicly (beware if you share code examples, url or screenshot).</br>
+This will avoid having someone use your request quota.
+</aside>
 
 <h2 id="second-step">Second step</h2>
 <pre class="highlight shell"><code><span class="c"># You can use curl to request Navitia</span>
@@ -212,14 +218,14 @@ if you only want to challenge Navitia functionality, take your token and go to t
 
 <p>Stay tuned on twitter <a href="https://twitter.com/navitia">@navitia</a>.</p>
 
-<p>At last, we are present on IRC on the network <a href="https://webchat.freenode.net/">Freenode</a>, channel <b>#navitia</b>.</p>
+<p>At last, we are present on the network <code class="prettyprint">matrix.org</code>, channel <a href="https://riot.im/app/#/room/#navitia:matrix.org"><code class="prettyprint">#navitia:matrix.org</code></a>.</p>
 
           <h1 id="some-examples"><a name="some_examples"></a>Some examples</h1>
 
 <p>This chapter shows some usages with the minimal required arguments. However, this is not a reference and not all APIs nor arguments are shown.</p>
 
 <aside class="notice">
-You will have to use your own token with the examples below.
+You will have to use your own token with the examples below (if you switch to another coverage than &ldquo;sandbox&rdquo;).
 </aside>
 
 <h2 id="basics-on-the-api-request">Basics on the API request</h2>
@@ -231,7 +237,7 @@ You will have to use your own token with the examples below.
 <img alt="Navitia basic request" src="images/navitia_basic.png" /></p>
 
 <ol>
-<li><strong>Root url</strong> of the API, the adress of the server.<br>
+<li><strong>Root url</strong> of the API, the address of the server.<br>
 Here <code class="prettyprint">https://api.navitia.io/v1/</code></li>
 <li><strong>Path</strong>, used to filter the request and precise what is affected by the query. This filter is an intersection of multiple <code class="prettyprint">key/value</code> (logical <em>AND</em>).<br>
 Here <code class="prettyprint">/coverage/sandbox/stop_areas/stop_area:RAT:SA:BASTI/lines/line:RAT:M5/</code> means we are looking for information on everything that is in the region <em>&ldquo;sandbox&rdquo;</em> and that is stricly related to both station <em>&ldquo;Bastille&rdquo;</em> and line <em>&ldquo;metro 5&rdquo;</em>.</li>
@@ -472,7 +478,7 @@ That&rsquo;s what we call an <code class="prettyprint">isochron</code> (see <a h
           <h1 id="authentication">Authentication</h1>
 
 <blockquote>
-<p>3 ways to request Navitia</p>
+<p>4 ways to request Navitia</p>
 </blockquote>
 <pre class="highlight shell"><code>
 <span class="c">#using "headers"</span>
@@ -484,6 +490,9 @@ That&rsquo;s what we call an <code class="prettyprint">isochron</code> (see <a h
 <span class="c">#using "straight URL"</span>
 <span class="gp">$ </span>curl https://3b036afe-0110-4202-b9ed-99718476c2e0@api.navitia.io/v1/coverage
 
+<span class="c">#using "key" parameter</span>
+<span class="gp">$ </span>curl https://api.navitia.io/v1/coverage?key<span class="o">=</span>3b036afe-0110-4202-b9ed-99718476c2e0
+
 </code></pre>
 
 <p>Authentication is required to use <strong>navitia.io</strong>. When you register we will give you
@@ -492,7 +501,7 @@ an authentication key that must accompany each API call you make.</p>
 <p><strong>Navitia.io</strong> uses <a href="http://tools.ietf.org/html/rfc2617#section-2">Basic HTTP authentication</a>
 for authentication, where the username is the key, and password remains empty.</p>
 
-<p>For example, in a <a href="https://en.wikipedia.org/wiki/CURL">Curl</a> way, you can request either :</p>
+<p>For example, in a <a href="https://en.wikipedia.org/wiki/CURL">Curl</a> way, you can request either (using the fake sandbox token):</p>
 
 <p><code class="prettyprint">curl &#39;https://api.navitia.io/v1/coverage&#39; -H &#39;Authorization: 3b036afe-0110-4202-b9ed-99718476c2e0&#39;</code></p>
 
@@ -505,6 +514,15 @@ for authentication, where the username is the key, and password remains empty.</
 <p>or</p>
 
 <p><code class="prettyprint">curl https://3b036afe-0110-4202-b9ed-99718476c2e0@api.navitia.io/v1/coverage</code></p>
+
+<p>or</p>
+
+<p><code class="prettyprint">curl https://api.navitia.io/v1/coverage?key=3b036afe-0110-4202-b9ed-99718476c2e0</code></p>
+
+<aside class="notice">
+The token used within this documentation has only access to the &ldquo;sandbox&rdquo; coverage.</br>
+The private token obtained on https://navitia.io has access to other coverages, but not to &ldquo;sandbox&rdquo;.
+</aside>
 
           <h1 id="journey-planning"><a name="journey_planning"></a><img alt="Journey planning" src="images/journeys.png" />Journey planning</h1>
 
@@ -1363,10 +1381,13 @@ as headsign (on vehicle journey itself or at a stop time).</p>
 <p>To be used only on &ldquo;vehicle_journeys&rdquo; and &ldquo;disruptions&rdquo; collection, to filter on a
 period. Both parameters &ldquo;until&rdquo; and &ldquo;since&rdquo; are optional.</p>
 
+<p>For vehicle_journeys, &ldquo;since&rdquo; and &ldquo;until&rdquo; are associated with the data_freshness parameter (defaults to base_schedule): see the <a href="#realtime">realtime</a> section.</p>
+
 <p>Example:</p>
 
 <ul>
-<li>  Getting every active New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100</a></li>
+<li>  Getting every active (only base_schedule) New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100</a></li>
+<li>  Getting every active (according to realtime information) New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100&amp;data_freshness=realtime">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100&amp;data_freshness=realtime</a></li>
 <li>  Getting every active disruption on &ldquo;Bretagne&rdquo; for a specific date <a href="http://api.navitia.io/v1/coverage/fr-bre/disruptions?since=20170206000000&amp;until=20170206235959">http://api.navitia.io/v1/coverage/fr-bre/disruptions?since=20170206000000&amp;until=20170206235959</a></li>
 </ul>
 
@@ -1772,7 +1793,7 @@ to understand the user input even if he has mittens.</p>
 <aside class="warning">
     Until now, you have to specify the right coverage to get `/places`.<br>
     If you like to play, you can test the &ldquo;beta&rdquo; `/places`, without any coverage:
-    it will soon be able to request entire Earth on adresses, POIs, stop areas&hellip; with geographical sort.
+    it will soon be able to request entire Earth on addresses, POIs, stop areas&hellip; with geographical sort.
 </aside>
 
 <h3 id="parameters">Parameters</h3>
@@ -1830,7 +1851,7 @@ to understand the user input even if he has mittens.</p>
 </tr>
 </tbody></table>
 
-<h2 id="places-nearby"><a name="places-nearby-api"></a>Places Nearby</h2>
+<h2 id="places-nearby"><a name="places-nearby-api"></a>Places nearby</h2>
 
 <blockquote>
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fstop_areas%2Fstop_area%3ARAT%3ASA%3ACAMPO%2Fplaces_nearby">Try it on Navitia playground (click on &ldquo;MAP&rdquo; buttons to see places)</a></p>
@@ -2224,14 +2245,14 @@ These disruptions won&rsquo;t be on the <code class="prettyprint">display_inform
 <td>nop</td>
 <td>from</td>
 <td>id</td>
-<td>The id of the departure of your journey. If none are provided an isochrone is computed</td>
+<td>The id of the departure of your journey. If none are provided an isochrone is computed. Should be different than <code class="prettyprint">to</code> or no journey will be computed.</td>
 <td></td>
 </tr>
 <tr>
 <td>nop</td>
 <td>to</td>
 <td>id</td>
-<td>The id of the arrival of your journey. If none are provided an isochrone is computed</td>
+<td>The id of the arrival of your journey. If none are provided an isochrone is computed. Should be different than <code class="prettyprint">from</code> or no journey will be computed.</td>
 <td></td>
 </tr>
 <tr>
@@ -5017,9 +5038,21 @@ and commercial modes when building an output to the traveler.</p>
 </tr>
 </tbody></table>
 
-<p>It also encapsulates many instances of vehicle_journey, accessible with the url:</p>
+<p>It encapsulates many instances of vehicle_journey.</p>
+
+<h3 id="vehicle-journey">Vehicle-journey</h3>
+
+<p>A vehicle-journey describes a scheduled vehicle circulation, the days on which it circulates according to base-schedule,
+the days it circulates according to realtime information.</p>
+
+<p>Note that multiple vehicle-journeys are often associated with the same trip for technical and logical
+reasons (to model the daylight saving time, for the changes after applying realtime disruptions, etc.).</p>
+
+<p>The collection is accessible with the url:</p>
 
 <p><code class="prettyprint">https://api.navitia.io/v1/coverage/sandbox/trips/{trip.id}/vehicle_journeys</code>.</p>
+
+<p>Note: this collection is mostly used for debug and technical purposes.</p>
 
 <h3 id="pt_object"><a name="pt-object"></a>Pt_object</h3>
 
@@ -5433,7 +5466,7 @@ and commercial modes when building an output to the traveler.</p>
 <tr>
 <td>effect</td>
 <td>Enum</td>
-<td>Normalized value of the effect on the public transport object See the GTFS RT documentation at <a href="https://developers.google.com/transit/gtfs-realtime/reference#Effect">https://developers.google.com/transit/gtfs-realtime/reference#Effect</a></td>
+<td>Normalized value of the effect on the public transport object. See the GTFS RT documentation at <a href="https://gtfs.org/reference/realtime/v2/#enum-effect">https://gtfs.org/reference/realtime/v2/#enum-effect</a>. See also <a href="#realtime">realtime</a> section.</td>
 </tr>
 </tbody></table>
 
@@ -5631,7 +5664,7 @@ and commercial modes when building an output to the traveler.</p>
 <tr>
 <td>label</td>
 <td>string</td>
-<td>Label of the adress. The name is directly taken from the data whereas the label is something we compute for better traveler information. If you don&rsquo;t know what to display, display the label.</td>
+<td>Label of the address. The name is directly taken from the data whereas the label is something we compute for better traveler information. If you don&rsquo;t know what to display, display the label.</td>
 </tr>
 <tr>
 <td>coord</td>
@@ -6216,6 +6249,59 @@ Here are some tagging rules:
 </tr>
 </tbody></table>
 
+<h2 id="service-translation"><a name=Service-translation></a>Service Translation</h2>
+
+<p>When specifying a service in the data through <code class="prettyprint">calendar.txt</code> and <code class="prettyprint">calendar_dates.txt</code>, you might get surprised to see a different result from Navitia&rsquo;s response.</p>
+<pre class="highlight shell"><code><span class="c"># Navitia's interpreted service response</span>
+<span class="o">{</span>
+    <span class="s2">"calendars"</span>: <span class="o">[</span>
+       <span class="o">{</span>
+            <span class="s2">"active_periods"</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">"begin"</span>: <span class="s2">"20200101"</span>,
+                    <span class="s2">"end"</span>: <span class="s2">"20200130"</span>
+                <span class="o">}</span>
+            <span class="o">]</span>,
+            <span class="s2">"week_pattern"</span>: <span class="o">{</span>
+                <span class="s2">"monday"</span>: <span class="nb">false</span>,
+                <span class="s2">"tuesday"</span>: <span class="nb">false</span>,
+                <span class="s2">"wednesday"</span>: <span class="nb">false</span>,
+                <span class="s2">"thursday"</span>: <span class="nb">false</span>,
+                <span class="s2">"friday"</span>: <span class="nb">false</span>,
+                <span class="s2">"saturday"</span>: <span class="nb">true</span>,
+                <span class="s2">"sunday"</span>: <span class="nb">true</span>
+            <span class="o">}</span>,
+            <span class="s2">"exceptions"</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">"type"</span>: <span class="s2">"remove"</span>,
+                    <span class="s2">"datetime"</span>: <span class="s2">"20200127"</span>
+                <span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+</code></pre>
+
+<p>For instance, if you have a trip that:</p>
+
+<ul>
+<li>  occurs every Saturday of January 2020 (in your <code class="prettyprint">calendar.txt</code>)</li>
+<li>  has 3 exceptions that <code class="prettyprint">add</code> the service the first 3 Sundays (<code class="prettyprint">calendar_dates.txt</code>)</li>
+</ul>
+
+<p>You might expect to have that same exact representation for your <code class="prettyprint">/vehicle_journeys</code>, but instead you find something different.</p>
+
+<p>You expected to have 3 <code class="prettyprint">add</code> exceptions but you only have 1 <code class="prettyprint">remove</code>. Also, the week pattern is set to <code class="prettyprint">true</code> on Sunday even though your <code class="prettyprint">calendar.txt</code> said Saturday only.</p>
+
+<p>This is due to a re-interpretation of the service pattern, with one specific goal :</p>
+
+<aside class="notice">
+ Navitia analyzes the input service and computes an equivalent pair of (week_pattern, exceptions) with the **smallest** number of exceptions
+</aside>
+
+<p>This means that Navitia will re-organise the input data, to produce a smaller and more comprehensive response that respects the semantics of the input data.</p>
+
+<p>For more information about the algorithm (in French): <a href="https://github.com/TeXitoi/pinot2015presenter/blob/master/pres/pinot2015presenter-pres.pdf">https://github.com/TeXitoi/pinot2015presenter/blob/master/pres/pinot2015presenter-pres.pdf</a></p>
+
 <h2 id="ridesharing"><a name="ridesharing-stuff"></a>Ridesharing</h2>
 <pre class="highlight shell"><code>simplified output
 
@@ -6595,15 +6681,15 @@ HTTP/1.1 404 OK
 </tr>
 <tr>
 <td>no_destination</td>
-<td>Couldn&rsquo;t find an destination for the journeys</td>
+<td>Couldn&rsquo;t find a destination for the journeys</td>
 </tr>
 <tr>
 <td>no_origin_nor_destination</td>
-<td>Couldn&rsquo;t find an origin nor a destination for the journeys</td>
+<td>Couldn&rsquo;t find neither origin nor destination for the journeys</td>
 </tr>
 <tr>
 <td>unknown_object</td>
-<td>As it&rsquo;s said</td>
+<td>Couldn&rsquo;t find one of the request parameters. It can be the region, the API or a PT object</td>
 </tr>
 </tbody></table>
 
@@ -6632,6 +6718,10 @@ HTTP/1.1 404 OK
 <tr>
 <td>bad_format</td>
 <td>When you provide ill-formated parameter (coord for example)</td>
+</tr>
+<tr>
+<td>config_exception</td>
+<td>When you try to configure an external service (street network back-end or autocomplete) with wrong parameters</td>
 </tr>
 </tbody></table>
 
@@ -6666,6 +6756,18 @@ Navitia can end up finding that the correct answer is empty.</p>
 <td>internal_error</td>
 <td>Something bad and unexpected has happened internally</td>
 </tr>
+<tr>
+<td>service_unavailable</td>
+<td>Navitia isn&rsquo;t responding</td>
+</tr>
+<tr>
+<td>dead_socket</td>
+<td>The requested region isn&rsquo;t responding</td>
+</tr>
+<tr>
+<td>technical_error</td>
+<td>An external service (street network back-end or autocomplete) isn&rsquo;t responding</td>
+</tr>
 </tbody></table>
 
           <h1 id="real-time-integration-in-navita"><a name="realtime"></a> Real time integration in Navita</h1>
@@ -6676,14 +6778,16 @@ Navitia can end up finding that the correct answer is empty.</p>
 Real time isn&rsquo;t available on every coverage for Navitia. For real time to be available for a client, it needs to provide real time info about its network to Navitia.
 </aside>
 
-<p>The effect of a disruption can be one of the following:
+<p>The effect of a disruption can be among the following:
 <ul>
     <li><a href="#SIGNIFICANT_DELAYS">SIGNIFICANT_DELAYS</a></li>
     <li><a href="#REDUCED_SERVICE">REDUCED_SERVICE</a></li>
+    <li><a href="#NO_SERVICE">NO_SERVICE</a></li>
     <li><a href="#MODIFIED_SERVICE">MODIFIED_SERVICE</a></li>
     <li><a href="#ADDITIONAL_SERVICE">ADDITIONAL_SERVICE</a></li>
     <li><a href="#UNKNOWN_EFFECT">UNKNOWN_EFFECT</a></li>
-</ul></p>
+</ul>
+This list follows the GTFS RT values documented at <a href="https://gtfs.org/reference/realtime/v2/#enum-effect">https://gtfs.org/reference/realtime/v2/#enum-effect</a>.</p>
 
 <p>For each one of these effects, here&rsquo;s how the Navitia responses will be affected over the different endpoints.</p>
 
@@ -6699,7 +6803,7 @@ So the data_freshness parameter may affect the number of objects returned depend
 <p>For example when looking for a specific circulation with the collection vehicle_journey using the request:<br>
 <code class="prettyprint">http://api.navitia.io/v1/coverage/&lt;toto&gt;/vehicle_journeys?since=20191008T100000&amp;until=20191008T200000&amp;data_freshness=base_schedule</code>.</p>
 
-<p>A vehicle_journey circulating between since and until that is <strong>fully deleted</strong> by a disruption will
+<p>A vehicle_journey circulating between since and until that is <strong>fully deleted</strong> (NO_SERVICE) by a disruption will
 of course be <strong>visible</strong> if <code class="prettyprint">data_freshness=base_schedule</code>.<br>
 But it <strong>will not appear</strong> with the parameter <code class="prettyprint">data_freshness=realtime</code> as it does not exist in that collection.</p>
 
@@ -6940,6 +7044,55 @@ Either way, a link to this disruption can be found in the section &ldquo;display
 <h3 id="departures-amp-stop-schedules">Departures &amp; Stop Schedules</h3>
 
 <p>At the deleted stop area, the departure time of the train with a reduced service simply won&rsquo;t be displayed in the list of departures/stop_schedules if &ldquo;data_freshness&rdquo; is set to &ldquo;realtime&rdquo;.</p>
+
+<p>If &ldquo;data_freshness&rdquo; is &ldquo;base_schedule&rdquo;, then the depature time is displayed.<br>
+In that case, a link to this disruption can be found in the section &ldquo;display_informations&rdquo; for departures, in the &ldquo;date_times&rdquo; object itself for stop_schedules.</p>
+
+<h2 id="no-service"><a name="NO_SERVICE"></a>No service</h2>
+
+<p><img alt="image" src="images/no_service.png" /></p>
+<pre class="highlight shell"><code><span class="c"># Extract of an impacted trip from /disruptions</span>
+<span class="o">{</span>
+    <span class="s2">"application_periods"</span>: ⊖[
+       ⊖<span class="o">{</span>
+            <span class="s2">"begin"</span>: <span class="s2">"20191210T183100"</span>,
+            <span class="s2">"end"</span>: <span class="s2">"20191210T194459"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">"impacted_objects"</span>: ⊖[
+       ⊖<span class="o">{</span>
+            <span class="s2">"pt_object"</span>: ⊖<span class="o">{</span>
+                <span class="s2">"embedded_type"</span>: <span class="s2">"trip"</span>,
+                <span class="s2">"id"</span>: <span class="s2">"OCE:BOA017534OCESNF-20191210"</span>,
+                <span class="s2">"name"</span>: <span class="s2">"OCE:BOA017534OCESNF-20191210"</span>,
+                <span class="s2">"trip"</span>: ⊕<span class="o">{</span>2 items<span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">"severity"</span>: ⊖<span class="o">{</span>
+        <span class="s2">"effect"</span>: <span class="s2">"NO_SERVICE"</span>
+        <span class="s2">"name"</span>: <span class="s2">"trip canceled"</span>,
+    <span class="o">}</span>,
+<span class="o">}</span>
+</code></pre>
+
+<p>The effect of the disruption is <code class="prettyprint">NO_SERVICE</code>. It means that the train won&rsquo;t be circulating at all.</p>
+
+<p>In the disruption, the deleted trip can be found in the &ldquo;impacted_objects&rdquo; list with the
+&ldquo;application_periods&rdquo; describing the period(s) of unavailability for the trip.<br>
+See the <a href="#disruption">disruption</a> objects section for its full content and description.</p>
+
+<div></div>
+
+<h3 id="journeys">Journeys</h3>
+
+<p>If the deleted trip is used by a section of the <code class="prettyprint">base_schedule</code> journey, Navitia will compute a different
+itinerary to the requested station in <code class="prettyprint">realtime</code>, or a later one (without using that trip).<br>
+A link to this disruption can be found in the section &ldquo;display_informations&rdquo; like for other disruptions, on a <code class="prettyprint">base_schedule</code> journey.</p>
+
+<h3 id="departures-amp-stop-schedules">Departures &amp; Stop Schedules</h3>
+
+<p>At the deleted stop area, the departure time of the cancelled train simply won&rsquo;t be displayed in the list of departures/stop_schedules if &ldquo;data_freshness&rdquo; is set to &ldquo;realtime&rdquo;.</p>
 
 <p>If &ldquo;data_freshness&rdquo; is &ldquo;base_schedule&rdquo;, then the depature time is displayed.<br>
 In that case, a link to this disruption can be found in the section &ldquo;display_informations&rdquo; for departures, in the &ldquo;date_times&rdquo; object itself for stop_schedules.</p>

@@ -529,10 +529,13 @@ as headsign (on vehicle journey itself or at a stop time).</p>
 <p>To be used only on &ldquo;vehicle_journeys&rdquo; and &ldquo;disruptions&rdquo; collection, to filter on a
 period. Both parameters &ldquo;until&rdquo; and &ldquo;since&rdquo; are optional.</p>
 
+<p>For vehicle_journeys, &ldquo;since&rdquo; and &ldquo;until&rdquo; are associated with the data_freshness parameter (defaults to base_schedule): see the <a href="#realtime">realtime</a> section.</p>
+
 <p>Example:</p>
 
 <ul>
-<li>  Getting every active New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100</a></li>
+<li>  Getting every active (only base_schedule) New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100</a></li>
+<li>  Getting every active (according to realtime information) New Jersey vehicles between 12h00 and 12h01, on a specific date <a href="https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100&amp;data_freshness=realtime">https://api.navitia.io/v1/coverage/us-ny/networks/network:newjersey/vehicle_journeys?since=20170407T120000&amp;until=20170407T120100&amp;data_freshness=realtime</a></li>
 <li>  Getting every active disruption on &ldquo;Bretagne&rdquo; for a specific date <a href="http://api.navitia.io/v1/coverage/fr-bre/disruptions?since=20170206000000&amp;until=20170206235959">http://api.navitia.io/v1/coverage/fr-bre/disruptions?since=20170206000000&amp;until=20170206235959</a></li>
 </ul>
 
@@ -938,7 +941,7 @@ to understand the user input even if he has mittens.</p>
 <aside class="warning">
     Until now, you have to specify the right coverage to get `/places`.<br>
     If you like to play, you can test the &ldquo;beta&rdquo; `/places`, without any coverage:
-    it will soon be able to request entire Earth on adresses, POIs, stop areas&hellip; with geographical sort.
+    it will soon be able to request entire Earth on addresses, POIs, stop areas&hellip; with geographical sort.
 </aside>
 
 <h3 id="parameters">Parameters</h3>
@@ -996,7 +999,7 @@ to understand the user input even if he has mittens.</p>
 </tr>
 </tbody></table>
 
-<h2 id="places-nearby"><a name="places-nearby-api"></a>Places Nearby</h2>
+<h2 id="places-nearby"><a name="places-nearby-api"></a>Places nearby</h2>
 
 <blockquote>
 <p><a href="http://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2Fsandbox%2Fstop_areas%2Fstop_area%3ARAT%3ASA%3ACAMPO%2Fplaces_nearby">Try it on Navitia playground (click on &ldquo;MAP&rdquo; buttons to see places)</a></p>
@@ -1390,14 +1393,14 @@ These disruptions won&rsquo;t be on the <code class="prettyprint">display_inform
 <td>nop</td>
 <td>from</td>
 <td>id</td>
-<td>The id of the departure of your journey. If none are provided an isochrone is computed</td>
+<td>The id of the departure of your journey. If none are provided an isochrone is computed. Should be different than <code class="prettyprint">to</code> or no journey will be computed.</td>
 <td></td>
 </tr>
 <tr>
 <td>nop</td>
 <td>to</td>
 <td>id</td>
-<td>The id of the arrival of your journey. If none are provided an isochrone is computed</td>
+<td>The id of the arrival of your journey. If none are provided an isochrone is computed. Should be different than <code class="prettyprint">from</code> or no journey will be computed.</td>
 <td></td>
 </tr>
 <tr>
